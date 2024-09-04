@@ -1,8 +1,8 @@
-import { AppProps } from "next/app";
-import Head from "next/head";
+import { AppProps } from 'next/app';
+import Head from 'next/head';
 
-import Layout from "components/Layout";
-import GlobalStyle from "styles/globalStyles";
+import Layout from 'components/Layout';
+import GlobalStyle from 'styles/globalStyles';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -12,9 +12,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <GlobalStyle />
-      <Layout >
+      <Layout>
         <Component {...pageProps} />
       </Layout>
     </>
-  )
+  );
 }

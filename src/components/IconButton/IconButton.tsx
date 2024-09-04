@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import styled from "styled-components";
+import { ReactNode } from 'react';
+import styled from 'styled-components';
 
 interface IIconButtonProps {
   children: ReactNode;
@@ -13,11 +13,11 @@ const IconButton = ({ children, size, className }: IIconButtonProps) => {
       {children}
     </Button>
   );
-}
+};
 
 export default IconButton;
 
-const Button = styled.button<{size?: number}>`
+const Button = styled.button<{ size?: number }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -26,9 +26,11 @@ const Button = styled.button<{size?: number}>`
   background: none;
   border-radius: 50%;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  width: ${props => props.size ? props.size + 'px' : 'auto'};
-  height: ${props => props.size ? props.size + 'px' : 'auto'};
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+  width: ${(props) => (props.size ? props.size + 'px' : 'auto')};
+  height: ${(props) => (props.size ? props.size + 'px' : 'auto')};
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.08);
