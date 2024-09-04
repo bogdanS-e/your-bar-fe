@@ -36,7 +36,6 @@ const SearchBar = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-  console.log(isFocused && filteredItems.length > 0);
 
   return (
     <SearchBarWrapper ref={wrapperRef}>
