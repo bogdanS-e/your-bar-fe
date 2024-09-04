@@ -1,20 +1,50 @@
-import { ReactNode } from 'react';
-import { Inter } from 'next/font/google';
+import { ReactNode, useEffect } from 'react';
+import { Roboto } from 'next/font/google';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import IconButton from 'components/IconButton';
 import SearchBar from 'components/SearchBar';
 import GlobalLoader from 'components/GlobalLoader';
+import { useQueries } from '@tanstack/react-query';
+import useGlobalStore from '../../globalStore';
 
 interface ILayoutProps {
   children: ReactNode;
 }
 
-const inter = Inter({ subsets: ['latin', 'cyrillic'] });
+const roboto = Roboto({
+  weight: ['400', '700'],
+  subsets: ['latin', 'cyrillic'],
+})
 
 const Layout = ({ children }: ILayoutProps) => {
   const router = useRouter();
+  const { stopLoading } = useGlobalStore();
+
+  // prepare global data
+  const [query1, query2] = useQueries({
+    queries: [
+      {
+        queryKey: ['ingredients'],
+        queryFn: async () => await fetch('https://dummyjson.com/products'),
+      },
+      {
+        queryKey: ['cooktails'],
+        queryFn: async () => await fetch('https://dummyjson.com/products'),
+      }
+    ],
+  });
+
+  useEffect(() => {
+    if (query1.isError || query2.isError) {
+      throw new Error("Global error! Cannot extract data");
+    }
+
+    if (query1.data && query2.data) {
+      stopLoading();
+    }
+  }, [query1.isError, query2.isError, query1.data, query2.data]);
 
   return (
     <>
@@ -98,6 +128,7 @@ const Nav = styled.nav`
   padding: 5px 25px;
   background-color: #dacdcd;
   border-radius: 0 10px 10px 0;
+  margin-right: 25px;
 `;
 
 const StyledIconButton = styled(IconButton) <{ isActive: boolean }>`
@@ -119,5 +150,5 @@ const Page = styled.div`
   display: flex;
   padding: 20px 20px 20px 0;
   min-height: 100dvh;
-  ${inter.style}
+  ${roboto.style};
 `;

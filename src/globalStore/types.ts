@@ -3,9 +3,9 @@ export interface IGlobalStoreProps {
 }
 
 export interface IGlobalStoreActions {
-  startLoadind: () => void;
-  stopLoadind: () => void;
-  setLoadind: (isLoading: boolean) => void;
+  startLoading: () => void;
+  stopLoading: () => void;
+  setLoading: (isLoading: boolean) => void;
 }
 
 export type IGlobalStore = IGlobalStoreProps & IGlobalStoreActions;

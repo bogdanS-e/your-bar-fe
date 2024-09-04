@@ -1,28 +1,18 @@
 import { GetStaticProps } from 'next';
-import Head from 'next/head';
-import styled from 'styled-components';
+
+import IngredientsPage from 'components/Ingredients';
 
 interface IIngredientsProps {
   data: any;
 }
 
-export default function Ingredients({ data }: IIngredientsProps) {
-  return (
-    <>
-      <Head>
-        <title>Ingredients</title>
-        <meta name="description" content="Ingredients" />
-      </Head>
-      <main>
-        <Title> some thegfsddfgdsfdedfdes</Title>
-      </main>
-    </>
-  );
-}
+const Ingredients = ({ data }: IIngredientsProps) => <IngredientsPage data={data} />
+
+export default Ingredients;
 
 export const getStaticProps: GetStaticProps<IIngredientsProps> = async () => {
-  //const res = await fetch('https://dummyjson.com/products');
-  const data = {}; //|| await res.json();
+  const res = await fetch('https://dummyjson.com/products');
+  const data = {}; await res.json();
 
   return {
     props: {
@@ -32,6 +22,3 @@ export const getStaticProps: GetStaticProps<IIngredientsProps> = async () => {
   };
 };
 
-const Title = styled.h1`
-  color: red;
-`;

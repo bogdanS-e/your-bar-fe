@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.7",
+    "@tanstack/react-query": "^5.54.1",
+    "@tanstack/react-query-devtools": "^5.54.1",
     "i": "^0.3.7",
     "next": "14.2.7",
     "npm": "^10.8.3",

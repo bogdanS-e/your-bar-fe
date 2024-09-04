@@ -43,11 +43,10 @@ const SearchBar = () => {
         type="text"
         value={searchTerm}
         onChange={handleSearch}
-        hasValue={searchTerm.length > 0}
         onFocus={() => setIsFocused(true)}
       />
       <PlaceholderWrapper hasValue={searchTerm.length > 0}>
-        Поиск коктейлей и ингридиентов...
+        Search for cooktails and ingredients...
       </PlaceholderWrapper>
       <SearchIconWrapper>
         <StyledIconButton size={40}>
@@ -146,7 +145,7 @@ const PlaceholderWrapper = styled.div<{ hasValue: boolean }>`
   `}
 `;
 
-const SearchInput = styled.input<{ hasValue: boolean }>`
+const SearchInput = styled.input`
   width: 100%;
   padding: 10px 40px 10px 10px;
   border: 1px solid #ccc;

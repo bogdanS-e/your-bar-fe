@@ -7,9 +7,9 @@ const initialData: IGlobalStoreProps = {
 
 const useGlobalStore = create<IGlobalStore>()((set) => ({
   ...initialData,
-  startLoadind: () => set({ isLoading: true }),
-  stopLoadind: () => set({ isLoading: false }),
-  setLoadind: (isLoading) => set({ isLoading }),
+  startLoading: () => set({ isLoading: true }),
+  stopLoading: () => set({ isLoading: false }),
+  setLoading: (isLoading) => set({ isLoading }),
 }));
 
 export default useGlobalStore;

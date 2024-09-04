@@ -2,14 +2,10 @@ import styled, { keyframes } from "styled-components";
 import useGlobalStore from "../../globalStore";
 
 const GlobalLoader = () => {
-  const {isLoading} = useGlobalStore();
-  
-  if (!isLoading) {
-    return null;
-  }
+  const { isLoading } = useGlobalStore();
 
   return (
-    <Container>
+    <Container isLoading={isLoading}>
       <Loader />
     </Container>
   );
@@ -23,7 +19,7 @@ const wave = keyframes`
   }
 `;
 
-const Container = styled.div`
+const Container = styled.div<{ isLoading: boolean }>`
   position: absolute;
   left: 0;
   top: 0;
@@ -33,6 +29,9 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   background: #fff;
+  transition: visibility 0.3s, opacity 0.3s;
+  visibility: ${({ isLoading }) => isLoading ? 'visible' : 'hidden'};
+  opacity: ${({ isLoading }) => isLoading ? '1' : '0'};
 `;
 
 const Loader = styled.div`
