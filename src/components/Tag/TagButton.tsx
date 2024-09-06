@@ -63,4 +63,5 @@ const Button = styled.span<{ color: string }>`
   border-radius: 5px;
   font-size: 0.875rem;
   white-space: nowrap;
+  color: #080808;
 `;

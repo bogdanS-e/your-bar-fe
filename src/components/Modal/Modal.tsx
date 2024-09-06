@@ -64,5 +64,5 @@ const CloseButton = styled.button`
 `;
 
 const ModalBody = styled.div`
-  padding-top: 1rem;
+  padding-top: 10px;
 `;

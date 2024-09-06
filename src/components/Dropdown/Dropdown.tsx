@@ -41,7 +41,7 @@ const Dropdown = <T extends number | string>({
 
   return (
     <DropdownContainer ref={dropdownRef}>
-      <DropdownTrigger onClick={() => setIsOpen(!isOpen)}>
+      <DropdownTrigger onClick={() => items.length && setIsOpen(!isOpen)}>
         {trigger}
       </DropdownTrigger>
       <CSSTransition

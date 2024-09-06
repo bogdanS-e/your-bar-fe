@@ -10,12 +10,14 @@ interface IAddTagsProps<T> {
   allTags: T[];
   onChange: (newTags: T[]) => void;
   isIngredient: boolean; //add tags for ingredient or cocktail
+  className?: string;
 }
 
 const AddTags = <T extends IngredientTag>({
   selectedTags,
   allTags,
   isIngredient,
+  className,
   onChange,
 }: IAddTagsProps<T>) => {
   const availableTags = useMemo(() => {
@@ -31,7 +33,7 @@ const AddTags = <T extends IngredientTag>({
   };
 
   return (
-    <Container>
+    <Container className={className}>
       {selectedTags.map((tag) => (
         <TagButton
           key={tag}

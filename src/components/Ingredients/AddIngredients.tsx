@@ -5,6 +5,9 @@ import { z, ZodType } from 'zod';
 import { toFormikValidate } from 'zod-formik-adapter';
 import { IngredientTag } from '../../types/ingredient';
 import AddTags from 'components/Tag/AddTags';
+import Input from 'components/Input';
+import styled from 'styled-components';
+import ImageInput from 'components/ImageInput';
 
 interface IIngredientFormValues {
   name: string;
@@ -39,20 +42,26 @@ const AddIngredients = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTags, setSelectedTags] = useState<IngredientTag[]>([]);
 
-  const { handleBlur, handleSubmit, handleChange, setFieldValue, values } =
-    useFormik<IIngredientFormValues>({
-      initialValues: {
-        name: '',
-        description: '',
-        tags: [],
-        image: null,
-      },
-      validateOnChange: false,
-      validate: toFormikValidate(ingredientSchema),
-      onSubmit: (values) => {
-        console.log(values);
-      },
-    });
+  const {
+    handleBlur,
+    handleSubmit,
+    handleChange,
+    setFieldValue,
+    values,
+    errors,
+  } = useFormik<IIngredientFormValues>({
+    initialValues: {
+      name: '',
+      description: '',
+      tags: [],
+      image: null,
+    },
+    validateOnChange: false,
+    validate: toFormikValidate(ingredientSchema),
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
 
   const close = () => {
     setIsOpen(false);
@@ -61,40 +70,37 @@ const AddIngredients = () => {
   const open = () => {
     setIsOpen(true);
   };
+  console.log(errors);
 
   return (
     <>
       <button onClick={open}>Add ingredients</button>
 
       <Modal isOpen={isOpen} onClose={close} title="Add new ingredient">
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="name">Ingredient Name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={values.name}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-          </div>
+        <Form onSubmit={handleSubmit}>
+          <NameWrapper>
+            <div>
+              <Input
+                label="Ingredient name"
+                name="name"
+                value={values.name}
+                onChange={handleChange}
+              />
+              <StyledAddTags
+                allTags={Object.values(IngredientTag).filter(
+                  (value) => typeof value === 'number'
+                )}
+                selectedTags={values.tags}
+                onChange={(selectedOptions) => {
+                  setFieldValue('tags', selectedOptions);
+                }}
+                isIngredient
+              />
+            </div>
+            <ImageInput onImageChange={() => {}} />
+          </NameWrapper>
 
-          <div>
-            <span>Tags:</span>
-            <AddTags
-              allTags={Object.values(IngredientTag).filter(
-                (value) => typeof value === 'number'
-              )}
-              selectedTags={values.tags}
-              onChange={(selectedOptions) => {
-                setFieldValue('tags', selectedOptions);
-              }}
-              isIngredient
-            />
-          </div>
-
-          <div>
+          {/* <div>
             <label htmlFor="image">Thumbnail</label>
             <input
               type="file"
@@ -108,7 +114,7 @@ const AddIngredients = () => {
                 setFieldValue('image', file);
               }}
             />
-          </div>
+          </div> */}
 
           <div>
             <textarea
@@ -122,10 +128,32 @@ const AddIngredients = () => {
           </div>
 
           <button type="submit">Submit</button>
-        </form>
+        </Form>
       </Modal>
     </>
   );
 };
 
 export default AddIngredients;
+
+const NameWrapper = styled.div`
+  display: flex;
+  align-items: start;
+  gap: 20px;
+  justify-content: space-between;
+
+  > div:first-child {
+    flex: 1;
+  }
+`;
+
+const StyledAddTags = styled(AddTags)`
+  margin: 10px 0;
+  flex-wrap: wrap;
+`;
+
+const Form = styled.form`
+  color: #525252;
+  max-width: 436px;
+  width: 100%;
+`;
