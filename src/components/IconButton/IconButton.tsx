@@ -5,11 +5,17 @@ interface IIconButtonProps {
   children: ReactNode;
   size?: number;
   className?: string;
+  onClick?: () => void;
 }
 
-const IconButton = ({ children, size, className }: IIconButtonProps) => {
+const IconButton = ({
+  children,
+  size,
+  className,
+  onClick,
+}: IIconButtonProps) => {
   return (
-    <Button size={size} className={className}>
+    <Button size={size} className={className} onClick={onClick}>
       {children}
     </Button>
   );

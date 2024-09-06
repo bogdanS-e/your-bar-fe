@@ -1,8 +1,9 @@
-import Filter from "components/Filter";
-import Head from "next/head";
-import styled from "styled-components";
-import { IIngredient, IngredientTag } from "../../types/ingredient";
-import { useState } from "react";
+import Filter from 'components/Filter';
+import Head from 'next/head';
+import styled from 'styled-components';
+import { IngredientTag } from '../../types/ingredient';
+import { useState } from 'react';
+import AddIngredients from './AddIngredients';
 
 interface IIngredientsProps {
   data: any;
@@ -44,23 +45,12 @@ const ingrediensFilter = [
     title: 'Other',
     key: IngredientTag.Other,
   },
-]
+];
 
 const IngredientsPage = ({ data }: IIngredientsProps) => {
-  //get data from BE
-  const items: IIngredient[] = [
-    {
-      tags: [IngredientTag.Beverages]
-    },
-    {
-      tags: [IngredientTag.Strong, IngredientTag.Fruit]
-    },
-    {
-      tags: [IngredientTag.Strong]
-    }
-  ];
-
-  const [selected, setSelected] = useState(ingrediensFilter.map(({ key }) => key));
+  const [selected, setSelected] = useState(
+    ingrediensFilter.map(({ key }) => key)
+  );
 
   return (
     <>
@@ -69,18 +59,17 @@ const IngredientsPage = ({ data }: IIngredientsProps) => {
         <meta name="description" content="Ingredients" />
       </Head>
       <Main>
-        <Title>
-          Ingredients
-        </Title>
+        <Title>Ingredients</Title>
         <Filter
           items={ingrediensFilter}
           selected={selected}
           onChange={setSelected}
         />
+        <AddIngredients />
       </Main>
     </>
   );
-}
+};
 
 export default IngredientsPage;
 

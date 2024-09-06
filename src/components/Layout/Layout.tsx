@@ -16,7 +16,7 @@ interface ILayoutProps {
 const roboto = Roboto({
   weight: ['400', '700'],
   subsets: ['latin', 'cyrillic'],
-})
+});
 
 const Layout = ({ children }: ILayoutProps) => {
   const router = useRouter();
@@ -32,13 +32,13 @@ const Layout = ({ children }: ILayoutProps) => {
       {
         queryKey: ['cooktails'],
         queryFn: async () => await fetch('https://dummyjson.com/products'),
-      }
+      },
     ],
   });
 
   useEffect(() => {
     if (query1.isError || query2.isError) {
-      throw new Error("Global error! Cannot extract data");
+      throw new Error('Global error! Cannot extract data');
     }
 
     if (query1.data && query2.data) {
@@ -116,6 +116,7 @@ const Layout = ({ children }: ILayoutProps) => {
           <SearchBar />
           {children}
         </Main>
+        <div id="modal-root" />
       </Page>
       <GlobalLoader />
     </>
@@ -131,7 +132,7 @@ const Nav = styled.nav`
   margin-right: 25px;
 `;
 
-const StyledIconButton = styled(IconButton) <{ isActive: boolean }>`
+const StyledIconButton = styled(IconButton)<{ isActive: boolean }>`
   width: 50px;
   height: 50px;
   color: ${(props) => (props.isActive ? '#909022' : 'inherit')};

@@ -1,18 +1,22 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-export interface IFilterItem<T extends string> {
+export interface IFilterItem<T> {
   image: string;
   title: string;
   key: T;
 }
 
-interface IFilterProps<T extends string> {
+interface IFilterProps<T> {
   items: IFilterItem<T>[];
   selected: T[];
   onChange: (selectedItems: T[]) => void;
 }
 
-const Filter = <T extends string>({ items, selected, onChange }: IFilterProps<T>) => {
+const Filter = <T extends string | number>({
+  items,
+  selected,
+  onChange,
+}: IFilterProps<T>) => {
   const handleClick = (key: T) => {
     if (selected.includes(key)) {
       onChange(selected.filter((value) => value !== key));
@@ -21,7 +25,7 @@ const Filter = <T extends string>({ items, selected, onChange }: IFilterProps<T>
     }
 
     onChange([...selected, key]);
-  }
+  };
 
   return (
     <Container>
@@ -35,7 +39,7 @@ const Filter = <T extends string>({ items, selected, onChange }: IFilterProps<T>
       ))}
     </Container>
   );
-}
+};
 
 export default Filter;
 
@@ -68,7 +72,7 @@ const Image = styled.span<{ image: string }>`
 
 const Selected = styled.span<{ isSelected: boolean }>`
   transition: border 0.15s linear;
-  border: ${({ isSelected }) => isSelected ? '5px' : '0'} solid #90caf8;
+  border: ${({ isSelected }) => (isSelected ? '5px' : '0')} solid #90caf8;
   width: calc(100% + 2px);
   height: calc(100% + 2px);
   position: absolute;
@@ -89,6 +93,6 @@ const Selected = styled.span<{ isSelected: boolean }>`
     right: -5%;
     top: -5%;
     color: #080808a8;
-    opacity: ${({ isSelected }) => isSelected ? '1' : '0'};
+    opacity: ${({ isSelected }) => (isSelected ? '1' : '0')};
   }
 `;

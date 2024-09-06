@@ -16,6 +16,25 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
   }
+
+  .dropdown-fade-enter {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  .dropdown-fade-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+  }
+  .dropdown-fade-exit {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .dropdown-fade-exit-active {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+  }
 `;
 
 export default GlobalStyle;

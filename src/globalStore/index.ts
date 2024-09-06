@@ -1,9 +1,9 @@
-import { create } from 'zustand'
-import { IGlobalStore, IGlobalStoreProps } from './types'
+import { create } from 'zustand';
+import { IGlobalStore, IGlobalStoreProps } from './types';
 
 const initialData: IGlobalStoreProps = {
   isLoading: true,
-}
+};
 
 const useGlobalStore = create<IGlobalStore>()((set) => ({
   ...initialData,

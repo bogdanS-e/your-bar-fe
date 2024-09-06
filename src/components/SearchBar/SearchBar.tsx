@@ -25,8 +25,11 @@ const SearchBar = () => {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
         setIsFocused(false);
       }
     };

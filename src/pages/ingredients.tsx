@@ -6,13 +6,16 @@ interface IIngredientsProps {
   data: any;
 }
 
-const Ingredients = ({ data }: IIngredientsProps) => <IngredientsPage data={data} />
+const Ingredients = ({ data }: IIngredientsProps) => (
+  <IngredientsPage data={data} />
+);
 
 export default Ingredients;
 
 export const getStaticProps: GetStaticProps<IIngredientsProps> = async () => {
   const res = await fetch('https://dummyjson.com/products');
-  const data = {}; await res.json();
+  const data = {};
+  await res.json();
 
   return {
     props: {
@@ -21,4 +24,3 @@ export const getStaticProps: GetStaticProps<IIngredientsProps> = async () => {
     revalidate: 60,
   };
 };
-

@@ -1,5 +1,5 @@
-import styled, { keyframes } from "styled-components";
-import useGlobalStore from "../../globalStore";
+import styled, { keyframes } from 'styled-components';
+import useGlobalStore from '../../globalStore';
 
 const GlobalLoader = () => {
   const { isLoading } = useGlobalStore();
@@ -9,7 +9,7 @@ const GlobalLoader = () => {
       <Loader />
     </Container>
   );
-}
+};
 
 export default GlobalLoader;
 
@@ -29,9 +29,11 @@ const Container = styled.div<{ isLoading: boolean }>`
   justify-content: center;
   align-items: center;
   background: #fff;
-  transition: visibility 0.3s, opacity 0.3s;
-  visibility: ${({ isLoading }) => isLoading ? 'visible' : 'hidden'};
-  opacity: ${({ isLoading }) => isLoading ? '1' : '0'};
+  transition:
+    visibility 0.3s,
+    opacity 0.3s;
+  visibility: ${({ isLoading }) => (isLoading ? 'visible' : 'hidden')};
+  opacity: ${({ isLoading }) => (isLoading ? '1' : '0')};
 `;
 
 const Loader = styled.div`
@@ -41,16 +43,16 @@ const Loader = styled.div`
   filter: blur(4px) contrast(12);
 
   &:before {
-    content: "";
+    content: '';
     height: 40px;
     aspect-ratio: 3;
-    --c: #0000 64%,#000 66% 98%,#0000 101%;
+    --c: #0000 64%, #000 66% 98%, #0000 101%;
     background:
-      radial-gradient(35% 146% at 50% 159%,var(--c)) 0 0,
-      radial-gradient(35% 146% at 50% -59%,var(--c)) 100% 100%;
-    background-size: calc(200%/3) 50%;
+      radial-gradient(35% 146% at 50% 159%, var(--c)) 0 0,
+      radial-gradient(35% 146% at 50% -59%, var(--c)) 100% 100%;
+    background-size: calc(200% / 3) 50%;
     background-repeat: repeat-x;
-    -webkit-mask: repeating-linear-gradient(90deg,#000 0 10%,#0000 0 20%);
-    animation: ${wave} .8s infinite linear;
+    -webkit-mask: repeating-linear-gradient(90deg, #000 0 10%, #0000 0 20%);
+    animation: ${wave} 0.8s infinite linear;
   }
 `;
