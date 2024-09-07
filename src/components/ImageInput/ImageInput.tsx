@@ -126,8 +126,8 @@ const ImagePreview = styled.label<{
 }>`
   width: 100%;
   height: 100%;
-  background: #f0f0f0 url(${(props) => props.imageUrl}) center;
-  background-size: cover;
+  background: #f0f0f0 url(${(props) => props.imageUrl}) no-repeat center;
+  background-size: contain;
   border-radius: 10px;
   border: ${({ isDragOver }) =>
     isDragOver ? '2px solid #3f51b5' : '2px dashed #ccc'};

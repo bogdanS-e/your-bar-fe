@@ -15,7 +15,7 @@ const IconButton = ({
   onClick,
 }: IIconButtonProps) => {
   return (
-    <Button size={size} className={className} onClick={onClick}>
+    <Button size={size} className={className} onClick={onClick} type='button'>
       {children}
     </Button>
   );

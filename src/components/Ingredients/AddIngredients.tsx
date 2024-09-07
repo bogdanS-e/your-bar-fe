@@ -1,5 +1,5 @@
 import Modal from 'components/Modal';
-import { useFormik, Field, ErrorMessage } from 'formik';
+import { useFormik } from 'formik';
 import { useState } from 'react';
 import { z, ZodType } from 'zod';
 import { toFormikValidate } from 'zod-formik-adapter';
@@ -8,13 +8,9 @@ import AddTags from 'components/Tag/AddTags';
 import Input from 'components/Input';
 import styled from 'styled-components';
 import ImageInput from 'components/ImageInput';
-
-interface IIngredientFormValues {
-  name: string;
-  description: string;
-  tags: IngredientTag[];
-  image?: File | null;
-}
+import Textarea from 'components/Textarea';
+import Button from 'components/Button/Button';
+import useCreateIngredient, { IIngredientFormValues } from './useCreateIngredient';
 
 // Zod schema definition
 const ingredientSchema: ZodType<IIngredientFormValues> = z.object({
@@ -40,7 +36,7 @@ const ingredientSchema: ZodType<IIngredientFormValues> = z.object({
 
 const AddIngredients = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedTags, setSelectedTags] = useState<IngredientTag[]>([]);
+  const createIngerientMutation = useCreateIngredient();
 
   const {
     handleBlur,
@@ -57,9 +53,10 @@ const AddIngredients = () => {
       image: null,
     },
     validateOnChange: false,
+    validateOnBlur: false,
     validate: toFormikValidate(ingredientSchema),
     onSubmit: (values) => {
-      console.log(values);
+      createIngerientMutation.mutate(values);
     },
   });
 
@@ -70,7 +67,6 @@ const AddIngredients = () => {
   const open = () => {
     setIsOpen(true);
   };
-  console.log(errors);
 
   return (
     <>
@@ -80,54 +76,61 @@ const AddIngredients = () => {
         <Form onSubmit={handleSubmit}>
           <NameWrapper>
             <div>
-              <Input
-                label="Ingredient name"
-                name="name"
-                value={values.name}
-                onChange={handleChange}
-              />
-              <StyledAddTags
-                allTags={Object.values(IngredientTag).filter(
-                  (value) => typeof value === 'number'
+              <div>
+                <Input
+                  label="Ingredient name"
+                  name="name"
+                  value={values.name}
+                  onChange={handleChange}
+                />
+
+                {errors?.name && (
+                  <ErrorText>{errors.name}</ErrorText>
                 )}
-                selectedTags={values.tags}
-                onChange={(selectedOptions) => {
-                  setFieldValue('tags', selectedOptions);
-                }}
-                isIngredient
-              />
+              </div>
+
+              <div>
+                <StyledAddTags
+                  allTags={Object.values(IngredientTag).filter(
+                    (value) => typeof value === 'number'
+                  )}
+                  selectedTags={values.tags}
+                  onChange={(selectedOptions) => {
+                    setFieldValue('tags', selectedOptions);
+                  }}
+                  isIngredient
+                />
+
+                {errors?.tags && (
+                  <ErrorText>{errors.tags}</ErrorText>
+                )}
+              </div>
             </div>
-            <ImageInput onImageChange={() => {}} />
+            <div>
+              <ImageInput onImageChange={(file) => setFieldValue('image', file)} />
+
+              {errors?.image && (
+                <ErrorText>{errors.image}</ErrorText>
+              )}
+            </div>
           </NameWrapper>
 
-          {/* <div>
-            <label htmlFor="image">Thumbnail</label>
-            <input
-              type="file"
-              id="image"
-              name="image"
-              accept="image/*"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                const file = event.currentTarget.files
-                  ? event.currentTarget.files[0]
-                  : null;
-                setFieldValue('image', file);
-              }}
-            />
-          </div> */}
+          <StyledTextarea
+            rows={10}
+            id="description"
+            name="description"
+            placeholder="Enter the ingredient description..."
+            value={values.description}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          {errors?.description && (
+            <ErrorText>{errors.description}</ErrorText>
+          )}
 
-          <div>
-            <textarea
-              id="description"
-              name="description"
-              placeholder="Description..."
-              value={values.description}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-          </div>
-
-          <button type="submit">Submit</button>
+          <ActionWrapper>
+            <Button type="submit">Submit</Button>
+          </ActionWrapper>
         </Form>
       </Modal>
     </>
@@ -135,6 +138,22 @@ const AddIngredients = () => {
 };
 
 export default AddIngredients;
+
+const ErrorText = styled.small`
+  font-size: 0.625rem;
+  color: red;
+  display: block;
+`;
+
+const ActionWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+`;
+
+const StyledTextarea = styled(Textarea)`
+  margin-top: 10px;
+`;
 
 const NameWrapper = styled.div`
   display: flex;
@@ -148,7 +167,7 @@ const NameWrapper = styled.div`
 `;
 
 const StyledAddTags = styled(AddTags)`
-  margin: 10px 0;
+  margin-top: 10px;
   flex-wrap: wrap;
 `;
 
