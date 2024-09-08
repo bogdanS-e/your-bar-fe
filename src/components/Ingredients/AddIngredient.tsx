@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import { useState } from 'react';
 import { z, ZodType } from 'zod';
 import { toFormikValidate } from 'zod-formik-adapter';
-import { IngredientTag } from '../../types/ingredient';
+import { ingredientTagInfo } from '../../types/ingredient';
 import AddTags from 'components/Tag/AddTags';
 import Input from 'components/Input';
 import styled from 'styled-components';
@@ -116,9 +116,7 @@ const AddIngredient = () => {
 
               <div>
                 <StyledAddTags
-                  allTags={Object.values(IngredientTag).filter(
-                    (value) => typeof value === 'number'
-                  )}
+                  allTags={Object.values(ingredientTagInfo).map(({ key }) => key)}
                   selectedTags={values.tags}
                   onChange={(selectedOptions) => {
                     setFieldValue('tags', selectedOptions);

@@ -1,7 +1,10 @@
 import Filter from 'components/Filter';
 import Head from 'next/head';
 import styled from 'styled-components';
-import { IIngredient, IngredientTag } from 'types/ingredient';
+import {
+  IIngredient,
+  ingredientTagInfo,
+} from 'types/ingredient';
 import { useState } from 'react';
 import AddIngredients from './AddIngredient';
 import IngredientsList from './IngredientsList';
@@ -10,43 +13,7 @@ interface IIngredientsProps {
   initialData: IIngredient[];
 }
 
-const ingrediensFilter = [
-  {
-    image: '/images/beverages.png',
-    title: 'Bevarages',
-    key: IngredientTag.Beverages,
-  },
-  {
-    image: '/images/soft.png',
-    title: 'Soft alcohol',
-    key: IngredientTag.Soft,
-  },
-  {
-    image: '/images/strong.png',
-    title: 'Strong alcohol',
-    key: IngredientTag.Strong,
-  },
-  {
-    image: '/images/syrup.png',
-    title: 'Syrup',
-    key: IngredientTag.Syrup,
-  },
-  {
-    image: '/images/fruits.png',
-    title: 'Fruit',
-    key: IngredientTag.Fruit,
-  },
-  {
-    image: '/images/juice.png',
-    title: 'Juice',
-    key: IngredientTag.Juice,
-  },
-  {
-    image: '/images/other.png',
-    title: 'Other',
-    key: IngredientTag.Other,
-  },
-];
+const ingrediensFilter = Object.values(ingredientTagInfo);
 
 const IngredientsPage = ({ initialData }: IIngredientsProps) => {
   const [selected, setSelected] = useState(
