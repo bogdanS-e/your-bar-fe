@@ -25,7 +25,7 @@ const roboto = Roboto({
 const Layout = ({ children }: ILayoutProps) => {
   const router = useRouter();
   const { stopLoading } = useGlobalStore();
-  
+
   // prepare global data
   const query1 = useIngredients();
   const [query2] = useQueries({
@@ -134,7 +134,7 @@ const Nav = styled.nav`
   margin-right: 25px;
 `;
 
-const StyledIconButton = styled(IconButton) <{ isActive: boolean }>`
+const StyledIconButton = styled(IconButton)<{ isActive: boolean }>`
   width: 50px;
   height: 50px;
   color: ${(props) => (props.isActive ? '#909022' : 'inherit')};

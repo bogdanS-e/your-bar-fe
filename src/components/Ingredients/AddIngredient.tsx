@@ -70,9 +70,9 @@ const AddIngredient = () => {
         },
         error: {
           render: ({ data }) => getAxiosError(data),
-        }
+        },
       }
-    )
+    );
   };
 
   const {
@@ -94,8 +94,6 @@ const AddIngredient = () => {
     validate: toFormikValidate(ingredientSchema),
     onSubmit: onCreate,
   });
-
-
 
   return (
     <>

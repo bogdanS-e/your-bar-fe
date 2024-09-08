@@ -27,22 +27,22 @@ const ingrediensFilter = [
     key: IngredientTag.Strong,
   },
   {
-    image: '/images/strong.png',
+    image: '/images/syrup.png',
     title: 'Syrup',
     key: IngredientTag.Syrup,
   },
   {
-    image: '/images/strong.png',
+    image: '/images/fruits.png',
     title: 'Fruit',
     key: IngredientTag.Fruit,
   },
   {
-    image: '/images/strong.png',
+    image: '/images/juice.png',
     title: 'Juice',
     key: IngredientTag.Juice,
   },
   {
-    image: '/images/strong.png',
+    image: '/images/other.png',
     title: 'Other',
     key: IngredientTag.Other,
   },
@@ -75,7 +75,7 @@ const IngredientsPage = ({ initialData }: IIngredientsProps) => {
 
 export default IngredientsPage;
 
-const Main = styled.main`
+const Main = styled.div`
   margin: 20px 0;
 `;
 

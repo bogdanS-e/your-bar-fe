@@ -6,7 +6,7 @@ import IngredientsPage from 'components/Ingredients';
 import { getIngredients } from 'components/Ingredients/useIngredients';
 
 interface IIngredientsProps {
-  initialData: IIngredient[] ;
+  initialData: IIngredient[];
 }
 
 const Ingredients = ({ initialData }: IIngredientsProps) => (
@@ -16,7 +16,7 @@ const Ingredients = ({ initialData }: IIngredientsProps) => (
 export default Ingredients;
 
 export const getStaticProps: GetStaticProps<IIngredientsProps> = async () => {
-  const ingredients = await getIngredients()
+  const ingredients = await getIngredients();
 
   return {
     props: {

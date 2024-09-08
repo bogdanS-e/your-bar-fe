@@ -25,11 +25,15 @@ const submitIngredient = async ({
     formData.append('image', image);
   }
 
-  const { data } = await axiosInstance.post<IIngredientFormValues>('/add-ingredient', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
+  const { data } = await axiosInstance.post<IIngredientFormValues>(
+    '/add-ingredient',
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     }
-  });
+  );
 
   return data;
 };

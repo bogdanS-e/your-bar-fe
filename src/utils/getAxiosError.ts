@@ -1,5 +1,5 @@
-import { AxiosError } from "axios";
-import { IResError } from "../types/common";
+import { AxiosError } from 'axios';
+import { IResError } from '../types/common';
 
 const getAxiosError = (error: AxiosError<IResError>) => {
   let errorMessage = 'Something went wrong';
@@ -9,6 +9,6 @@ const getAxiosError = (error: AxiosError<IResError>) => {
   }
 
   return errorMessage;
-}
+};
 
 export default getAxiosError;
