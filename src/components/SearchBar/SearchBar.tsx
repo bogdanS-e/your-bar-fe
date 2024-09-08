@@ -120,7 +120,7 @@ const animation = () => css`
 
 const StyledIconButton = styled(IconButton)`
   svg {
-    fill: none!important;
+    fill: none !important;
   }
 `;
 

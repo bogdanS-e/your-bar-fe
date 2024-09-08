@@ -9,6 +9,10 @@ import GlobalLoader from 'components/GlobalLoader';
 import { useQueries } from '@tanstack/react-query';
 import useGlobalStore from '../../globalStore';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import useIngredients from 'components/Ingredients/useIngredients';
+
 interface ILayoutProps {
   children: ReactNode;
 }
@@ -21,14 +25,11 @@ const roboto = Roboto({
 const Layout = ({ children }: ILayoutProps) => {
   const router = useRouter();
   const { stopLoading } = useGlobalStore();
-
+  
   // prepare global data
-  const [query1, query2] = useQueries({
+  const query1 = useIngredients();
+  const [query2] = useQueries({
     queries: [
-      {
-        queryKey: ['ingredients'],
-        queryFn: async () => await fetch('https://dummyjson.com/products'),
-      },
       {
         queryKey: ['cooktails'],
         queryFn: async () => await fetch('https://dummyjson.com/products'),
@@ -119,6 +120,7 @@ const Layout = ({ children }: ILayoutProps) => {
         <div id="modal-root" />
       </Page>
       <GlobalLoader />
+      <ToastContainer position="bottom-center" hideProgressBar />
     </>
   );
 };
@@ -132,7 +134,7 @@ const Nav = styled.nav`
   margin-right: 25px;
 `;
 
-const StyledIconButton = styled(IconButton)<{ isActive: boolean }>`
+const StyledIconButton = styled(IconButton) <{ isActive: boolean }>`
   width: 50px;
   height: 50px;
   color: ${(props) => (props.isActive ? '#909022' : 'inherit')};

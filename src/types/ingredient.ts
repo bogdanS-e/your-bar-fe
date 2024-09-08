@@ -45,5 +45,9 @@ export const ingredientTagInfo: Record<IngredientTag, IIngredientTagInfo> = {
 };
 
 export interface IIngredient {
+  _id: string;
+  nameEn: string;
+  descriptionEn: string;
+  image: string | null;
   tags: IngredientTag[];
 }

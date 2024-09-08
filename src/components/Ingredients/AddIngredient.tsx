@@ -10,14 +10,20 @@ import styled from 'styled-components';
 import ImageInput from 'components/ImageInput';
 import Textarea from 'components/Textarea';
 import Button from 'components/Button/Button';
-import useCreateIngredient, { IIngredientFormValues } from './useCreateIngredient';
+import useCreateIngredient, {
+  IIngredientFormValues,
+} from './useCreateIngredient';
+import { toast } from 'react-toastify';
+import { AxiosError } from 'axios';
+import { IResError } from 'types/common';
+import getAxiosError from 'utils/getAxiosError';
 
 // Zod schema definition
 const ingredientSchema: ZodType<IIngredientFormValues> = z.object({
   name: z
     .string()
     .min(1, 'Ingredient name is required')
-    .max(100, 'Name too long'),
+    .max(30, 'Name too long'),
   description: z
     .string()
     .min(1, 'Description is required')
@@ -34,9 +40,40 @@ const ingredientSchema: ZodType<IIngredientFormValues> = z.object({
     .nullable(),
 });
 
-const AddIngredients = () => {
+const AddIngredient = () => {
   const [isOpen, setIsOpen] = useState(false);
   const createIngerientMutation = useCreateIngredient();
+
+  const close = () => {
+    setIsOpen(false);
+  };
+
+  const open = () => {
+    setIsOpen(true);
+  };
+
+  const onCreate = (values: IIngredientFormValues) => {
+    toast.promise<IIngredientFormValues, AxiosError<IResError>>(
+      async () => await createIngerientMutation.mutateAsync(values),
+      {
+        pending: 'Creating a new ingredient',
+        success: {
+          render: ({ data: toastData }) => {
+            close();
+
+            return (
+              <span>
+                <b>{toastData.name}</b> ingredient has been added 👌
+              </span>
+            );
+          },
+        },
+        error: {
+          render: ({ data }) => getAxiosError(data),
+        }
+      }
+    )
+  };
 
   const {
     handleBlur,
@@ -55,18 +92,10 @@ const AddIngredients = () => {
     validateOnChange: false,
     validateOnBlur: false,
     validate: toFormikValidate(ingredientSchema),
-    onSubmit: (values) => {
-      createIngerientMutation.mutate(values);
-    },
+    onSubmit: onCreate,
   });
 
-  const close = () => {
-    setIsOpen(false);
-  };
 
-  const open = () => {
-    setIsOpen(true);
-  };
 
   return (
     <>
@@ -84,9 +113,7 @@ const AddIngredients = () => {
                   onChange={handleChange}
                 />
 
-                {errors?.name && (
-                  <ErrorText>{errors.name}</ErrorText>
-                )}
+                {errors?.name && <ErrorText>{errors.name}</ErrorText>}
               </div>
 
               <div>
@@ -101,17 +128,15 @@ const AddIngredients = () => {
                   isIngredient
                 />
 
-                {errors?.tags && (
-                  <ErrorText>{errors.tags}</ErrorText>
-                )}
+                {errors?.tags && <ErrorText>{errors.tags}</ErrorText>}
               </div>
             </div>
             <div>
-              <ImageInput onImageChange={(file) => setFieldValue('image', file)} />
+              <ImageInput
+                onImageChange={(file) => setFieldValue('image', file)}
+              />
 
-              {errors?.image && (
-                <ErrorText>{errors.image}</ErrorText>
-              )}
+              {errors?.image && <ErrorText>{errors.image}</ErrorText>}
             </div>
           </NameWrapper>
 
@@ -124,12 +149,12 @@ const AddIngredients = () => {
             onChange={handleChange}
             onBlur={handleBlur}
           />
-          {errors?.description && (
-            <ErrorText>{errors.description}</ErrorText>
-          )}
+          {errors?.description && <ErrorText>{errors.description}</ErrorText>}
 
           <ActionWrapper>
-            <Button type="submit">Submit</Button>
+            <Button type="submit" disabled={createIngerientMutation.isPending}>
+              Submit
+            </Button>
           </ActionWrapper>
         </Form>
       </Modal>
@@ -137,7 +162,7 @@ const AddIngredients = () => {
   );
 };
 
-export default AddIngredients;
+export default AddIngredient;
 
 const ErrorText = styled.small`
   font-size: 0.625rem;

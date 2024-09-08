@@ -1,26 +1,27 @@
 import { GetStaticProps } from 'next';
 
+import { IIngredient } from 'types/ingredient';
+
 import IngredientsPage from 'components/Ingredients';
+import { getIngredients } from 'components/Ingredients/useIngredients';
 
 interface IIngredientsProps {
-  data: any;
+  initialData: IIngredient[] ;
 }
 
-const Ingredients = ({ data }: IIngredientsProps) => (
-  <IngredientsPage data={data} />
+const Ingredients = ({ initialData }: IIngredientsProps) => (
+  <IngredientsPage initialData={initialData} />
 );
 
 export default Ingredients;
 
 export const getStaticProps: GetStaticProps<IIngredientsProps> = async () => {
-  const res = await fetch('https://dummyjson.com/products');
-  const data = {};
-  await res.json();
+  const ingredients = await getIngredients()
 
   return {
     props: {
-      data,
+      initialData: ingredients,
     },
-    revalidate: 60,
+    revalidate: 24 * 60 * 60 * 1000, // 1 day
   };
 };

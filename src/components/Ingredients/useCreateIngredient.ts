@@ -1,5 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
-import { IngredientTag } from "../../types/ingredient";
+import { useMutation } from '@tanstack/react-query';
+import { IngredientTag } from '../../types/ingredient';
+import axiosInstance from 'utils/axiosInstance';
 
 export interface IIngredientFormValues {
   name: string;
@@ -8,7 +9,12 @@ export interface IIngredientFormValues {
   image?: File | null;
 }
 
-const submitIngredient = async ({ image, name, description, tags }: IIngredientFormValues) => {
+const submitIngredient = async ({
+  image,
+  name,
+  description,
+  tags,
+}: IIngredientFormValues) => {
   const formData = new FormData();
 
   formData.append('name', name);
@@ -19,16 +25,13 @@ const submitIngredient = async ({ image, name, description, tags }: IIngredientF
     formData.append('image', image);
   }
 
-  const response = await fetch('http://localhost:3001/v1/add-ingredient', {
-    method: 'POST',
-    body: formData,
+  const { data } = await axiosInstance.post<IIngredientFormValues>('/add-ingredient', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    }
   });
 
-  if (!response.ok) {
-    throw new Error('Something went wrong');
-  }
-
-  return response.json();
+  return data;
 };
 
 const useCreateIngredient = () => {

@@ -1,12 +1,13 @@
 import Filter from 'components/Filter';
 import Head from 'next/head';
 import styled from 'styled-components';
-import { IngredientTag } from '../../types/ingredient';
+import { IIngredient, IngredientTag } from 'types/ingredient';
 import { useState } from 'react';
-import AddIngredients from './AddIngredients';
+import AddIngredients from './AddIngredient';
+import IngredientsList from './IngredientsList';
 
 interface IIngredientsProps {
-  data: any;
+  initialData: IIngredient[];
 }
 
 const ingrediensFilter = [
@@ -47,7 +48,7 @@ const ingrediensFilter = [
   },
 ];
 
-const IngredientsPage = ({ data }: IIngredientsProps) => {
+const IngredientsPage = ({ initialData }: IIngredientsProps) => {
   const [selected, setSelected] = useState(
     ingrediensFilter.map(({ key }) => key)
   );
@@ -66,6 +67,7 @@ const IngredientsPage = ({ data }: IIngredientsProps) => {
           onChange={setSelected}
         />
         <AddIngredients />
+        <IngredientsList initialData={initialData} />
       </Main>
     </>
   );

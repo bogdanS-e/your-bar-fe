@@ -1,11 +1,11 @@
-import { ReactNode } from "react";
-import styled from "styled-components";
+import { ReactNode } from 'react';
+import styled from 'styled-components';
 
 interface IButtonProps {
   children: ReactNode;
   onClick?: () => void;
   disabled?: boolean;
-  type?: "button" | "submit" | "reset";
+  type?: 'button' | 'submit' | 'reset';
 }
 
 const Button = ({ children, type, onClick, disabled }: IButtonProps) => {
@@ -14,7 +14,7 @@ const Button = ({ children, type, onClick, disabled }: IButtonProps) => {
       {children}
     </StyledButton>
   );
-}
+};
 
 export default Button;
 
@@ -29,7 +29,10 @@ const StyledButton = styled.button`
   background-color: transparent;
   color: #1976d2;
   cursor: pointer;
-  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.3s,
+    border-color 0.3s,
+    color 0.3s;
 
   &:hover {
     background-color: rgba(25, 118, 210, 0.04);
@@ -39,6 +42,6 @@ const StyledButton = styled.button`
   &:disabled {
     color: rgba(25, 118, 210, 0.5);
     border-color: rgba(25, 118, 210, 0.5);
-    cursor: not-allowed;
+    pointer-events: none;
   }
-`
+`;

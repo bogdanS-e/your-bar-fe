@@ -8,9 +8,7 @@ interface ITextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
 }
 
 const Textarea = (props: ITextareaProps) => {
-  return (
-    <StyledTextarea {...props} />
-  );
+  return <StyledTextarea {...props} />;
 };
 
 export default Textarea;
@@ -31,4 +29,3 @@ const StyledTextarea = styled.textarea`
     border-color: #3f51b5;
   }
 `;
-
