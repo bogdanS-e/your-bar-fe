@@ -6,7 +6,7 @@ import {
   ingredientTagInfo,
 } from 'types/ingredient';
 import { useState } from 'react';
-import AddIngredients from './AddIngredient';
+import AddIngredient from './AddIngredient';
 import IngredientsList from './IngredientsList';
 
 interface IIngredientsProps {
@@ -16,7 +16,7 @@ interface IIngredientsProps {
 const ingrediensFilter = Object.values(ingredientTagInfo);
 
 const IngredientsPage = ({ initialData }: IIngredientsProps) => {
-  const [selected, setSelected] = useState(
+  const [selectedTags, setSelectedTags] = useState(
     ingrediensFilter.map(({ key }) => key)
   );
 
@@ -30,11 +30,10 @@ const IngredientsPage = ({ initialData }: IIngredientsProps) => {
         <Title>Ingredients</Title>
         <Filter
           items={ingrediensFilter}
-          selected={selected}
-          onChange={setSelected}
+          selectedTags={selectedTags}
+          onChange={setSelectedTags}
         />
-        <AddIngredients />
-        <IngredientsList initialData={initialData} />
+        <IngredientsList selectedTags={selectedTags} initialData={initialData} />
       </Main>
     </>
   );

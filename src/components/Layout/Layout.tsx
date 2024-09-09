@@ -132,6 +132,9 @@ const Nav = styled.nav`
   background-color: #dacdcd;
   border-radius: 0 10px 10px 0;
   margin-right: 25px;
+  max-height: calc(100vh - 40px);
+  position: sticky;
+  top: 20px;
 `;
 
 const StyledIconButton = styled(IconButton)<{ isActive: boolean }>`

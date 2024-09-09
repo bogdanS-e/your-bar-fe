@@ -8,23 +8,23 @@ export interface IFilterItem<T> {
 
 interface IFilterProps<T> {
   items: IFilterItem<T>[];
-  selected: T[];
+  selectedTags: T[];
   onChange: (selectedItems: T[]) => void;
 }
 
 const Filter = <T extends string | number>({
   items,
-  selected,
+  selectedTags,
   onChange,
 }: IFilterProps<T>) => {
   const handleClick = (key: T) => {
-    if (selected.includes(key)) {
-      onChange(selected.filter((value) => value !== key));
+    if (selectedTags.includes(key)) {
+      onChange(selectedTags.filter((value) => value !== key));
 
       return;
     }
 
-    onChange([...selected, key]);
+    onChange([...selectedTags, key]);
   };
 
   return (
@@ -32,7 +32,7 @@ const Filter = <T extends string | number>({
       {items.map(({ title, key, image }) => (
         <Item key={key} onClick={() => handleClick(key)}>
           <Image image={image}>
-            <Selected isSelected={selected.includes(key)} />
+            <Selected isSelected={selectedTags.includes(key)} />
           </Image>
           {title}
         </Item>
