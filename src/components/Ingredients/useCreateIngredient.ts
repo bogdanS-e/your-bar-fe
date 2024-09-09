@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { IngredientTag } from '../../types/ingredient';
 import axiosInstance from 'utils/axiosInstance';
 
@@ -39,8 +39,15 @@ const submitIngredient = async ({
 };
 
 const useCreateIngredient = () => {
+  const queryClient = useQueryClient()
+  
   return useMutation({
     mutationFn: submitIngredient,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['ingredients']
+      })
+    }
   });
 };
 

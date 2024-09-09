@@ -53,7 +53,7 @@ const AddIngredient = () => {
   };
 
   const onCreate = (values: IIngredientFormValues) => {
-    toast.promise<IIngredientFormValues, AxiosError<IResError>>(
+    return toast.promise<IIngredientFormValues, AxiosError<IResError>>(
       async () => await createIngerientMutation.mutateAsync(values),
       {
         pending: 'Creating a new ingredient',
@@ -82,6 +82,7 @@ const AddIngredient = () => {
     setFieldValue,
     values,
     errors,
+    resetForm,
   } = useFormik<IIngredientFormValues>({
     initialValues: {
       name: '',
@@ -92,7 +93,10 @@ const AddIngredient = () => {
     validateOnChange: false,
     validateOnBlur: false,
     validate: toFormikValidate(ingredientSchema),
-    onSubmit: onCreate,
+    onSubmit: async (values) => {
+      await onCreate(values);
+      resetForm();
+    },
   });
 
   return (
