@@ -1,8 +1,8 @@
-import { AddCocktailModal } from "components/Cocktail";
-import Dropdown from "components/Dropdown";
-import IconButton from "components/IconButton";
-import { AddIngredientModal } from "components/Ingredient";
-import { useState } from "react";
+import { AddCocktailModal } from 'components/Cocktail';
+import Dropdown from 'components/Dropdown';
+import IconButton from 'components/IconButton';
+import { AddIngredientModal } from 'components/Ingredient';
+import { useState } from 'react';
 
 type TTypeToAdd = 'ingredient' | 'cocktail';
 
@@ -18,15 +18,13 @@ const AddNew = () => {
     }
 
     setIsAddCocktailOpen(true);
-  }
+  };
 
   return (
     <>
       <Dropdown
         trigger={
-          <IconButton
-            size={50}
-          >
+          <IconButton size={50}>
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -53,7 +51,7 @@ const AddNew = () => {
         }
         renderItem={(type) => `Add ${type}`}
         items={['ingredient', 'cocktail']}
-        position='top'
+        position="top"
         onOptionClick={handleOptionClick}
       />
       <AddIngredientModal
@@ -65,7 +63,7 @@ const AddNew = () => {
         onClose={() => setIsAddCocktailOpen(false)}
       />
     </>
-  )
-}
+  );
+};
 
 export default AddNew;

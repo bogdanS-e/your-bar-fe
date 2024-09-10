@@ -21,7 +21,10 @@ const Input = ({ label, value, placeholder, ...rest }: IInputProps) => {
         placeholder={placeholder}
         {...rest}
       />
-      <StyledLabel htmlFor={id} isActive={!!placeholder || isFocused || !!value}>
+      <StyledLabel
+        htmlFor={id}
+        isActive={!!placeholder || isFocused || !!value}
+      >
         {label}
       </StyledLabel>
     </InputContainer>

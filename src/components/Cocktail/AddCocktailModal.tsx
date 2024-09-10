@@ -22,21 +22,22 @@ interface IAddIngredientModalProps {
 }
 
 const AddCocktailModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
-
-  const { values, errors, handleChange, handleBlur, setFieldValue } = useFormik({
-    initialValues: {
-      name: '',
-      description: '',
-      recipe: '',
-      tags: [],
-      image: null,
-    },
-    onSubmit: () => { },
-  });
+  const { values, errors, handleChange, handleBlur, setFieldValue } = useFormik(
+    {
+      initialValues: {
+        name: '',
+        description: '',
+        recipe: '',
+        tags: [],
+        image: null,
+      },
+      onSubmit: () => {},
+    }
+  );
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Add new cocktail">
-      <Form >
+      <Form>
         <NameWrapper>
           <div>
             <div>
@@ -99,10 +100,12 @@ const AddCocktailModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
           {errors?.recipe && <ErrorText>{errors.recipe}</ErrorText>}
         </div>
 
-            <AddIngredients />
+        <AddIngredients />
 
         <ActionWrapper>
-          <Button type="submit"/*  disabled={createIngerientMutation.isPending} */>
+          <Button
+            type="submit" /*  disabled={createIngerientMutation.isPending} */
+          >
             Submit
           </Button>
         </ActionWrapper>

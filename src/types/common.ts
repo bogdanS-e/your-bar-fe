@@ -1,5 +1,5 @@
-import { CocktailTag } from "./cocktail";
-import { IngredientTag } from "./ingredient";
+import { CocktailTag } from './cocktail';
+import { IngredientTag } from './ingredient';
 
 export interface IResError {
   error: string;

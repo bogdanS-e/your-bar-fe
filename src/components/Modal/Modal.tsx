@@ -9,7 +9,13 @@ interface IModalProps {
   title?: string;
   className?: string;
 }
-const Modal = ({ isOpen, onClose, children, title, className }: IModalProps) => {
+const Modal = ({
+  isOpen,
+  onClose,
+  children,
+  title,
+  className,
+}: IModalProps) => {
   if (typeof window === 'undefined' || !isOpen) return null;
 
   return createPortal(

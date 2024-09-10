@@ -77,7 +77,7 @@ const DropdownTrigger = styled.div`
   cursor: pointer;
 `;
 
-const DropdownMenu = styled.div<{position: TPosition}>`
+const DropdownMenu = styled.div<{ position: TPosition }>`
   position: absolute;
   top: 100%;
   left: 0;
@@ -89,10 +89,12 @@ const DropdownMenu = styled.div<{position: TPosition}>`
   border-radius: 10px;
   overflow: hidden;
 
-  ${({position}) => position === 'top' && css`
-    bottom: 100%;
-    top: unset;
-  `}
+  ${({ position }) =>
+    position === 'top' &&
+    css`
+      bottom: 100%;
+      top: unset;
+    `}
 `;
 
 const DropdownItem = styled.div`

@@ -1,12 +1,10 @@
-import { useState } from "react";
-import CocktailIngredient from "./CocktailIngredient";
+import { useState } from 'react';
+import CocktailIngredient from './CocktailIngredient';
 
 const AddIngredients = () => {
   const [ingredients, setIngredients] = useState([]);
-  
-  return (
-    <CocktailIngredient />
-  )
-}
+
+  return <CocktailIngredient />;
+};
 
 export default AddIngredients;

@@ -1,4 +1,8 @@
-import { IIngredient, IngredientTag, ingredientTagInfo } from 'types/ingredient';
+import {
+  IIngredient,
+  IngredientTag,
+  ingredientTagInfo,
+} from 'types/ingredient';
 import useIngredients from './useIngredients';
 import IngredientCard from './IngredientCard';
 import styled from 'styled-components';
@@ -10,7 +14,10 @@ interface IIngredientsListProps {
   selectedTags: IngredientTag[];
 }
 
-const IngredientsList = ({ initialData, selectedTags }: IIngredientsListProps) => {
+const IngredientsList = ({
+  initialData,
+  selectedTags,
+}: IIngredientsListProps) => {
   const { data: queryData } = useIngredients();
   const data = queryData || initialData;
 
@@ -30,7 +37,6 @@ const IngredientsList = ({ initialData, selectedTags }: IIngredientsListProps) =
 
         if (!mapped) {
           throw new Error(`Unknown tag ${tag}`);
-
         }
 
         mapped.push(ingredient);
@@ -54,36 +60,30 @@ const IngredientsList = ({ initialData, selectedTags }: IIngredientsListProps) =
           timeout={{ enter: 1000, exit: 300 }}
           classNames="article"
         >
-          <Article >
+          <Article>
             <Title>{ingredientTagInfo[tag].title}</Title>
             <IngredientsWrapper>
-              {ingredients.map(({ _id, nameEn, descriptionEn, image, tags }) => (
-                <StyledIngredientCard
-                  key={_id}
-                  name={nameEn}
-                  description={descriptionEn}
-                  image={image}
-                  tags={tags}
-                />
-              ))}
+              {ingredients.map(
+                ({ _id, nameEn, descriptionEn, image, tags }) => (
+                  <StyledIngredientCard
+                    key={_id}
+                    name={nameEn}
+                    description={descriptionEn}
+                    image={image}
+                    tags={tags}
+                  />
+                )
+              )}
             </IngredientsWrapper>
           </Article>
         </CSSTransition>
       );
     }
 
-    return (
-      <TransitionGroup component={null}>
-        {articles}
-      </TransitionGroup>
-    );
-  }
+    return <TransitionGroup component={null}>{articles}</TransitionGroup>;
+  };
 
-  return (
-    <Container>
-      {renderArticles()}
-    </Container>
-  );
+  return <Container>{renderArticles()}</Container>;
 };
 
 export default IngredientsList;
@@ -107,9 +107,7 @@ const Title = styled.h2`
   margin: 40px 0 20px;
 `;
 
-const Container = styled.section`
-  
-`;
+const Container = styled.section``;
 
 const StyledIngredientCard = styled(IngredientCard)`
   width: calc((100% - 4 * ${gap}) / 5);

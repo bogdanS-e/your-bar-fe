@@ -16,7 +16,6 @@ const TagButton = <T extends IngredientTag | CocktailTag>({
   isIngredient,
   onRemove,
 }: ITagProps<T>) => {
-
   const { color, title } = useMemo(() => {
     if (isIngredient) {
       return ingredientTagInfo[tag as IngredientTag];

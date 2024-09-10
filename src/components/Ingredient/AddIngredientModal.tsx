@@ -44,7 +44,7 @@ const ingredientSchema: ZodType<IIngredientFormValues> = z.object({
     .nullable(),
 });
 
-const AddIngredientModal = ({isOpen, onClose }: IAddIngredientModalProps) => {
+const AddIngredientModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
   const createIngerientMutation = useCreateIngredient();
 
   const onCreate = (values: IIngredientFormValues) => {

@@ -119,9 +119,12 @@ const Layout = ({ children }: ILayoutProps) => {
           <AddNew />
         </Sidebar>
         <Main>
-          <SearchBar value={''} onChange={function (e: ChangeEvent<HTMLInputElement>): void {
-            throw new Error('Function not implemented.');
-          } } />
+          <SearchBar
+            value={''}
+            onChange={function (e: ChangeEvent<HTMLInputElement>): void {
+              throw new Error('Function not implemented.');
+            }}
+          />
           {children}
         </Main>
         <div id="modal-root" />
@@ -147,7 +150,7 @@ const Sidebar = styled.div`
   justify-content: space-between;
 `;
 
-const StyledIconButton = styled(IconButton) <{ isActive: boolean }>`
+const StyledIconButton = styled(IconButton)<{ isActive: boolean }>`
   width: 50px;
   height: 50px;
   color: ${(props) => (props.isActive ? '#909022' : 'inherit')};

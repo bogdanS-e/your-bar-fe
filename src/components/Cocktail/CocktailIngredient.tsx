@@ -1,10 +1,10 @@
-import useIngredients from "components/Ingredient/useIngredients";
-import Input from "components/Input";
-import Modal from "components/Modal";
-import SearchBar from "components/SearchBar";
-import TagButton from "components/Tag/TagButton";
-import { useMemo, useState } from "react";
-import styled from "styled-components";
+import useIngredients from 'components/Ingredient/useIngredients';
+import Input from 'components/Input';
+import Modal from 'components/Modal';
+import SearchBar from 'components/SearchBar';
+import TagButton from 'components/Tag/TagButton';
+import { useMemo, useState } from 'react';
+import styled from 'styled-components';
 
 const CocktailIngredient = () => {
   const { data: ingredients } = useIngredients();
@@ -18,7 +18,9 @@ const CocktailIngredient = () => {
 
     const search = searchValue.toLowerCase();
 
-    return ingredients.filter(({ nameEn }) => nameEn.toLowerCase().includes(search));
+    return ingredients.filter(({ nameEn }) =>
+      nameEn.toLowerCase().includes(search)
+    );
   }, [ingredients, searchValue]);
 
   if (!ingredients) {
@@ -30,7 +32,7 @@ const CocktailIngredient = () => {
       <StyledInput
         label="name"
         name="name"
-        value=''
+        value=""
         onChange={({ currentTarget }) => setSearchValue(currentTarget.value)}
         readOnly
         onClick={() => setIsModalOpen(true)}
@@ -51,9 +53,7 @@ const CocktailIngredient = () => {
             <Ingredient key={_id}>
               <Image image={image || ''} />
               <Content>
-                <Name>
-                  {nameEn}
-                </Name>
+                <Name>{nameEn}</Name>
                 <Tags>
                   {tags.map((tag) => (
                     <TagButton key={tag} tag={tag} isIngredient />
@@ -65,8 +65,8 @@ const CocktailIngredient = () => {
         </IngredientsWrapper>
       </StyledModal>
     </div>
-  )
-}
+  );
+};
 
 export default CocktailIngredient;
 
@@ -120,7 +120,3 @@ const Image = styled.span<{ image: string }>`
   background-size: contain;
   border-radius: 10px;
 `;
-
-
-
-

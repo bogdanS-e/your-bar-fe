@@ -1,4 +1,4 @@
-import { ITagInfo } from "./common";
+import { ITagInfo } from './common';
 
 export enum CocktailTag {
   NonAlcoholic,
@@ -7,7 +7,7 @@ export enum CocktailTag {
   Soft,
   MediumStrength,
   Shooter,
-  Custom
+  Custom,
 }
 
 export const cocktailTagInfo: Record<CocktailTag, ITagInfo<CocktailTag>> = {

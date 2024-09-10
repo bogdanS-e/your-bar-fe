@@ -1,10 +1,7 @@
 import Filter from 'components/Filter';
 import Head from 'next/head';
 import styled from 'styled-components';
-import {
-  IIngredient,
-  ingredientTagInfo,
-} from 'types/ingredient';
+import { IIngredient, ingredientTagInfo } from 'types/ingredient';
 import { useState } from 'react';
 import IngredientsList from './IngredientsList';
 
@@ -32,7 +29,10 @@ const IngredientsPage = ({ initialData }: IIngredientsProps) => {
           selectedTags={selectedTags}
           onChange={setSelectedTags}
         />
-        <IngredientsList selectedTags={selectedTags} initialData={initialData} />
+        <IngredientsList
+          selectedTags={selectedTags}
+          initialData={initialData}
+        />
       </Main>
     </>
   );

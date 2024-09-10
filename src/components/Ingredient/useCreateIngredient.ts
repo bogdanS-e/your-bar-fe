@@ -39,15 +39,15 @@ const submitIngredient = async ({
 };
 
 const useCreateIngredient = () => {
-  const queryClient = useQueryClient()
-  
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: submitIngredient,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['ingredients']
-      })
-    }
+        queryKey: ['ingredients'],
+      });
+    },
   });
 };
 
