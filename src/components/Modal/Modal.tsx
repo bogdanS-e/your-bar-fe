@@ -7,13 +7,14 @@ interface IModalProps {
   onClose: () => void;
   children: ReactNode;
   title?: string;
+  className?: string;
 }
-const Modal = ({ isOpen, onClose, children, title }: IModalProps) => {
+const Modal = ({ isOpen, onClose, children, title, className }: IModalProps) => {
   if (typeof window === 'undefined' || !isOpen) return null;
 
   return createPortal(
     <ModalOverlay onClick={onClose}>
-      <ModalContent onClick={(e) => e.stopPropagation()}>
+      <ModalContent className={className} onClick={(e) => e.stopPropagation()}>
         <ModalHeader>
           <h2>{title}</h2>
           <CloseButton onClick={onClose}>&times;</CloseButton>
@@ -46,6 +47,8 @@ const ModalContent = styled.div`
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   min-width: 500px;
   max-width: 90%;
+  max-height: 90dvh;
+  overflow-y: auto;
 `;
 
 const ModalHeader = styled.div`

@@ -2,8 +2,8 @@ import { GetStaticProps } from 'next';
 
 import { IIngredient } from 'types/ingredient';
 
-import IngredientsPage from 'components/Ingredients';
-import { getIngredients } from 'components/Ingredients/useIngredients';
+import IngredientsPage from 'components/Ingredient';
+import { getIngredients } from 'components/Ingredient/useIngredients';
 
 interface IIngredientsProps {
   initialData: IIngredient[];

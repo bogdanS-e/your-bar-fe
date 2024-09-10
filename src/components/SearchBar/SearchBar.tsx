@@ -2,15 +2,22 @@ import IconButton from 'components/IconButton';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
-const SearchBar = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+interface ISearchBarProps {
+  placeholder?: string;
+  value: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}
+
+const SearchBar = ({ placeholder, value, onChange }: ISearchBarProps) => {
   const [filteredItems, setFilteredItems] = useState<string[]>([]);
   const [isFocused, setIsFocused] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setSearchTerm(value);
+    //setSearchTerm(value);
+
+    return;
 
     if (value) {
       const matches = ['a', 'abc', 'abcs', 'erwer', 'afad'].filter((item) =>
@@ -24,7 +31,7 @@ const SearchBar = () => {
     setFilteredItems([]);
   };
 
-  useEffect(() => {
+  /* useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         wrapperRef.current &&
@@ -38,18 +45,18 @@ const SearchBar = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, []); */
 
   return (
     <SearchBarWrapper ref={wrapperRef}>
       <SearchInput
         type="text"
-        value={searchTerm}
-        onChange={handleSearch}
+        value={value}
+        onChange={onChange}
         onFocus={() => setIsFocused(true)}
       />
-      <PlaceholderWrapper hasValue={searchTerm.length > 0}>
-        Search for cooktails and ingredients...
+      <PlaceholderWrapper hasValue={value.length > 0}>
+        {placeholder || 'Search for cooktails and ingredients...'}
       </PlaceholderWrapper>
       <SearchIconWrapper>
         <StyledIconButton size={40}>
@@ -92,11 +99,11 @@ const SearchBar = () => {
           </svg>
         </StyledIconButton>
       </SearchIconWrapper>
-      <Dropdown show={isFocused && filteredItems.length > 0}>
+      {/* <Dropdown show={isFocused && filteredItems.length > 0}>
         {filteredItems.map((item, index) => (
           <DropdownItem key={index}>{item}</DropdownItem>
         ))}
-      </Dropdown>
+      </Dropdown> */}
     </SearchBarWrapper>
   );
 };

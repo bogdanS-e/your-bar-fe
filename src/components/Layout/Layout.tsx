@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from 'react';
+import { ChangeEvent, ReactNode, useEffect } from 'react';
 import { Roboto } from 'next/font/google';
 import Link from 'next/link';
 import styled from 'styled-components';
@@ -11,7 +11,7 @@ import useGlobalStore from '../../globalStore';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import useIngredients from 'components/Ingredients/useIngredients';
+import useIngredients from 'components/Ingredient/useIngredients';
 import Dropdown from 'components/Dropdown';
 import AddNew from 'components/AddNew';
 
@@ -119,7 +119,9 @@ const Layout = ({ children }: ILayoutProps) => {
           <AddNew />
         </Sidebar>
         <Main>
-          <SearchBar />
+          <SearchBar value={''} onChange={function (e: ChangeEvent<HTMLInputElement>): void {
+            throw new Error('Function not implemented.');
+          } } />
           {children}
         </Main>
         <div id="modal-root" />

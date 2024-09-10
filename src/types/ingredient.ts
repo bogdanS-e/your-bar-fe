@@ -1,3 +1,5 @@
+import { ITagInfo } from "./common";
+
 export enum IngredientTag {
   Beverages,
   Strong,
@@ -9,14 +11,7 @@ export enum IngredientTag {
   Custom,
 }
 
-interface IIngredientTagInfo {
-  color: string;
-  title: string;
-  image: string;
-  key: IngredientTag;
-}
-
-export const ingredientTagInfo: Record<IngredientTag, IIngredientTagInfo> = {
+export const ingredientTagInfo: Record<IngredientTag, ITagInfo<IngredientTag>> = {
   [IngredientTag.Beverages]: {
     color: '#ffab91bb',
     title: 'Beverages',

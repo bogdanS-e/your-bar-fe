@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import { IngredientTag, ingredientTagInfo } from '../../types/ingredient';
 import IconButton from 'components/IconButton';
+import { CocktailTag, cocktailTagInfo } from 'types/cocktail';
+import { ITagInfo } from 'types/common';
+import { useMemo } from 'react';
 
 interface ITagProps<T> {
   tag: T;
@@ -8,13 +11,19 @@ interface ITagProps<T> {
   onRemove?: (tag: T) => void;
 }
 
-const TagButton = <T extends IngredientTag>({
+const TagButton = <T extends IngredientTag | CocktailTag>({
   tag,
   isIngredient,
   onRemove,
 }: ITagProps<T>) => {
-  const tagInfo = ingredientTagInfo;
-  const { color, title } = tagInfo[tag];
+
+  const { color, title } = useMemo(() => {
+    if (isIngredient) {
+      return ingredientTagInfo[tag as IngredientTag];
+    }
+
+    return cocktailTagInfo[tag as CocktailTag];
+  }, [tag, isIngredient]);
 
   return (
     <Button color={color}>

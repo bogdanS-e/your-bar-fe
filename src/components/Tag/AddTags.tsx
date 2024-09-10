@@ -1,9 +1,10 @@
 import Dropdown from 'components/Dropdown';
 import IconButton from 'components/IconButton';
 import styled from 'styled-components';
-import { IngredientTag, ingredientTagInfo } from '../../types/ingredient';
+import { IngredientTag } from '../../types/ingredient';
 import { useMemo } from 'react';
 import TagButton from './TagButton';
+import { CocktailTag } from 'types/cocktail';
 
 interface IAddTagsProps<T> {
   selectedTags: T[];
@@ -13,7 +14,7 @@ interface IAddTagsProps<T> {
   className?: string;
 }
 
-const AddTags = <T extends IngredientTag>({
+const AddTags = <T extends IngredientTag | CocktailTag>({
   selectedTags,
   allTags,
   isIngredient,

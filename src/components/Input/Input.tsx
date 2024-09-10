@@ -7,7 +7,7 @@ interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = ({ label, value, ...rest }: IInputProps) => {
+const Input = ({ label, value, placeholder, ...rest }: IInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const id = useId();
 
@@ -18,9 +18,10 @@ const Input = ({ label, value, ...rest }: IInputProps) => {
         value={value}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
+        placeholder={placeholder}
         {...rest}
       />
-      <StyledLabel htmlFor={id} isActive={isFocused || !!value}>
+      <StyledLabel htmlFor={id} isActive={!!placeholder || isFocused || !!value}>
         {label}
       </StyledLabel>
     </InputContainer>

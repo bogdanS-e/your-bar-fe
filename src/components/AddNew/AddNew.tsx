@@ -1,18 +1,23 @@
+import { AddCocktailModal } from "components/Cocktail";
 import Dropdown from "components/Dropdown";
 import IconButton from "components/IconButton";
-import { AddIngredientModal } from "components/Ingredients";
+import { AddIngredientModal } from "components/Ingredient";
 import { useState } from "react";
 
 type TTypeToAdd = 'ingredient' | 'cocktail';
 
 const AddNew = () => {
   const [isAddIngredientOpen, setIsAddIngredientOpen] = useState(false);
+  const [isAddCocktailOpen, setIsAddCocktailOpen] = useState(false);
 
   const handleOptionClick = (type: TTypeToAdd) => {
     if (type === 'ingredient') {
       setIsAddIngredientOpen(true);
+
+      return;
     }
 
+    setIsAddCocktailOpen(true);
   }
 
   return (
@@ -54,6 +59,10 @@ const AddNew = () => {
       <AddIngredientModal
         isOpen={isAddIngredientOpen}
         onClose={() => setIsAddIngredientOpen(false)}
+      />
+      <AddCocktailModal
+        isOpen={isAddCocktailOpen}
+        onClose={() => setIsAddCocktailOpen(false)}
       />
     </>
   )
