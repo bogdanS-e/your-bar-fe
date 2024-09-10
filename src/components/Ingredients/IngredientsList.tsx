@@ -49,7 +49,11 @@ const IngredientsList = ({ initialData, selectedTags }: IIngredientsListProps) =
       }
 
       articles.push(
-        <CSSTransition key={tag} timeout={500} classNames="article">
+        <CSSTransition
+          key={tag}
+          timeout={{ enter: 1000, exit: 300 }}
+          classNames="article"
+        >
           <Article >
             <Title>{ingredientTagInfo[tag].title}</Title>
             <IngredientsWrapper>

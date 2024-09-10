@@ -1,9 +1,8 @@
 import Modal from 'components/Modal';
 import { useFormik } from 'formik';
-import { useState } from 'react';
 import { z, ZodType } from 'zod';
 import { toFormikValidate } from 'zod-formik-adapter';
-import { ingredientTagInfo } from '../../types/ingredient';
+import { IngredientTag, ingredientTagInfo } from 'types/ingredient';
 import AddTags from 'components/Tag/AddTags';
 import Input from 'components/Input';
 import styled from 'styled-components';
@@ -17,6 +16,11 @@ import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 import { IResError } from 'types/common';
 import getAxiosError from 'utils/getAxiosError';
+
+interface IAddIngredientModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
 
 // Zod schema definition
 const ingredientSchema: ZodType<IIngredientFormValues> = z.object({
@@ -40,17 +44,8 @@ const ingredientSchema: ZodType<IIngredientFormValues> = z.object({
     .nullable(),
 });
 
-const AddIngredient = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const AddIngredientModal = ({isOpen, onClose }: IAddIngredientModalProps) => {
   const createIngerientMutation = useCreateIngredient();
-
-  const close = () => {
-    setIsOpen(false);
-  };
-
-  const open = () => {
-    setIsOpen(true);
-  };
 
   const onCreate = (values: IIngredientFormValues) => {
     return toast.promise<IIngredientFormValues, AxiosError<IResError>>(
@@ -87,7 +82,7 @@ const AddIngredient = () => {
     initialValues: {
       name: '',
       description: '',
-      tags: [],
+      tags: [IngredientTag.Custom],
       image: null,
     },
     validateOnChange: false,
@@ -100,69 +95,65 @@ const AddIngredient = () => {
   });
 
   return (
-    <>
-      <button onClick={open}>Add ingredients</button>
-
-      <Modal isOpen={isOpen} onClose={close} title="Add new ingredient">
-        <Form onSubmit={handleSubmit}>
-          <NameWrapper>
+    <Modal isOpen={isOpen} onClose={onClose} title="Add new ingredient">
+      <Form onSubmit={handleSubmit}>
+        <NameWrapper>
+          <div>
             <div>
-              <div>
-                <Input
-                  label="Ingredient name"
-                  name="name"
-                  value={values.name}
-                  onChange={handleChange}
-                />
-
-                {errors?.name && <ErrorText>{errors.name}</ErrorText>}
-              </div>
-
-              <div>
-                <StyledAddTags
-                  allTags={Object.values(ingredientTagInfo).map(({ key }) => key)}
-                  selectedTags={values.tags}
-                  onChange={(selectedOptions) => {
-                    setFieldValue('tags', selectedOptions);
-                  }}
-                  isIngredient
-                />
-
-                {errors?.tags && <ErrorText>{errors.tags}</ErrorText>}
-              </div>
-            </div>
-            <div>
-              <ImageInput
-                onImageChange={(file) => setFieldValue('image', file)}
+              <Input
+                label="Ingredient name"
+                name="name"
+                value={values.name}
+                onChange={handleChange}
               />
 
-              {errors?.image && <ErrorText>{errors.image}</ErrorText>}
+              {errors?.name && <ErrorText>{errors.name}</ErrorText>}
             </div>
-          </NameWrapper>
 
-          <StyledTextarea
-            rows={10}
-            id="description"
-            name="description"
-            placeholder="Enter the ingredient description..."
-            value={values.description}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          {errors?.description && <ErrorText>{errors.description}</ErrorText>}
+            <div>
+              <StyledAddTags
+                allTags={Object.values(ingredientTagInfo).map(({ key }) => key)}
+                selectedTags={values.tags}
+                onChange={(selectedOptions) => {
+                  setFieldValue('tags', selectedOptions);
+                }}
+                isIngredient
+              />
 
-          <ActionWrapper>
-            <Button type="submit" disabled={createIngerientMutation.isPending}>
-              Submit
-            </Button>
-          </ActionWrapper>
-        </Form>
-      </Modal>
-    </>
+              {errors?.tags && <ErrorText>{errors.tags}</ErrorText>}
+            </div>
+          </div>
+          <div>
+            <ImageInput
+              onImageChange={(file) => setFieldValue('image', file)}
+            />
+
+            {errors?.image && <ErrorText>{errors.image}</ErrorText>}
+          </div>
+        </NameWrapper>
+
+        <StyledTextarea
+          rows={10}
+          id="description"
+          name="description"
+          placeholder="Enter the ingredient description..."
+          value={values.description}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+        {errors?.description && <ErrorText>{errors.description}</ErrorText>}
+
+        <ActionWrapper>
+          <Button type="submit" disabled={createIngerientMutation.isPending}>
+            Submit
+          </Button>
+        </ActionWrapper>
+      </Form>
+    </Modal>
   );
 };
 
-export default AddIngredient;
+export default AddIngredientModal;
 
 const ErrorText = styled.small`
   font-size: 0.625rem;

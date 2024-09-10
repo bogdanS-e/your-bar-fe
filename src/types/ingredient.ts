@@ -6,6 +6,7 @@ export enum IngredientTag {
   Fruit,
   Juice,
   Other,
+  Custom,
 }
 
 interface IIngredientTagInfo {
@@ -57,6 +58,12 @@ export const ingredientTagInfo: Record<IngredientTag, IIngredientTagInfo> = {
     title: 'Other',
     image: '/images/other.png',
     key: IngredientTag.Other,
+  },
+  [IngredientTag.Custom]: {
+    color: '#8bf2ffbb',
+    title: 'Custom',
+    image: '/images/other.png',
+    key: IngredientTag.Custom,
   },
 };
 

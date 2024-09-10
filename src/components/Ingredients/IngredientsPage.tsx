@@ -6,7 +6,6 @@ import {
   ingredientTagInfo,
 } from 'types/ingredient';
 import { useState } from 'react';
-import AddIngredient from './AddIngredient';
 import IngredientsList from './IngredientsList';
 
 interface IIngredientsProps {

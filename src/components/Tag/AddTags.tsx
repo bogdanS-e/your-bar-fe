@@ -39,7 +39,7 @@ const AddTags = <T extends IngredientTag>({
           key={tag}
           tag={tag}
           isIngredient={isIngredient}
-          onRemove={removeTag}
+          onRemove={tag === IngredientTag.Custom ? undefined : removeTag}
         />
       ))}
 

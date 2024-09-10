@@ -17,6 +17,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
+  // dropdown animation
   .dropdown-fade-enter {
     opacity: 0;
     transform: translateY(10px);
@@ -36,6 +37,7 @@ const GlobalStyle = createGlobalStyle`
     transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
   }
 
+  // articles animation
   .article-enter {
     opacity: 0;
     transform: translateY(-20px);
@@ -43,7 +45,7 @@ const GlobalStyle = createGlobalStyle`
   .article-enter-active {
     opacity: 1;
     transform: translateY(0);
-    transition: opacity 500ms, transform 500ms;
+    transition: opacity 1000ms, transform 1000ms; /* Slow enter */
   }
   .article-exit {
     opacity: 1;
@@ -52,7 +54,7 @@ const GlobalStyle = createGlobalStyle`
   .article-exit-active {
     opacity: 0;
     transform: translateY(-20px);
-    transition: opacity 500ms, transform 500ms;
+    transition: opacity 300ms, transform 300ms; /* Fast exit */
   }
 `;
 

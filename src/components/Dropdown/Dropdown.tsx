@@ -1,17 +1,21 @@
 import { useState, useRef, useEffect, ReactNode } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
+
+type TPosition = 'top' | 'bottom';
 
 interface IDropdownProps<T> {
   trigger: ReactNode;
   items: T[];
-  renderItem: (item: T) => ReactNode;
+  position?: TPosition;
+  renderItem?: (item: T) => ReactNode;
   onOptionClick: (item: T) => void;
 }
 
 const Dropdown = <T extends number | string>({
   trigger,
   items,
+  position = 'bottom',
   renderItem,
   onOptionClick,
 }: IDropdownProps<T>) => {
@@ -50,10 +54,10 @@ const Dropdown = <T extends number | string>({
         classNames="dropdown-fade"
         unmountOnExit
       >
-        <DropdownMenu>
+        <DropdownMenu position={position}>
           {items.map((item) => (
             <DropdownItem onClick={() => onItemClick(item)} key={item}>
-              {renderItem(item)}
+              {renderItem ? renderItem(item) : item}
             </DropdownItem>
           ))}
         </DropdownMenu>
@@ -73,7 +77,7 @@ const DropdownTrigger = styled.div`
   cursor: pointer;
 `;
 
-const DropdownMenu = styled.div`
+const DropdownMenu = styled.div<{position: TPosition}>`
   position: absolute;
   top: 100%;
   left: 0;
@@ -83,6 +87,12 @@ const DropdownMenu = styled.div`
   z-index: 1;
   min-width: 150px;
   border-radius: 10px;
+  overflow: hidden;
+
+  ${({position}) => position === 'top' && css`
+    bottom: 100%;
+    top: unset;
+  `}
 `;
 
 const DropdownItem = styled.div`
