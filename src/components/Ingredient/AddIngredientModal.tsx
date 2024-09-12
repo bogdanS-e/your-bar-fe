@@ -22,7 +22,6 @@ interface IAddIngredientModalProps {
   onClose: () => void;
 }
 
-// Zod schema definition
 const ingredientSchema: ZodType<IIngredientFormValues> = z.object({
   name: z
     .string()

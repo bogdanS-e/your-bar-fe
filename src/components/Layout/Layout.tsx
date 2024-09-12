@@ -30,14 +30,7 @@ const Layout = ({ children }: ILayoutProps) => {
 
   // prepare global data
   const query1 = useIngredients();
-  const [query2] = useQueries({
-    queries: [
-      {
-        queryKey: ['cooktails'],
-        queryFn: async () => await fetch('https://dummyjson.com/products'),
-      },
-    ],
-  });
+  const query2 = useIngredients();
 
   useEffect(() => {
     if (query1.isError || query2.isError) {

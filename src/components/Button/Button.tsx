@@ -6,11 +6,23 @@ interface IButtonProps {
   onClick?: () => void;
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
+  className?: string;
 }
 
-const Button = ({ children, type, onClick, disabled }: IButtonProps) => {
+const Button = ({
+  children,
+  type,
+  onClick,
+  disabled,
+  className,
+}: IButtonProps) => {
   return (
-    <StyledButton onClick={onClick} disabled={disabled} type={type}>
+    <StyledButton
+      onClick={onClick}
+      disabled={disabled}
+      type={type}
+      className={className}
+    >
       {children}
     </StyledButton>
   );

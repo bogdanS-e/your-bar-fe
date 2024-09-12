@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
 
-type TPosition = 'top' | 'bottom';
+type TPosition = 'top' | 'bottom' | 'left';
 
 interface IDropdownProps<T> {
   trigger: ReactNode;
@@ -94,6 +94,12 @@ const DropdownMenu = styled.div<{ position: TPosition }>`
     css`
       bottom: 100%;
       top: unset;
+    `}
+  ${({ position }) =>
+    position === 'left' &&
+    css`
+      right: 0;
+      left: unset;
     `}
 `;
 

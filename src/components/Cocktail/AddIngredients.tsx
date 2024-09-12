@@ -1,10 +1,17 @@
-import { useState } from 'react';
 import CocktailIngredient from './CocktailIngredient';
+import { useFormikContext } from 'formik';
+import { ICocktailFormValues } from './AddCocktailModal';
 
 const AddIngredients = () => {
-  const [ingredients, setIngredients] = useState([]);
+  const { values: { ingredients } } = useFormikContext<ICocktailFormValues>();
 
-  return <CocktailIngredient />;
+  return (
+    <div>
+      {ingredients.map((_, i) => (
+        <CocktailIngredient key={i} index={i} />
+      ))}
+    </div>
+  );
 };
 
 export default AddIngredients;

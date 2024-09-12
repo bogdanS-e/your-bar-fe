@@ -5,6 +5,7 @@ interface IIconButtonProps {
   children: ReactNode;
   size?: number;
   className?: string;
+  disabled?: boolean;
   onClick?: () => void;
 }
 
@@ -12,10 +13,11 @@ const IconButton = ({
   children,
   size,
   className,
+  disabled,
   onClick,
 }: IIconButtonProps) => {
   return (
-    <Button size={size} className={className} onClick={onClick} type="button">
+    <Button disabled={disabled} size={size} className={className} onClick={onClick} type="button">
       {children}
     </Button>
   );
@@ -36,7 +38,13 @@ const Button = styled.button<{ size?: number }>`
     background-color 0.3s ease,
     color 0.3s ease;
   width: ${(props) => (props.size ? props.size + 'px' : 'auto')};
-  height: ${(props) => (props.size ? props.size + 'px' : 'auto')};
+  aspect-ratio: 1 / 1;
+  font-family: inherit;
+  overflow: hidden;
+
+  &:disabled {
+  pointer-events: none;
+  }
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.08);

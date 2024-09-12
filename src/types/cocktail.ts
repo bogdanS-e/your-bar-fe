@@ -54,3 +54,9 @@ export const cocktailTagInfo: Record<CocktailTag, ITagInfo<CocktailTag>> = {
     key: CocktailTag.Custom,
   },
 };
+
+export interface ICocktailngredient {
+  ingredientId: string;
+  value: number;
+  unit: string;
+}

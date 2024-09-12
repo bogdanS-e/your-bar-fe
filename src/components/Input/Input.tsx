@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  value: string;
+  value: string | number;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -23,7 +23,9 @@ const Input = ({ label, value, placeholder, ...rest }: IInputProps) => {
       />
       <StyledLabel
         htmlFor={id}
-        isActive={!!placeholder || isFocused || !!value}
+        isActive={
+          !!placeholder || isFocused || !!value || typeof value === 'number'
+        }
       >
         {label}
       </StyledLabel>
