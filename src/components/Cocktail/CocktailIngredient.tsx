@@ -1,23 +1,24 @@
 import Dropdown from 'components/Dropdown';
 import IconButton from 'components/IconButton';
-import useIngredients from 'components/Ingredient/useIngredients';
 import Input from 'components/Input';
 import Modal from 'components/Modal';
 import SearchBar from 'components/SearchBar';
 import TagButton from 'components/Tag/TagButton';
-import { FieldArray, getIn, useFormikContext } from 'formik';
-import { ChangeEvent, useMemo, useState } from 'react';
+import { FieldArray, useFormikContext } from 'formik';
+import { useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { ICocktailngredient } from 'types/cocktail';
 import { ICocktailFormValues } from './AddCocktailModal';
 import { Row } from 'styles/components';
+import { IIngredient } from 'types/ingredient';
+import { CocktailTag, CocktailUnit, cocktailUnitInfo } from 'types/cocktail';
+import Checkbox from 'components/Checkbox';
 
 interface ICocktailIngredientProps {
   index: number;
+  allIngredients: IIngredient[];
 }
 
-const CocktailIngredient = ({ index }: ICocktailIngredientProps) => {
-  const { data: allIngredients } = useIngredients();
+const CocktailIngredient = ({ index, allIngredients }: ICocktailIngredientProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
 
@@ -27,8 +28,6 @@ const CocktailIngredient = ({ index }: ICocktailIngredientProps) => {
     setFieldValue,
     handleChange,
   } = useFormikContext<ICocktailFormValues>();
-
-  console.log(ingredients);
 
   const filteredIngredients = useMemo(() => {
     if (!allIngredients) {
@@ -45,12 +44,21 @@ const CocktailIngredient = ({ index }: ICocktailIngredientProps) => {
 
   const onIngredientChange = (ingredientId: string, ingredientName: string) => () => {
     setIsModalOpen(false);
+    setSearchValue('');
     setFieldValue(`ingredients.${index}.ingredientId`, ingredientId);
     setFieldValue(`ingredients.${index}.name`, ingredientName);
   };
 
-  const onUnitChange = (unit: string) => {
+  const onUnitChange = (unit: CocktailUnit) => {
     setFieldValue(`ingredients.${index}.unit`, unit);
+  }
+
+  const onOptionalChange = (isChecked: boolean) => {
+    setFieldValue(`ingredients.${index}.isOptional`, isChecked);
+  }
+
+  const onDecorationChange = (isChecked: boolean) => {
+    setFieldValue(`ingredients.${index}.isDecoration`, isChecked);
   }
 
   const getError = (key: string) => {
@@ -97,14 +105,17 @@ const CocktailIngredient = ({ index }: ICocktailIngredientProps) => {
 
         <div>
           <Row>
-            <Dropdown
-              position="left"
+            <StyledDropdown
+              position="top"
               trigger={
                 <Unit justifyContent='flex-end'>
-                  {ingredients[index].unit} <IconButton>▼</IconButton>
+                  {cocktailUnitInfo[ingredients[index].unit].title} <IconButton>▼</IconButton>
                 </Unit>
               }
-              items={['ml', 'spoon']}
+              items={Object.values(cocktailUnitInfo).map(({ key }) => key)}
+              renderItem={(unit) => (
+                <div>{cocktailUnitInfo[unit].title}</div>
+              )}
               onOptionClick={onUnitChange}
             />
             <FieldArray name="ingredients">
@@ -122,15 +133,20 @@ const CocktailIngredient = ({ index }: ICocktailIngredientProps) => {
 
           {getError('unit') && <ErrorText>{getError('unit')}</ErrorText>}
         </div>
-
       </InputsWrapper>
+      <CheckboxWrapper gap='20px'>
+        <Checkbox label='optional' isChecked={ingredients[index].isOptional} onChange={onOptionalChange} />
+        <Checkbox label='decoration' isChecked={ingredients[index].isDecoration} onChange={onDecorationChange} />
+      </CheckboxWrapper>
 
       <StyledModal
         isOpen={isModalOpen}
+        keepUnmount
         onClose={() => setIsModalOpen(false)}
         title="Search ingredient"
       >
         <SearchBar
+          autoFocus
           placeholder="Search ingredient"
           onChange={({ currentTarget }) => setSearchValue(currentTarget.value)}
           value={searchValue}
@@ -149,6 +165,9 @@ const CocktailIngredient = ({ index }: ICocktailIngredientProps) => {
               </Content>
             </Ingredient>
           ))}
+          {filteredIngredients.length === 0 && (
+            'No ingredient match your search'
+          )}
         </IngredientsWrapper>
       </StyledModal>
     </Container>
@@ -157,7 +176,19 @@ const CocktailIngredient = ({ index }: ICocktailIngredientProps) => {
 
 export default CocktailIngredient;
 
-const Unit= styled(Row)`
+const CheckboxWrapper = styled(Row)`
+  margin-top: 5px;
+  padding: 0 40px;
+`;
+
+const StyledDropdown: typeof Dropdown = styled(Dropdown)`
+  .dropdown-menu {
+    left: -15px;
+    max-height: min(40vh, 400px);
+  }
+`;
+
+const Unit = styled(Row)`
   width: 80px;
 `;
 
@@ -178,12 +209,12 @@ const CloseButton = styled(IconButton)`
 const InputsWrapper = styled.div<{ index: number }>`
   display: flex;
   gap: 20px;
-  align-items: center;
+  align-items: flex-start;
   padding-left: 40px;
   position: relative;
 
   > :first-child {
-    flex: 3;
+    flex: 2;
   }
 
   > :nth-child(2) {

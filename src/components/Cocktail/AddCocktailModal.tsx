@@ -16,7 +16,8 @@ import getAxiosError from 'utils/getAxiosError';
 import {
   CocktailTag,
   cocktailTagInfo,
-  ICocktailngredient,
+  CocktailUnit,
+  ICocktailIngredient,
 } from 'types/cocktail';
 import AddIngredients from './AddIngredients';
 
@@ -25,8 +26,9 @@ interface IAddIngredientModalProps {
   onClose: () => void;
 }
 
-interface ICocktailngredientFormValues extends ICocktailngredient {
+interface ICocktailIngredientFormValues extends Omit<ICocktailIngredient, 'value' | 'alternatives'> {
   name: string;
+  value: number | string;
 }
 
 export interface ICocktailFormValues {
@@ -35,7 +37,7 @@ export interface ICocktailFormValues {
   recipe: string;
   tags: CocktailTag[];
   image?: null | File;
-  ingredients: ICocktailngredientFormValues[];
+  ingredients: ICocktailIngredientFormValues[];
 }
 
 const cocktailSchema: ZodType<ICocktailFormValues> = z.object({
@@ -58,21 +60,30 @@ const cocktailSchema: ZodType<ICocktailFormValues> = z.object({
   ingredients: z.array(
     z.object({
       ingredientId: z.string(),
+      isOptional: z.boolean(),
+      isDecoration: z.boolean(),
       name: z
         .string()
         .min(1, 'Ingredient name is required')
         .max(30, 'Name too long'),
-      value: z.number().min(1, 'Value must be greater than 0'),
-      unit: z.string().min(1, 'Unit is required'),
+      value: z
+        .string()
+        .transform((val) => Number(val))
+        .refine((val) => !isNaN(val), { message: 'Value must be a number' })
+        .refine((val) => val > 0, { message: 'Value must be greater than 0' }),
+      unit: z.number().min(0, 'Unit is required'),
     })
-  ),
+  ).max(10, 'No cocktail has 10 ingredients')
 });
 
 const emptyIngredient = {
+  alternatives: [],
   ingredientId: '',
   name: '',
-  value: 0,
-  unit: '',
+  value: '0',
+  unit: CocktailUnit.Ml,
+  isOptional: false,
+  isDecoration: false,
 }
 
 const AddCocktailModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
@@ -86,7 +97,7 @@ const AddCocktailModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Add new cocktail">
+    <StyledModal isOpen={isOpen} onClose={onClose} title="Add new cocktail">
       <Formik
         initialValues={initialValues}
         validate={toFormikValidate(cocktailSchema)}
@@ -147,7 +158,7 @@ const AddCocktailModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
             />
             {errors?.description && <ErrorText>{errors.description}</ErrorText>}
 
-            <div>
+            <RecipeWrapper>
               <span>Recipe:</span>
               <Textarea
                 rows={5}
@@ -160,7 +171,7 @@ const AddCocktailModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
               />
 
               {errors?.recipe && <ErrorText>{errors.recipe}</ErrorText>}
-            </div>
+            </RecipeWrapper>
 
             <AddIngredientsWrapper>
               <AddIngredients />
@@ -171,6 +182,7 @@ const AddCocktailModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
                   </AddIngredientButton>
                 )}
               </FieldArray>
+              {errors?.ingredients && <ErrorText>{errors.ingredients as string}</ErrorText>}
             </AddIngredientsWrapper>
 
             <ActionWrapper>
@@ -183,11 +195,15 @@ const AddCocktailModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
           </StyledForm>
         )}
       </Formik>
-    </Modal>
+    </StyledModal>
   );
 };
 
 export default AddCocktailModal;
+
+const StyledModal = styled(Modal)`
+  max-width: 500px!important;
+`;
 
 const AddIngredientButton = styled(Button)`
   padding: 8px;
@@ -217,11 +233,16 @@ const ActionWrapper = styled.div`
   margin-top: 20px;
 `;
 
+const RecipeWrapper = styled.div`
+  margin: 10px 0;
+`;
+
 const NameWrapper = styled.div`
   display: flex;
   align-items: start;
   gap: 20px;
   justify-content: space-between;
+  margin-bottom: 10px;
 
   > div:first-child {
     flex: 1;
@@ -235,6 +256,5 @@ const StyledAddTags = styled(AddTags)`
 
 const StyledForm = styled(Form)`
   color: #525252;
-  max-width: 436px;
   width: 100%;
 `;

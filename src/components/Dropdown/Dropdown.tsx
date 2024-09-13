@@ -8,6 +8,7 @@ interface IDropdownProps<T> {
   trigger: ReactNode;
   items: T[];
   position?: TPosition;
+  className?: string;
   renderItem?: (item: T) => ReactNode;
   onOptionClick: (item: T) => void;
 }
@@ -16,6 +17,7 @@ const Dropdown = <T extends number | string>({
   trigger,
   items,
   position = 'bottom',
+  className,
   renderItem,
   onOptionClick,
 }: IDropdownProps<T>) => {
@@ -44,7 +46,7 @@ const Dropdown = <T extends number | string>({
   }, []);
 
   return (
-    <DropdownContainer ref={dropdownRef}>
+    <DropdownContainer ref={dropdownRef} className={className}>
       <DropdownTrigger onClick={() => items.length && setIsOpen(!isOpen)}>
         {trigger}
       </DropdownTrigger>
@@ -54,7 +56,7 @@ const Dropdown = <T extends number | string>({
         classNames="dropdown-fade"
         unmountOnExit
       >
-        <DropdownMenu position={position}>
+        <DropdownMenu className='dropdown-menu' position={position}>
           {items.map((item) => (
             <DropdownItem onClick={() => onItemClick(item)} key={item}>
               {renderItem ? renderItem(item) : item}
@@ -87,7 +89,7 @@ const DropdownMenu = styled.div<{ position: TPosition }>`
   z-index: 1;
   min-width: 150px;
   border-radius: 10px;
-  overflow: hidden;
+  overflow-y: auto;
 
   ${({ position }) =>
     position === 'top' &&

@@ -188,6 +188,5 @@ const StyledAddTags = styled(AddTags)`
 
 const Form = styled.form`
   color: #525252;
-  max-width: 436px;
   width: 100%;
 `;

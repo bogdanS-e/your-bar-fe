@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 
@@ -7,6 +7,7 @@ interface IModalProps {
   onClose: () => void;
   children: ReactNode;
   title?: string;
+  keepUnmount?: boolean; //ignore useEffect on isOpen=false 
   className?: string;
 }
 const Modal = ({
@@ -14,8 +15,27 @@ const Modal = ({
   onClose,
   children,
   title,
+  keepUnmount,
   className,
 }: IModalProps) => {
+  useEffect(() => {
+    if (!isOpen && keepUnmount) {
+      return;
+    }
+
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+
+      return;
+    }
+
+    document.body.style.overflow = '';
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen, keepUnmount]);
+
   if (typeof window === 'undefined' || !isOpen) return null;
 
   return createPortal(

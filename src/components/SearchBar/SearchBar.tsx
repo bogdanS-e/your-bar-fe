@@ -6,9 +6,10 @@ interface ISearchBarProps {
   placeholder?: string;
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  autoFocus?: boolean;
 }
 
-const SearchBar = ({ placeholder, value, onChange }: ISearchBarProps) => {
+const SearchBar = ({ placeholder, value, onChange ,autoFocus}: ISearchBarProps) => {
   const [filteredItems, setFilteredItems] = useState<string[]>([]);
   const [isFocused, setIsFocused] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -54,6 +55,7 @@ const SearchBar = ({ placeholder, value, onChange }: ISearchBarProps) => {
         value={value}
         onChange={onChange}
         onFocus={() => setIsFocused(true)}
+        autoFocus={autoFocus}
       />
       <PlaceholderWrapper hasValue={value.length > 0}>
         {placeholder || 'Search for cooktails and ingredients...'}
