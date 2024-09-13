@@ -5,13 +5,13 @@ import { IIngredient, ingredientTagInfo } from 'types/ingredient';
 import { useState } from 'react';
 import IngredientsList from './IngredientsList';
 
-interface IIngredientsProps {
+interface IIngredientsPageProps {
   initialData: IIngredient[];
 }
 
 const ingrediensFilter = Object.values(ingredientTagInfo);
 
-const IngredientsPage = ({ initialData }: IIngredientsProps) => {
+const IngredientsPage = ({ initialData }: IIngredientsPageProps) => {
   const [selectedTags, setSelectedTags] = useState(
     ingrediensFilter.map(({ key }) => key)
   );

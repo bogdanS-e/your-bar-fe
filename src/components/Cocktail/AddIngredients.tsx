@@ -1,8 +1,8 @@
 import CocktailIngredient from './CocktailIngredient';
 import { useFormikContext } from 'formik';
-import { ICocktailFormValues } from './AddCocktailModal';
 import { useMemo } from 'react';
 import useIngredients from 'components/Ingredient/useIngredients';
+import { ICocktailFormValues } from './useCreateCocktail';
 
 const AddIngredients = () => {
   const { data: allIngredients } = useIngredients();

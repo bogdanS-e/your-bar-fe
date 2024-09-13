@@ -55,14 +55,6 @@ export const cocktailTagInfo: Record<CocktailTag, ITagInfo<CocktailTag>> = {
   },
 };
 
-export interface ICocktailIngredient {
-  ingredientId: string;
-  value: number;
-  unit: CocktailUnit;
-  isOptional: boolean;
-  isDecoration: boolean;
-}
-
 export enum CocktailUnit {
   Cl,
   Oz,
@@ -183,3 +175,22 @@ export const cocktailUnitInfo: Record<CocktailUnit, { title: string, key: Cockta
     key: CocktailUnit.Scoop,
   }
 };
+
+
+export interface ICocktailIngredient {
+  ingredientId: string;
+  value: number;
+  unit: CocktailUnit;
+  isOptional: boolean;
+  isDecoration: boolean;
+}
+
+export interface ICocktail {
+  _id: string;
+  nameEn: string;
+  descriptionEn: string;
+  recipeEn: string;
+  image: string | null;
+  tags: CocktailTag[];
+  ingredients: ICocktailIngredient[];
+}

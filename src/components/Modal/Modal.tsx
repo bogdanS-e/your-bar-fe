@@ -39,8 +39,8 @@ const Modal = ({
   if (typeof window === 'undefined' || !isOpen) return null;
 
   return createPortal(
-    <ModalOverlay onClick={onClose}>
-      <ModalContent className={className} onClick={(e) => e.stopPropagation()}>
+    <ModalOverlay onMouseDown={onClose}>
+      <ModalContent className={className} onMouseDown={(e) => e.stopPropagation()}>
         <ModalHeader>
           <h2>{title}</h2>
           <CloseButton onClick={onClose}>&times;</CloseButton>

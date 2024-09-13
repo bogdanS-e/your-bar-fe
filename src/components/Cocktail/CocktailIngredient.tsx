@@ -7,11 +7,11 @@ import TagButton from 'components/Tag/TagButton';
 import { FieldArray, useFormikContext } from 'formik';
 import { useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { ICocktailFormValues } from './AddCocktailModal';
 import { Row } from 'styles/components';
 import { IIngredient } from 'types/ingredient';
 import { CocktailTag, CocktailUnit, cocktailUnitInfo } from 'types/cocktail';
 import Checkbox from 'components/Checkbox';
+import { ICocktailFormValues } from './useCreateCocktail';
 
 interface ICocktailIngredientProps {
   index: number;

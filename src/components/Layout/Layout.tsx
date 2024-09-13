@@ -6,14 +6,13 @@ import { useRouter } from 'next/router';
 import IconButton from 'components/IconButton';
 import SearchBar from 'components/SearchBar';
 import GlobalLoader from 'components/GlobalLoader';
-import { useQueries } from '@tanstack/react-query';
 import useGlobalStore from '../../globalStore';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useIngredients from 'components/Ingredient/useIngredients';
-import Dropdown from 'components/Dropdown';
 import AddNew from 'components/AddNew';
+import useCocktails from 'components/Cocktail/useCocktails';
 
 interface ILayoutProps {
   children: ReactNode;
@@ -30,7 +29,7 @@ const Layout = ({ children }: ILayoutProps) => {
 
   // prepare global data
   const query1 = useIngredients();
-  const query2 = useIngredients();
+  const query2 = useCocktails();
 
   useEffect(() => {
     if (query1.isError || query2.isError) {
@@ -47,8 +46,8 @@ const Layout = ({ children }: ILayoutProps) => {
       <Page>
         <Sidebar>
           <nav>
-            <Link style={{ display: 'block' }} href="/">
-              <StyledIconButton size={50} isActive={router.pathname === '/'}>
+            <Link style={{ display: 'block' }} href="/cocktails">
+              <StyledIconButton size={50} isActive={router.pathname === '/cocktails'}>
                 <svg
                   fill="#000000"
                   height="200px"

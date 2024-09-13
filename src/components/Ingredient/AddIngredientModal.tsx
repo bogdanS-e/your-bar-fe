@@ -76,7 +76,6 @@ const AddIngredientModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
     setFieldValue,
     values,
     errors,
-    resetForm,
   } = useFormik<IIngredientFormValues>({
     initialValues: {
       name: '',
@@ -87,9 +86,10 @@ const AddIngredientModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
     validateOnChange: false,
     validateOnBlur: false,
     validate: toFormikValidate(ingredientSchema),
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       await onCreate(values);
       resetForm();
+      onClose();
     },
   });
 

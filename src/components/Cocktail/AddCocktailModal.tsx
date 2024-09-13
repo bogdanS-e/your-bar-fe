@@ -20,24 +20,11 @@ import {
   ICocktailIngredient,
 } from 'types/cocktail';
 import AddIngredients from './AddIngredients';
+import useCreateCocktail, { ICocktailFormValues } from './useCreateCocktail';
 
 interface IAddIngredientModalProps {
   isOpen: boolean;
   onClose: () => void;
-}
-
-interface ICocktailIngredientFormValues extends Omit<ICocktailIngredient, 'value' | 'alternatives'> {
-  name: string;
-  value: number | string;
-}
-
-export interface ICocktailFormValues {
-  name: string;
-  description: string;
-  recipe: string;
-  tags: CocktailTag[];
-  image?: null | File;
-  ingredients: ICocktailIngredientFormValues[];
 }
 
 const cocktailSchema: ZodType<ICocktailFormValues> = z.object({
@@ -77,7 +64,6 @@ const cocktailSchema: ZodType<ICocktailFormValues> = z.object({
 });
 
 const emptyIngredient = {
-  alternatives: [],
   ingredientId: '',
   name: '',
   value: '0',
@@ -87,24 +73,49 @@ const emptyIngredient = {
 }
 
 const AddCocktailModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
-  const initialValues: ICocktailFormValues = {
-    name: '',
-    description: '',
-    recipe: '',
-    tags: [],
-    image: null,
-    ingredients: [emptyIngredient],
+  const createCocktailMutation = useCreateCocktail();
+
+  const onCreate = (values: ICocktailFormValues) => {
+    return toast.promise<ICocktailFormValues, AxiosError<IResError>>(
+      async () => await createCocktailMutation.mutateAsync(values),
+      {
+        pending: 'Creating a new cocktail',
+        success: {
+          render: ({ data: toastData }) => {
+            close();
+
+            return (
+              <span>
+                <b>{toastData.name}</b> cocktail has been added 👌
+              </span>
+            );
+          },
+        },
+        error: {
+          render: ({ data }) => getAxiosError(data),
+        },
+      }
+    );
   };
 
   return (
     <StyledModal isOpen={isOpen} onClose={onClose} title="Add new cocktail">
       <Formik
-        initialValues={initialValues}
+        initialValues={{
+          name: '',
+          description: '',
+          recipe: '',
+          tags: [],
+          image: null,
+          ingredients: [emptyIngredient],
+        }}
         validate={toFormikValidate(cocktailSchema)}
         validateOnChange={false}
         validateOnBlur={false}
-        onSubmit={(values) => {
-          console.log(values);
+        onSubmit={async (values, { resetForm }) => {
+          await onCreate(values);
+          resetForm();
+          onClose();
         }}
       >
         {({ values, setFieldValue, handleBlur, handleChange, errors }) => (
