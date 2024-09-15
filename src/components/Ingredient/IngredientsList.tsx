@@ -65,7 +65,7 @@ const IngredientsList = ({
         >
           <Article>
             <Title>{ingredientTagInfo[tag].title}</Title>
-            <Row gap={gap} flexWrap="wrap">
+            <Row $gap={gap} $flexWrap="wrap">
               {ingredients.map(
                 ({ _id, nameEn, descriptionEn, image, tags }) => (
                   <StyledCard

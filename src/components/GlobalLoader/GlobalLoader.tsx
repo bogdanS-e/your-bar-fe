@@ -5,7 +5,7 @@ const GlobalLoader = () => {
   const { isLoading } = useGlobalStore();
 
   return (
-    <Container isLoading={isLoading}>
+    <Container $isLoading={isLoading}>
       <Loader />
     </Container>
   );
@@ -19,7 +19,7 @@ const wave = keyframes`
   }
 `;
 
-const Container = styled.div<{ isLoading: boolean }>`
+const Container = styled.div<{ $isLoading: boolean }>`
   position: fixed;
   left: 0;
   top: 0;
@@ -32,8 +32,8 @@ const Container = styled.div<{ isLoading: boolean }>`
   transition:
     visibility 0.3s,
     opacity 0.3s;
-  visibility: ${({ isLoading }) => (isLoading ? 'visible' : 'hidden')};
-  opacity: ${({ isLoading }) => (isLoading ? '1' : '0')};
+  visibility: ${({ $isLoading }) => ($isLoading ? 'visible' : 'hidden')};
+  opacity: ${({ $isLoading }) => ($isLoading ? '1' : '0')};
 `;
 
 const Loader = styled.div`

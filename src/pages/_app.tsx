@@ -12,9 +12,10 @@ import {
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import useStore from 'store';
 import { IIngredient } from 'types/ingredient';
+import { ICocktail } from 'types/cocktail';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-  const { updateIngredients } = useStore();
+  const { updateIngredients, updateCocktails } = useStore();
 
   const queryCache = new QueryCache({
     onSuccess: (data, query) => {
@@ -25,7 +26,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       }
 
       if (JSON.stringify(query.queryKey) === JSON.stringify(['cocktails'])) {
-        updateIngredients(data as IIngredient[]);
+        updateCocktails(data as ICocktail[]);
       }
     },
   });

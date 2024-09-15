@@ -23,7 +23,7 @@ const Input = ({ label, value, placeholder, ...rest }: IInputProps) => {
       />
       <StyledLabel
         htmlFor={id}
-        isActive={
+        $isActive={
           !!placeholder || isFocused || !!value || typeof value === 'number'
         }
       >
@@ -39,12 +39,12 @@ const InputContainer = styled.div`
   position: relative;
 `;
 
-const StyledLabel = styled.label<{ isActive: boolean }>`
+const StyledLabel = styled.label<{ $isActive: boolean }>`
   position: absolute;
-  top: ${({ isActive }) => (isActive ? '0' : '50%')};
-  left: ${({ isActive }) => (isActive ? '0' : '10px')};
+  top: ${({ $isActive }) => ($isActive ? '0' : '50%')};
+  left: ${({ $isActive }) => ($isActive ? '0' : '10px')};
   color: #aaa;
-  font-size: ${({ isActive }) => (isActive ? '0.75rem' : '1rem')};
+  font-size: ${({ $isActive }) => ($isActive ? '0.75rem' : '1rem')};
   transition: all 0.2s ease-in-out;
   pointer-events: none;
   transform: translateY(-50%);

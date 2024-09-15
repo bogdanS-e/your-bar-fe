@@ -79,10 +79,10 @@ const ImageInput = ({
     <InputContainer>
       <ImagePreviewContainer>
         <ImagePreview
-          imageUrl={imageUrl || ''}
+          $imageUrl={imageUrl || ''}
           htmlFor={inputId}
-          isDragOver={isDragOver}
-          isLoading={isLoading}
+          $isDragOver={isDragOver}
+          $isLoading={isLoading}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
@@ -120,18 +120,18 @@ const ImagePreviewContainer = styled.div`
 `;
 
 const ImagePreview = styled.label<{
-  imageUrl: string;
-  isDragOver: boolean;
-  isLoading: boolean;
+  $imageUrl: string;
+  $isDragOver: boolean;
+  $isLoading: boolean;
 }>`
   width: 100%;
   height: 100%;
-  background: #f0f0f0 url(${(props) => props.imageUrl}) no-repeat center;
+  background: #f0f0f0 url(${({ $imageUrl }) => $imageUrl}) no-repeat center;
   background-size: contain;
   border-radius: 10px;
-  border: ${({ isDragOver }) =>
-    isDragOver ? '2px solid #3f51b5' : '2px dashed #ccc'};
-  color: ${({ isDragOver }) => (isDragOver ? '#3f51b5' : '#aaa')};
+  border: ${({ $isDragOver }) =>
+    $isDragOver ? '2px solid #3f51b5' : '2px dashed #ccc'};
+  color: ${({ $isDragOver }) => ($isDragOver ? '#3f51b5' : '#aaa')};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -146,8 +146,8 @@ const ImagePreview = styled.label<{
     border-color: #3f51b5;
   }
 
-  ${({ imageUrl }) =>
-    imageUrl &&
+  ${({ $imageUrl }) =>
+    $imageUrl &&
     css`
       border: none;
       color: transparent;
@@ -162,7 +162,7 @@ const ImagePreview = styled.label<{
     top: 0;
     left: 0;
     transition: opacity 0.15s;
-    opacity: ${({ isLoading }) => (isLoading ? '0.5' : '0')};
+    opacity: ${({ $isLoading }) => ($isLoading ? '0.5' : '0')};
   }
 `;
 

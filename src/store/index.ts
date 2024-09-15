@@ -14,6 +14,7 @@ interface IActionsProps {
   updateIngredients: (ingredients: IIngredient[]) => void;
   updateCocktails: (ingredients: ICocktail[]) => void;
   getIngredientsName: (cocktailIngredients: ICocktailIngredient[]) => string[];
+  getObjectById: (id: string) => IIngredient | ICocktail | null;
 }
 
 const useStore = create<IStoreProps & IActionsProps>()((set, get) => ({
@@ -59,6 +60,14 @@ const useStore = create<IStoreProps & IActionsProps>()((set, get) => ({
     }
 
     return ingredientsName;
+  },
+  getObjectById: (id) => {
+    const { ingredientsMap, cocktaisMap } = get();
+    console.log(ingredientsMap, cocktaisMap);
+
+    console.log(id, ingredientsMap.get(id) || cocktaisMap.get(id) || null);
+
+    return ingredientsMap.get(id) || cocktaisMap.get(id) || null;
   },
 }));
 

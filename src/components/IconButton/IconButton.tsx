@@ -19,7 +19,7 @@ const IconButton = ({
   return (
     <Button
       disabled={disabled}
-      size={size}
+      $size={size}
       className={className}
       onClick={onClick}
       type="button"
@@ -31,7 +31,7 @@ const IconButton = ({
 
 export default IconButton;
 
-const Button = styled.button<{ size?: number }>`
+const Button = styled.button<{ $size?: number }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -43,7 +43,7 @@ const Button = styled.button<{ size?: number }>`
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
-  width: ${(props) => (props.size ? props.size + 'px' : 'auto')};
+  width: ${({ $size }) => ($size ? $size + 'px' : 'auto')};
   aspect-ratio: 1 / 1;
   font-family: inherit;
   overflow: hidden;

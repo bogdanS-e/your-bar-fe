@@ -24,7 +24,7 @@ const Card = ({
 }: ICardProps) => {
   return (
     <CardContainer className={className}>
-      <ImageWrapper justifyContent="center">
+      <ImageWrapper $justifyContent="center">
         <Image src={image || ''} alt={name} />
       </ImageWrapper>
       <Content>
@@ -73,6 +73,7 @@ const CardContainer = styled.div`
   width: 300px;
   border-radius: 10px;
   overflow: hidden;
+  cursor: pointer;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition:
     transform 0.3s ease,

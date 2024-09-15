@@ -67,7 +67,7 @@ const AllCocktailsTab = ({ initialData }: IIngredientsPageProps) => {
         >
           <Article>
             <ArticleTitle>{cocktailTagInfo[tag].title}</ArticleTitle>
-            <Row gap={gap} flexWrap="wrap">
+            <Row $gap={gap} $flexWrap="wrap">
               {cocktails.map(
                 ({ _id, nameEn, descriptionEn, image, tags, ingredients }) => (
                   <StyledCard

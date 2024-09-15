@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactNode, useEffect } from 'react';
+import { ChangeEvent, ReactNode, useEffect, useState } from 'react';
 import { Roboto } from 'next/font/google';
 import Link from 'next/link';
 import styled from 'styled-components';
@@ -26,10 +26,17 @@ const roboto = Roboto({
 const Layout = ({ children }: ILayoutProps) => {
   const router = useRouter();
   const { stopLoading } = useGlobalStore();
+  const [searchValue, setSearchValue] = useState('');
 
   // prepare global data
   const query1 = useIngredients();
   const query2 = useCocktails();
+
+  const handleSearchChange = ({
+    currentTarget,
+  }: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(currentTarget.value);
+  };
 
   useEffect(() => {
     if (query1.isError || query2.isError) {
@@ -49,7 +56,7 @@ const Layout = ({ children }: ILayoutProps) => {
             <Link style={{ display: 'block' }} href="/cocktails">
               <StyledIconButton
                 size={50}
-                isActive={router.pathname === '/cocktails'}
+                $isActive={router.pathname === '/cocktails'}
               >
                 <svg
                   fill="#000000"
@@ -60,11 +67,11 @@ const Layout = ({ children }: ILayoutProps) => {
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 512 512"
                 >
-                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                   <g
                     id="SVGRepo_tracerCarrier"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   ></g>
                   <g id="SVGRepo_iconCarrier">
                     {' '}
@@ -82,7 +89,7 @@ const Layout = ({ children }: ILayoutProps) => {
             <Link style={{ display: 'block' }} href="/ingredients">
               <StyledIconButton
                 size={50}
-                isActive={router.pathname === '/ingredients'}
+                $isActive={router.pathname === '/ingredients'}
               >
                 <svg
                   fill="#000000"
@@ -90,15 +97,15 @@ const Layout = ({ children }: ILayoutProps) => {
                   id="Warstwa_1"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 160 160"
-                  enable-background="new 0 0 160 160"
+                  enableBackground="new 0 0 160 160"
                   stroke="#000000"
-                  stroke-width="0.0016"
+                  strokeWidth="0.0016"
                 >
-                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                   <g
                     id="SVGRepo_tracerCarrier"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   ></g>
                   <g id="SVGRepo_iconCarrier">
                     {' '}
@@ -114,12 +121,7 @@ const Layout = ({ children }: ILayoutProps) => {
           <AddNew />
         </Sidebar>
         <Main>
-          <SearchBar
-            value={''}
-            onChange={function (e: ChangeEvent<HTMLInputElement>): void {
-              throw new Error('Function not implemented.');
-            }}
-          />
+          <SearchBar value={searchValue} onChange={handleSearchChange} />
           {children}
         </Main>
         <div id="modal-root" />
@@ -145,10 +147,10 @@ const Sidebar = styled.div`
   justify-content: space-between;
 `;
 
-const StyledIconButton = styled(IconButton)<{ isActive: boolean }>`
+const StyledIconButton = styled(IconButton)<{ $isActive: boolean }>`
   width: 50px;
   height: 50px;
-  color: ${(props) => (props.isActive ? '#909022' : 'inherit')};
+  color: ${({ $isActive }) => ($isActive ? '#909022' : 'inherit')};
 `;
 
 const Main = styled.main`

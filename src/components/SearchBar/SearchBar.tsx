@@ -1,6 +1,12 @@
+import { useCocktails } from 'components/Cocktail';
+import Dropdown from 'components/Dropdown';
 import IconButton from 'components/IconButton';
+import { useIngredients } from 'components/Ingredient';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
+import { ICocktail } from 'types/cocktail';
+import { IIngredient } from 'types/ingredient';
+import SearchResult from './SearchResult';
 
 interface ISearchBarProps {
   placeholder?: string;
@@ -9,113 +15,125 @@ interface ISearchBarProps {
   autoFocus?: boolean;
 }
 
+type TSearchItem = ICocktail | IIngredient;
+
 const SearchBar = ({
   placeholder,
   value,
   onChange,
   autoFocus,
 }: ISearchBarProps) => {
-  const [filteredItems, setFilteredItems] = useState<string[]>([]);
-  const [isFocused, setIsFocused] = useState(false);
+  const { data: ingredients } = useIngredients();
+  const { data: cocktails } = useCocktails();
+
+  const [cocktailIds, setCocktailIds] = useState<string[]>([]);
+  const [ingredientIds, setIngredientIds] = useState<string[]>([]);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    //setSearchTerm(value);
-
-    return;
+  useEffect(() => {
+    const findMatch = ({ nameEn }: TSearchItem) =>
+      nameEn.toLowerCase().includes(value.toLowerCase());
 
     if (value) {
-      const matches = ['a', 'abc', 'abcs', 'erwer', 'afad'].filter((item) =>
-        item.toLowerCase().includes(value.toLowerCase())
-      );
-      setFilteredItems(matches);
+      const coctailMatches = cocktails?.filter(findMatch);
+
+      if (coctailMatches) {
+        setCocktailIds(coctailMatches.map(({ _id }) => _id));
+      }
+
+      const ingredientMatches = ingredients?.filter(findMatch);
+
+      if (ingredientMatches) {
+        setIngredientIds(ingredientMatches.map(({ _id }) => _id));
+      }
 
       return;
     }
 
-    setFilteredItems([]);
-  };
-
-  /* useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        wrapperRef.current &&
-        !wrapperRef.current.contains(event.target as Node)
-      ) {
-        setIsFocused(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []); */
+    setCocktailIds([]);
+    setIngredientIds([]);
+  }, [value, cocktails, ingredients]);
 
   return (
-    <SearchBarWrapper ref={wrapperRef}>
-      <SearchInput
-        type="text"
-        value={value}
-        onChange={onChange}
-        onFocus={() => setIsFocused(true)}
-        autoFocus={autoFocus}
-      />
-      <PlaceholderWrapper hasValue={value.length > 0}>
-        {placeholder || 'Search for cooktails and ingredients...'}
-      </PlaceholderWrapper>
-      <SearchIconWrapper>
-        <StyledIconButton size={40}>
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-            <g
-              id="SVGRepo_tracerCarrier"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></g>
-            <g id="SVGRepo_iconCarrier">
-              {' '}
-              <g clip-path="url(#clip0_15_152)">
-                {' '}
-                <rect width="24" height="24" fill="white"></rect>{' '}
-                <circle
-                  cx="10.5"
-                  cy="10.5"
-                  r="6.5"
-                  stroke="#000000"
-                  stroke-linejoin="round"
-                ></circle>{' '}
-                <path
-                  d="M19.6464 20.3536C19.8417 20.5488 20.1583 20.5488 20.3536 20.3536C20.5488 20.1583 20.5488 19.8417 20.3536 19.6464L19.6464 20.3536ZM20.3536 19.6464L15.3536 14.6464L14.6464 15.3536L19.6464 20.3536L20.3536 19.6464Z"
-                  fill="#000000"
-                ></path>{' '}
-              </g>{' '}
-              <defs>
-                {' '}
-                <clipPath id="clip0_15_152">
+    <StyledDropdown
+      onOptionClick={() => {}}
+      items={[
+        {
+          name: 'Cocktails',
+          items: cocktailIds,
+        },
+        {
+          name: 'Ingredients',
+          items: ingredientIds,
+        },
+      ]}
+      renderItem={(id) => <SearchResult resultId={id} />}
+      trigger={
+        <SearchBarWrapper ref={wrapperRef}>
+          <SearchInput
+            type="text"
+            value={value}
+            onChange={onChange}
+            autoFocus={autoFocus}
+          />
+          <PlaceholderWrapper $hasValue={value.length > 0}>
+            {placeholder || 'Search for cooktails and ingredients...'}
+          </PlaceholderWrapper>
+          <SearchIconWrapper>
+            <StyledIconButton size={40}>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                ></g>
+                <g id="SVGRepo_iconCarrier">
                   {' '}
-                  <rect width="24" height="24" fill="white"></rect>{' '}
-                </clipPath>{' '}
-              </defs>{' '}
-            </g>
-          </svg>
-        </StyledIconButton>
-      </SearchIconWrapper>
-      {/* <Dropdown show={isFocused && filteredItems.length > 0}>
-        {filteredItems.map((item, index) => (
-          <DropdownItem key={index}>{item}</DropdownItem>
-        ))}
-      </Dropdown> */}
-    </SearchBarWrapper>
+                  <g clipPath="url(#clip0_15_152)">
+                    {' '}
+                    <rect width="24" height="24" fill="white"></rect>{' '}
+                    <circle
+                      cx="10.5"
+                      cy="10.5"
+                      r="6.5"
+                      stroke="#000000"
+                      strokeLinejoin="round"
+                    ></circle>{' '}
+                    <path
+                      d="M19.6464 20.3536C19.8417 20.5488 20.1583 20.5488 20.3536 20.3536C20.5488 20.1583 20.5488 19.8417 20.3536 19.6464L19.6464 20.3536ZM20.3536 19.6464L15.3536 14.6464L14.6464 15.3536L19.6464 20.3536L20.3536 19.6464Z"
+                      fill="#000000"
+                    ></path>{' '}
+                  </g>{' '}
+                  <defs>
+                    {' '}
+                    <clipPath id="clip0_15_152">
+                      {' '}
+                      <rect width="24" height="24" fill="white"></rect>{' '}
+                    </clipPath>{' '}
+                  </defs>{' '}
+                </g>
+              </svg>
+            </StyledIconButton>
+          </SearchIconWrapper>
+        </SearchBarWrapper>
+      }
+    />
   );
 };
 
 export default SearchBar;
+
+const StyledDropdown: typeof Dropdown = styled(Dropdown)`
+  .dropdown-menu {
+    width: 350px;
+    max-height: min(80vh, 800px);
+  }
+`;
 
 const fadeUp = keyframes`
   from {
@@ -143,7 +161,7 @@ const SearchBarWrapper = styled.div`
   width: 500px;
 `;
 
-const PlaceholderWrapper = styled.div<{ hasValue: boolean }>`
+const PlaceholderWrapper = styled.div<{ $hasValue: boolean }>`
   position: absolute;
   top: 50%;
   left: 10px;
@@ -154,8 +172,8 @@ const PlaceholderWrapper = styled.div<{ hasValue: boolean }>`
   color: #aaa;
   pointer-events: none;
 
-  ${({ hasValue }) =>
-    hasValue &&
+  ${({ $hasValue }) =>
+    $hasValue &&
     `
     transform: translateY(-50%) translateX(20px);
     opacity: 0;
@@ -182,33 +200,4 @@ const SearchIconWrapper = styled.div`
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
-`;
-
-const Dropdown = styled.ul<{ show: boolean }>`
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  max-height: 150px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  list-style: none;
-  padding: 0;
-  margin: 5px 0 0;
-  overflow-y: auto;
-  z-index: 1;
-  opacity: 0;
-  transform: translateY(10px);
-  animation: ${({ show }) => (show ? animation : 'none')};
-`;
-
-const DropdownItem = styled.li`
-  padding: 10px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #f0f0f0;
-  }
 `;

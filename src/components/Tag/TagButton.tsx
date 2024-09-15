@@ -25,7 +25,7 @@ const TagButton = <T extends IngredientTag | CocktailTag>({
   }, [tag, isIngredient]);
 
   return (
-    <Button color={color}>
+    <Button $color={color}>
       {title}
 
       {onRemove && (
@@ -35,11 +35,11 @@ const TagButton = <T extends IngredientTag | CocktailTag>({
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
             <g
               id="SVGRepo_tracerCarrier"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             ></g>
             <g id="SVGRepo_iconCarrier">
               {' '}
@@ -62,12 +62,12 @@ const StyledIconButton = styled(IconButton)`
   flex-shrink: 0;
 `;
 
-const Button = styled.span<{ color: string }>`
+const Button = styled.span<{ $color: string }>`
   padding: 5px 10px;
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background-color: ${({ color }) => color};
+  background-color: ${({ $color }) => $color};
   border-radius: 5px;
   font-size: 0.875rem;
   white-space: nowrap;

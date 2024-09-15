@@ -80,7 +80,7 @@ const CocktailIngredient = ({
 
   return (
     <Container>
-      <InputsWrapper index={index}>
+      <InputsWrapper $index={index}>
         <div>
           <StyledInput
             label="name"
@@ -111,7 +111,7 @@ const CocktailIngredient = ({
             <StyledDropdown
               position="top"
               trigger={
-                <Unit justifyContent="flex-end">
+                <Unit $justifyContent="flex-end">
                   {cocktailUnitInfo[ingredients[index].unit].title}{' '}
                   <IconButton>▼</IconButton>
                 </Unit>
@@ -136,7 +136,7 @@ const CocktailIngredient = ({
           {getError('unit') && <ErrorText>{getError('unit')}</ErrorText>}
         </div>
       </InputsWrapper>
-      <CheckboxWrapper gap="20px">
+      <CheckboxWrapper $gap="20px">
         <Checkbox
           label="optional"
           isChecked={ingredients[index].isOptional}
@@ -164,7 +164,7 @@ const CocktailIngredient = ({
         <IngredientsWrapper>
           {filteredIngredients.map(({ _id, nameEn, image, tags }) => (
             <Ingredient key={_id} onClick={onIngredientChange(_id, nameEn)}>
-              <Image image={image || ''} />
+              <Image $image={image || ''} />
               <Content>
                 <Name>{nameEn}</Name>
                 <Tags>
@@ -215,7 +215,7 @@ const CloseButton = styled(IconButton)`
   font-size: 1.5rem;
 `;
 
-const InputsWrapper = styled.div<{ index: number }>`
+const InputsWrapper = styled.div<{ $index: number }>`
   display: flex;
   gap: 20px;
   align-items: flex-start;
@@ -231,7 +231,7 @@ const InputsWrapper = styled.div<{ index: number }>`
   }
 
   &::before {
-    content: '${({ index }) => index + 1}';
+    content: '${({ $index }) => $index + 1}';
     position: absolute;
     top: 50%;
     left: 0;
@@ -290,10 +290,10 @@ const Ingredient = styled.div`
   }
 `;
 
-const Image = styled.span<{ image: string }>`
+const Image = styled.span<{ $image: string }>`
   width: 100px;
   aspect-ratio: 1 / 1;
-  background: #df00000a url(${({ image }) => image}) no-repeat center;
+  background: #df00000a url(${({ $image }) => $image}) no-repeat center;
   background-size: contain;
   border-radius: 10px;
 `;

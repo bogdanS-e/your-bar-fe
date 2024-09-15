@@ -31,8 +31,8 @@ const Filter = <T extends string | number>({
     <Container>
       {items.map(({ title, key, image }) => (
         <Item key={key} onClick={() => handleClick(key)}>
-          <Image image={image}>
-            <Selected isSelected={selectedTags.includes(key)} />
+          <Image $image={image}>
+            <Selected $isSelected={selectedTags.includes(key)} />
           </Image>
           {title}
         </Item>
@@ -59,20 +59,20 @@ const Item = styled.div`
   align-items: center;
 `;
 
-const Image = styled.span<{ image: string }>`
+const Image = styled.span<{ $image: string }>`
   width: 80px;
   height: 80px;
   border-radius: 50%;
   display: block;
   margin-bottom: 8px;
-  background: url(${({ image }) => image}) center;
+  background: url(${({ $image }) => $image}) center;
   background-size: cover;
   position: relative;
 `;
 
-const Selected = styled.span<{ isSelected: boolean }>`
+const Selected = styled.span<{ $isSelected: boolean }>`
   transition: border 0.15s linear;
-  border: ${({ isSelected }) => (isSelected ? '5px' : '0')} solid #90caf8;
+  border: ${({ $isSelected }) => ($isSelected ? '5px' : '0')} solid #90caf8;
   width: calc(100% + 2px);
   height: calc(100% + 2px);
   position: absolute;
@@ -93,6 +93,6 @@ const Selected = styled.span<{ isSelected: boolean }>`
     right: -5%;
     top: -5%;
     color: #080808a8;
-    opacity: ${({ isSelected }) => (isSelected ? '1' : '0')};
+    opacity: ${({ $isSelected }) => ($isSelected ? '1' : '0')};
   }
 `;

@@ -17,7 +17,7 @@ type TAlignItems =
   | 'first baseline'
   | 'last baseline';
 
-type TJustifyContent =
+type T$justifyContent =
   | TFlexAlignment
   | 'left'
   | 'right'
@@ -27,19 +27,19 @@ type TJustifyContent =
 
 type TGap = string | 'normal';
 
-type TFlexWrap = 'nowrap' | 'wrap' | 'wrap-reverse';
+type T$flexWrap = 'nowrap' | 'wrap' | 'wrap-reverse';
 
 interface IFlexProps {
-  alignItems?: TAlignItems;
-  justifyContent?: TJustifyContent;
-  flexWrap?: TFlexWrap;
-  gap?: TGap;
+  $alignItems?: TAlignItems;
+  $justifyContent?: T$justifyContent;
+  $flexWrap?: T$flexWrap;
+  $gap?: TGap;
 }
 
 export const Row = styled.div<IFlexProps>`
   display: flex;
-  align-items: ${({ alignItems }) => alignItems || 'center'};
-  justify-content: ${({ justifyContent }) => justifyContent || 'flex-start'};
-  flex-wrap: ${({ flexWrap }) => flexWrap || 'nowrap'};
-  gap: ${({ gap }) => gap || '0'};
+  align-items: ${({ $alignItems }) => $alignItems || 'center'};
+  justify-content: ${({ $justifyContent }) => $justifyContent || 'flex-start'};
+  flex-wrap: ${({ $flexWrap }) => $flexWrap || 'nowrap'};
+  gap: ${({ $gap }) => $gap || '0'};
 `;
