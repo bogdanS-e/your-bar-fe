@@ -1,6 +1,9 @@
 import { IIngredient } from 'types/ingredient';
 import { create } from 'zustand';
 
+// from BE we get arrays of ingredient & cocktail
+// store will store Map<objId, obj> for search optimization
+// Find cocktail & ingredient by id in O(1)
 interface IStoreProps {
   ingredientsMap: Map<string, IIngredient>;
 }
