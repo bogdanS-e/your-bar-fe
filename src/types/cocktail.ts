@@ -81,7 +81,10 @@ export enum CocktailUnit {
   Scoop,
 }
 
-export const cocktailUnitInfo: Record<CocktailUnit, { title: string, key: CocktailUnit }> = {
+export const cocktailUnitInfo: Record<
+  CocktailUnit,
+  { title: string; key: CocktailUnit }
+> = {
   [CocktailUnit.Cl]: {
     title: 'cl',
     key: CocktailUnit.Cl,
@@ -173,9 +176,8 @@ export const cocktailUnitInfo: Record<CocktailUnit, { title: string, key: Cockta
   [CocktailUnit.Scoop]: {
     title: 'scoop',
     key: CocktailUnit.Scoop,
-  }
+  },
 };
-
 
 export interface ICocktailIngredient {
   ingredientId: string;

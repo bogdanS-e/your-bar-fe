@@ -7,7 +7,7 @@ interface IModalProps {
   onClose: () => void;
   children: ReactNode;
   title?: string;
-  keepUnmount?: boolean; //ignore useEffect on isOpen=false 
+  keepUnmount?: boolean; //ignore useEffect on isOpen=false
   className?: string;
 }
 const Modal = ({
@@ -40,7 +40,10 @@ const Modal = ({
 
   return createPortal(
     <ModalOverlay onMouseDown={onClose}>
-      <ModalContent className={className} onMouseDown={(e) => e.stopPropagation()}>
+      <ModalContent
+        className={className}
+        onMouseDown={(e) => e.stopPropagation()}
+      >
         <ModalHeader>
           <h2>{title}</h2>
           <CloseButton onClick={onClose}>&times;</CloseButton>

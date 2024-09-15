@@ -47,7 +47,10 @@ const Layout = ({ children }: ILayoutProps) => {
         <Sidebar>
           <nav>
             <Link style={{ display: 'block' }} href="/cocktails">
-              <StyledIconButton size={50} isActive={router.pathname === '/cocktails'}>
+              <StyledIconButton
+                size={50}
+                isActive={router.pathname === '/cocktails'}
+              >
                 <svg
                   fill="#000000"
                   height="200px"

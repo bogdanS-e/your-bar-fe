@@ -2,7 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axiosInstance from 'utils/axiosInstance';
 import { CocktailTag, ICocktailIngredient } from 'types/cocktail';
 
-interface ICocktailIngredientFormValues extends Omit<ICocktailIngredient, 'value'> {
+interface ICocktailIngredientFormValues
+  extends Omit<ICocktailIngredient, 'value'> {
   name: string;
   value: number | string;
 }

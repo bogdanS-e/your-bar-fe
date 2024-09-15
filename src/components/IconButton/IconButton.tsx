@@ -17,7 +17,13 @@ const IconButton = ({
   onClick,
 }: IIconButtonProps) => {
   return (
-    <Button disabled={disabled} size={size} className={className} onClick={onClick} type="button">
+    <Button
+      disabled={disabled}
+      size={size}
+      className={className}
+      onClick={onClick}
+      type="button"
+    >
       {children}
     </Button>
   );
@@ -43,7 +49,7 @@ const Button = styled.button<{ size?: number }>`
   overflow: hidden;
 
   &:disabled {
-  pointer-events: none;
+    pointer-events: none;
   }
 
   &:hover {

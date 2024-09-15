@@ -18,7 +18,10 @@ interface ICocktailIngredientProps {
   allIngredients: IIngredient[];
 }
 
-const CocktailIngredient = ({ index, allIngredients }: ICocktailIngredientProps) => {
+const CocktailIngredient = ({
+  index,
+  allIngredients,
+}: ICocktailIngredientProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
 
@@ -41,25 +44,25 @@ const CocktailIngredient = ({ index, allIngredients }: ICocktailIngredientProps)
     );
   }, [allIngredients, searchValue]);
 
-
-  const onIngredientChange = (ingredientId: string, ingredientName: string) => () => {
-    setIsModalOpen(false);
-    setSearchValue('');
-    setFieldValue(`ingredients.${index}.ingredientId`, ingredientId);
-    setFieldValue(`ingredients.${index}.name`, ingredientName);
-  };
+  const onIngredientChange =
+    (ingredientId: string, ingredientName: string) => () => {
+      setIsModalOpen(false);
+      setSearchValue('');
+      setFieldValue(`ingredients.${index}.ingredientId`, ingredientId);
+      setFieldValue(`ingredients.${index}.name`, ingredientName);
+    };
 
   const onUnitChange = (unit: CocktailUnit) => {
     setFieldValue(`ingredients.${index}.unit`, unit);
-  }
+  };
 
   const onOptionalChange = (isChecked: boolean) => {
     setFieldValue(`ingredients.${index}.isOptional`, isChecked);
-  }
+  };
 
   const onDecorationChange = (isChecked: boolean) => {
     setFieldValue(`ingredients.${index}.isDecoration`, isChecked);
-  }
+  };
 
   const getError = (key: string) => {
     let err = errors as any;
@@ -69,7 +72,7 @@ const CocktailIngredient = ({ index, allIngredients }: ICocktailIngredientProps)
     }
 
     return err?.[`ingredients.${index}.${key}`];
-  }
+  };
 
   if (!allIngredients) {
     return null;
@@ -83,7 +86,7 @@ const CocktailIngredient = ({ index, allIngredients }: ICocktailIngredientProps)
             label="name"
             name={`ingredients.${index}.name`}
             value={ingredients[index].name}
-            onChange={() => { }}
+            onChange={() => {}}
             readOnly
             onClick={() => setIsModalOpen(true)}
           />
@@ -108,14 +111,13 @@ const CocktailIngredient = ({ index, allIngredients }: ICocktailIngredientProps)
             <StyledDropdown
               position="top"
               trigger={
-                <Unit justifyContent='flex-end'>
-                  {cocktailUnitInfo[ingredients[index].unit].title} <IconButton>▼</IconButton>
+                <Unit justifyContent="flex-end">
+                  {cocktailUnitInfo[ingredients[index].unit].title}{' '}
+                  <IconButton>▼</IconButton>
                 </Unit>
               }
               items={Object.values(cocktailUnitInfo).map(({ key }) => key)}
-              renderItem={(unit) => (
-                <div>{cocktailUnitInfo[unit].title}</div>
-              )}
+              renderItem={(unit) => <div>{cocktailUnitInfo[unit].title}</div>}
               onOptionClick={onUnitChange}
             />
             <FieldArray name="ingredients">
@@ -134,9 +136,17 @@ const CocktailIngredient = ({ index, allIngredients }: ICocktailIngredientProps)
           {getError('unit') && <ErrorText>{getError('unit')}</ErrorText>}
         </div>
       </InputsWrapper>
-      <CheckboxWrapper gap='20px'>
-        <Checkbox label='optional' isChecked={ingredients[index].isOptional} onChange={onOptionalChange} />
-        <Checkbox label='decoration' isChecked={ingredients[index].isDecoration} onChange={onDecorationChange} />
+      <CheckboxWrapper gap="20px">
+        <Checkbox
+          label="optional"
+          isChecked={ingredients[index].isOptional}
+          onChange={onOptionalChange}
+        />
+        <Checkbox
+          label="decoration"
+          isChecked={ingredients[index].isDecoration}
+          onChange={onDecorationChange}
+        />
       </CheckboxWrapper>
 
       <StyledModal
@@ -165,9 +175,8 @@ const CocktailIngredient = ({ index, allIngredients }: ICocktailIngredientProps)
               </Content>
             </Ingredient>
           ))}
-          {filteredIngredients.length === 0 && (
-            'No ingredient match your search'
-          )}
+          {filteredIngredients.length === 0 &&
+            'No ingredient match your search'}
         </IngredientsWrapper>
       </StyledModal>
     </Container>

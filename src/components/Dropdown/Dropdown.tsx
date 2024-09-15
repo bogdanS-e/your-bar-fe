@@ -56,7 +56,7 @@ const Dropdown = <T extends number | string>({
         classNames="dropdown-fade"
         unmountOnExit
       >
-        <DropdownMenu className='dropdown-menu' position={position}>
+        <DropdownMenu className="dropdown-menu" position={position}>
           {items.map((item) => (
             <DropdownItem onClick={() => onItemClick(item)} key={item}>
               {renderItem ? renderItem(item) : item}

@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { IIngredient } from 'types/ingredient';
 import axiosInstance from 'utils/axiosInstance';
 
@@ -9,6 +9,8 @@ export const getIngredients = async () => {
 };
 
 const useIngredients = () => {
+  const queryClient = useQueryClient();
+
   return useQuery({
     queryKey: ['ingredients'],
     queryFn: getIngredients,

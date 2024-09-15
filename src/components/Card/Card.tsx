@@ -1,45 +1,75 @@
-// components/IngredientCard.tsx
 import TagButton from 'components/Tag/TagButton';
 import React from 'react';
 import styled from 'styled-components';
+import { Row } from 'styles/components';
+import { CocktailTag } from 'types/cocktail';
 import { IngredientTag } from 'types/ingredient';
 
-interface IngredientCardProps {
+interface ICardProps {
   image: string | null;
   name: string;
   description: string;
-  tags: IngredientTag[];
+  tags: (IngredientTag | CocktailTag)[];
+  ingredients?: string[];
   className?: string;
 }
 
-const IngredientCard: React.FC<IngredientCardProps> = ({
+const Card = ({
   image,
   name,
   description,
   tags,
+  ingredients,
   className,
-}) => {
+}: ICardProps) => {
   return (
-    <Card className={className}>
-      <ImageWrapper>
+    <CardContainer className={className}>
+      <ImageWrapper justifyContent="center">
         <Image src={image || ''} alt={name} />
       </ImageWrapper>
       <Content>
         <Title>{name}</Title>
         <Description>{description}</Description>
+
+        {!!ingredients?.length && (
+          <Ingredients>
+            {ingredients.map((ingredient) => (
+              <span key={ingredient}>{ingredient}</span>
+            ))}
+          </Ingredients>
+        )}
+
         <TagsWrapper>
           {tags.map((tag) => (
-            <TagButton key={tag} tag={tag} isIngredient />
+            <TagButton
+              key={tag}
+              tag={tag}
+              isIngredient={!ingredients?.length}
+            />
           ))}
         </TagsWrapper>
       </Content>
-    </Card>
+    </CardContainer>
   );
 };
 
-export default IngredientCard;
+export default Card;
 
-const Card = styled.div`
+const Ingredients = styled.div`
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: #aaa;
+
+  span:not(:last-child) {
+    &:after {
+      content: ',  ';
+      white-space: pre;
+    }
+  }
+`;
+
+const CardContainer = styled.div`
   width: 300px;
   border-radius: 10px;
   overflow: hidden;
@@ -53,17 +83,18 @@ const Card = styled.div`
   }
 `;
 
-const ImageWrapper = styled.div`
+const ImageWrapper = styled(Row)`
   width: 100%;
   height: 150px;
+  padding-top: 10px;
   overflow: hidden;
 `;
 
 const Image = styled.img`
-  width: 100%;
   height: 100%;
   object-fit: contain;
   transition: transform 0.3s ease;
+  border-radius: 5px;
 `;
 
 const Content = styled.div`

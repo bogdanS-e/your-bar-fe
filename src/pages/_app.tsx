@@ -4,10 +4,27 @@ import Head from 'next/head';
 import Layout from 'components/Layout';
 import GlobalStyle from 'styles/globalStyles';
 import { useState } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import {
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import useStore from 'store';
+import { IIngredient } from 'types/ingredient';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+  const { updateIngredients } = useStore();
+
+  const queryCache = new QueryCache({
+    onSuccess: (data, query) => {
+      if (JSON.stringify(query.queryKey) === JSON.stringify(['ingredients'])) {
+        console.log('ingredients updated');
+        updateIngredients(data as IIngredient[]);
+      }
+    },
+  });
+
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -18,6 +35,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             retry: false,
           },
         },
+        queryCache,
       })
   );
 

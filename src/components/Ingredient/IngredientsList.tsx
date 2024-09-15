@@ -4,15 +4,18 @@ import {
   ingredientTagInfo,
 } from 'types/ingredient';
 import useIngredients from './useIngredients';
-import IngredientCard from './IngredientCard';
 import styled from 'styled-components';
 import { useMemo } from 'react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import Card from 'components/Card';
+import { Row } from 'styles/components';
 
 interface IIngredientsListProps {
   initialData: IIngredient[];
   selectedTags: IngredientTag[];
 }
+
+const gap = '20px';
 
 const IngredientsList = ({
   initialData,
@@ -62,10 +65,10 @@ const IngredientsList = ({
         >
           <Article>
             <Title>{ingredientTagInfo[tag].title}</Title>
-            <IngredientsWrapper>
+            <Row gap={gap} flexWrap="wrap">
               {ingredients.map(
                 ({ _id, nameEn, descriptionEn, image, tags }) => (
-                  <StyledIngredientCard
+                  <StyledCard
                     key={_id}
                     name={nameEn}
                     description={descriptionEn}
@@ -74,7 +77,7 @@ const IngredientsList = ({
                   />
                 )
               )}
-            </IngredientsWrapper>
+            </Row>
           </Article>
         </CSSTransition>
       );
@@ -87,14 +90,6 @@ const IngredientsList = ({
 };
 
 export default IngredientsList;
-
-const gap = '20px';
-
-const IngredientsWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: ${gap};
-`;
 
 const Article = styled.article`
   display: block;
@@ -109,6 +104,6 @@ const Title = styled.h2`
 
 const Container = styled.section``;
 
-const StyledIngredientCard = styled(IngredientCard)`
+const StyledCard = styled(Card)`
   width: calc((100% - 4 * ${gap}) / 5);
 `;

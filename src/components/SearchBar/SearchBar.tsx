@@ -9,7 +9,12 @@ interface ISearchBarProps {
   autoFocus?: boolean;
 }
 
-const SearchBar = ({ placeholder, value, onChange ,autoFocus}: ISearchBarProps) => {
+const SearchBar = ({
+  placeholder,
+  value,
+  onChange,
+  autoFocus,
+}: ISearchBarProps) => {
   const [filteredItems, setFilteredItems] = useState<string[]>([]);
   const [isFocused, setIsFocused] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);

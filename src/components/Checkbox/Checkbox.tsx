@@ -16,7 +16,11 @@ const Checkbox: React.FC<CheckboxProps> = ({ label, isChecked, onChange }) => {
   return (
     <CheckboxContainer>
       <HiddenCheckbox checked={isChecked} onChange={handleCheckboxChange} />
-      <StyledCheckbox isChecked={isChecked} alignItems='center' justifyContent='center' />
+      <StyledCheckbox
+        isChecked={isChecked}
+        alignItems="center"
+        justifyContent="center"
+      />
       <LabelText>{label}</LabelText>
     </CheckboxContainer>
   );
@@ -43,8 +47,8 @@ const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
 const StyledCheckbox = styled(Row)<{ isChecked: boolean }>`
   width: 20px;
   height: 20px;
-  background: ${({ isChecked }) => isChecked ? '#3f51b5' : '#fff'};
-  border: 2px solid ${({ isChecked }) => isChecked ? '#3f51b5' : '#ccc'};
+  background: ${({ isChecked }) => (isChecked ? '#3f51b5' : '#fff')};
+  border: 2px solid ${({ isChecked }) => (isChecked ? '#3f51b5' : '#ccc')};
   border-radius: 4px;
   transition: all 150ms;
   cursor: pointer;
@@ -55,7 +59,7 @@ const StyledCheckbox = styled(Row)<{ isChecked: boolean }>`
   }
 
   &::before {
-    content: '${({ isChecked }) => isChecked ? '✓' : ''}';
+    content: '${({ isChecked }) => (isChecked ? '✓' : '')}';
     color: #fff;
     font-size: 1rem;
     position: absolute;

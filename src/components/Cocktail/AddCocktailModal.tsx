@@ -44,23 +44,27 @@ const cocktailSchema: ZodType<ICocktailFormValues> = z.object({
       message: 'Image size should be less than 5MB',
     })
     .nullable(),
-  ingredients: z.array(
-    z.object({
-      ingredientId: z.string(),
-      isOptional: z.boolean(),
-      isDecoration: z.boolean(),
-      name: z
-        .string()
-        .min(1, 'Ingredient name is required')
-        .max(30, 'Name too long'),
-      value: z
-        .string()
-        .transform((val) => Number(val))
-        .refine((val) => !isNaN(val), { message: 'Value must be a number' })
-        .refine((val) => val > 0, { message: 'Value must be greater than 0' }),
-      unit: z.number().min(0, 'Unit is required'),
-    })
-  ).max(10, 'No cocktail has 10 ingredients')
+  ingredients: z
+    .array(
+      z.object({
+        ingredientId: z.string(),
+        isOptional: z.boolean(),
+        isDecoration: z.boolean(),
+        name: z
+          .string()
+          .min(1, 'Ingredient name is required')
+          .max(30, 'Name too long'),
+        value: z
+          .string()
+          .transform((val) => Number(val))
+          .refine((val) => !isNaN(val), { message: 'Value must be a number' })
+          .refine((val) => val > 0, {
+            message: 'Value must be greater than 0',
+          }),
+        unit: z.number().min(0, 'Unit is required'),
+      })
+    )
+    .max(10, 'No cocktail has 10 ingredients'),
 });
 
 const emptyIngredient = {
@@ -70,7 +74,7 @@ const emptyIngredient = {
   unit: CocktailUnit.Ml,
   isOptional: false,
   isDecoration: false,
-}
+};
 
 const AddCocktailModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
   const createCocktailMutation = useCreateCocktail();
@@ -188,12 +192,17 @@ const AddCocktailModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
               <AddIngredients />
               <FieldArray name="ingredients">
                 {({ push }) => (
-                  <AddIngredientButton type="button" onClick={() => push({ ...emptyIngredient })}>
+                  <AddIngredientButton
+                    type="button"
+                    onClick={() => push({ ...emptyIngredient })}
+                  >
                     Add ingredient
                   </AddIngredientButton>
                 )}
               </FieldArray>
-              {errors?.ingredients && <ErrorText>{errors.ingredients as string}</ErrorText>}
+              {errors?.ingredients && (
+                <ErrorText>{errors.ingredients as string}</ErrorText>
+              )}
             </AddIngredientsWrapper>
 
             <ActionWrapper>
@@ -213,7 +222,7 @@ const AddCocktailModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
 export default AddCocktailModal;
 
 const StyledModal = styled(Modal)`
-  max-width: 500px!important;
+  max-width: 500px !important;
 `;
 
 const AddIngredientButton = styled(Button)`
