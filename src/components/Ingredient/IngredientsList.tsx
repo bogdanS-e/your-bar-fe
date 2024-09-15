@@ -86,7 +86,7 @@ const IngredientsList = ({
     return <TransitionGroup component={null}>{articles}</TransitionGroup>;
   };
 
-  return <Container>{renderArticles()}</Container>;
+  return <section>{renderArticles()}</section>;
 };
 
 export default IngredientsList;
@@ -101,8 +101,6 @@ const Title = styled.h2`
   color: #8f8f8f;
   margin: 40px 0 20px;
 `;
-
-const Container = styled.section``;
 
 const StyledCard = styled(Card)`
   width: calc((100% - 4 * ${gap}) / 5);

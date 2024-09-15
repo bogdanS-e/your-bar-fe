@@ -1,3 +1,4 @@
+import { ICocktail, ICocktailIngredient } from 'types/cocktail';
 import { IIngredient } from 'types/ingredient';
 import { create } from 'zustand';
 
@@ -6,14 +7,18 @@ import { create } from 'zustand';
 // Find cocktail & ingredient by id in O(1)
 interface IStoreProps {
   ingredientsMap: Map<string, IIngredient>;
+  cocktaisMap: Map<string, ICocktail>;
 }
 
 interface IActionsProps {
   updateIngredients: (ingredients: IIngredient[]) => void;
+  updateCocktails: (ingredients: ICocktail[]) => void;
+  getIngredientsName: (cocktailIngredients: ICocktailIngredient[]) => string[];
 }
 
-const useStore = create<IStoreProps & IActionsProps>()((set) => ({
+const useStore = create<IStoreProps & IActionsProps>()((set, get) => ({
   ingredientsMap: new Map(),
+  cocktaisMap: new Map(),
   updateIngredients: (ingredients) => {
     const ingredientsMap = new Map<string, IIngredient>();
 
@@ -22,6 +27,38 @@ const useStore = create<IStoreProps & IActionsProps>()((set) => ({
     }
 
     set({ ingredientsMap });
+  },
+  updateCocktails: (cocktails) => {
+    const cocktaisMap = new Map<string, ICocktail>();
+
+    for (const cocktail of cocktails) {
+      cocktaisMap.set(cocktail._id, cocktail);
+    }
+
+    set({ cocktaisMap });
+  },
+  getIngredientsName: (cocktailIngredients) => {
+    const { ingredientsMap } = get();
+
+    if (!ingredientsMap.size) {
+      return ['ingredient name'];
+    }
+
+    const ingredientsName: string[] = [];
+
+    for (let i = 0; i < 3; i++) {
+      const { ingredientId } = cocktailIngredients[i];
+
+      const { nameEn } = ingredientsMap.get(ingredientId) || {};
+
+      if (!nameEn) {
+        continue;
+      }
+
+      ingredientsName.push(nameEn);
+    }
+
+    return ingredientsName;
   },
 }));
 
