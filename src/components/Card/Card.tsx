@@ -26,7 +26,7 @@ const Card = ({
   className,
 }: ICardProps) => {
   return (
-    <CardContainer className={className} href={href}>
+    <CardContainer className={className} href={href} prefetch={false}>
       <ImageWrapper $justifyContent="center">
         <Image src={image || ''} alt={name} />
       </ImageWrapper>
