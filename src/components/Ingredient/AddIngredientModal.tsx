@@ -9,20 +9,19 @@ import styled from 'styled-components';
 import ImageInput from 'components/ImageInput';
 import Textarea from 'components/Textarea';
 import Button from 'components/Button/Button';
-import useCreateIngredient, {
-  IIngredientFormValues,
-} from './useCreateIngredient';
+import useCreateIngredient from './useCreateIngredient';
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 import { IResError } from 'types/common';
 import getAxiosError from 'utils/getAxiosError';
+import { ICreateIngredientParams } from 'api/ingredients';
 
 interface IAddIngredientModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const ingredientSchema: ZodType<IIngredientFormValues> = z.object({
+const ingredientSchema: ZodType<ICreateIngredientParams> = z.object({
   name: z
     .string()
     .min(1, 'Ingredient name is required')
@@ -46,8 +45,8 @@ const ingredientSchema: ZodType<IIngredientFormValues> = z.object({
 const AddIngredientModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
   const createIngerientMutation = useCreateIngredient();
 
-  const onCreate = (values: IIngredientFormValues) => {
-    return toast.promise<IIngredientFormValues, AxiosError<IResError>>(
+  const onCreate = (values: ICreateIngredientParams) => {
+    return toast.promise<ICreateIngredientParams, AxiosError<IResError>>(
       async () => await createIngerientMutation.mutateAsync(values),
       {
         pending: 'Creating a new ingredient',
@@ -76,7 +75,7 @@ const AddIngredientModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
     setFieldValue,
     values,
     errors,
-  } = useFormik<IIngredientFormValues>({
+  } = useFormik<ICreateIngredientParams>({
     initialValues: {
       name: '',
       description: '',

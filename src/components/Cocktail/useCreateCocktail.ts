@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axiosInstance from 'utils/axiosInstance';
+import axiosInstance from 'api/axiosInstance';
 import { CocktailTag, ICocktailIngredient } from 'types/cocktail';
 
 interface ICocktailIngredientFormValues

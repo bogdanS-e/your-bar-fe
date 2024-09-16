@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { ICocktail } from 'types/cocktail';
-import axiosInstance from 'utils/axiosInstance';
+import axiosInstance from 'api/axiosInstance';
 
 export const getCocktails = async () => {
   const { data } = await axiosInstance.get<ICocktail[]>('/cocktails');

@@ -70,6 +70,7 @@ const IngredientsList = ({
                 ({ _id, nameEn, descriptionEn, image, tags }) => (
                   <StyledCard
                     key={_id}
+                    href={`ingredient/${_id}`}
                     name={nameEn}
                     description={descriptionEn}
                     image={image}

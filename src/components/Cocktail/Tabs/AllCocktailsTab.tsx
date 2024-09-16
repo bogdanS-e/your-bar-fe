@@ -76,6 +76,7 @@ const AllCocktailsTab = ({ initialData }: IIngredientsPageProps) => {
                     description={descriptionEn}
                     image={image}
                     tags={tags}
+                    href={`coctail/${_id}`}
                     ingredients={getIngredientsName(ingredients)}
                   />
                 )

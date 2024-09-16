@@ -22,6 +22,6 @@ export const getStaticProps: GetStaticProps<ICocktailsProps> = async () => {
     props: {
       initialData: cocktails,
     },
-    revalidate: 24 * 60 * 60 * 1000, // 1 day
+    revalidate: 24 * 60 * 60, // 1 day
   };
 };

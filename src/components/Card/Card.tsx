@@ -1,4 +1,5 @@
 import TagButton from 'components/Tag/TagButton';
+import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
 import { Row } from 'styles/components';
@@ -10,6 +11,7 @@ interface ICardProps {
   name: string;
   description: string;
   tags: (IngredientTag | CocktailTag)[];
+  href: string;
   ingredients?: string[];
   className?: string;
 }
@@ -19,11 +21,12 @@ const Card = ({
   name,
   description,
   tags,
+  href,
   ingredients,
   className,
 }: ICardProps) => {
   return (
-    <CardContainer className={className}>
+    <CardContainer className={className} href={href}>
       <ImageWrapper $justifyContent="center">
         <Image src={image || ''} alt={name} />
       </ImageWrapper>
@@ -69,7 +72,8 @@ const Ingredients = styled.div`
   }
 `;
 
-const CardContainer = styled.div`
+const CardContainer = styled(Link)`
+  display: block;
   width: 300px;
   border-radius: 10px;
   overflow: hidden;
