@@ -48,7 +48,7 @@ const AllCocktailsTab = ({ initialData }: IIngredientsPageProps) => {
     }
 
     return map;
-  }, [selectedTags.length, data]);
+  }, [selectedTags, data]);
 
   const renderArticles = () => {
     const articles = [];

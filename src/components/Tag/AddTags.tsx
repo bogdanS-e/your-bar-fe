@@ -23,7 +23,7 @@ const AddTags = <T extends IngredientTag | CocktailTag>({
 }: IAddTagsProps<T>) => {
   const availableTags = useMemo(() => {
     return allTags.filter((tag) => !selectedTags.includes(tag));
-  }, [selectedTags]);
+  }, [selectedTags, allTags]);
 
   const addTag = (tag: T) => {
     onChange([...selectedTags, tag]);

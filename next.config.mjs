@@ -4,6 +4,15 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: `/${process.env.CLOUDINARY_CLOUD_NAME}/**`,
+      },
+    ],
+  },
 };
 
 export default nextConfig;

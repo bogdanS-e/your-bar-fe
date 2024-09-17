@@ -2,7 +2,7 @@ import { GetStaticProps } from 'next';
 
 import { IIngredient } from 'types/ingredient';
 
-import IngredientsPage from 'components/Ingredient';
+import {IngredientsPage} from 'components/Ingredient';
 import { getIngredients } from 'api/ingredients';
 
 interface IIngredientsProps {

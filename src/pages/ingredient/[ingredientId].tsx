@@ -1,5 +1,5 @@
 import { getIngredient, getIngredients } from 'api/ingredients';
-import { default as IngredientPageComponent } from 'components/Ingredient/IngredientPage';
+import { IngredientPage as IngredientPageComponent } from 'components/Ingredient';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { IIngredient } from 'types/ingredient';
 

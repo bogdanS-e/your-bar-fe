@@ -2,7 +2,7 @@ import { useCocktails } from 'components/Cocktail';
 import Dropdown from 'components/Dropdown';
 import IconButton from 'components/IconButton';
 import { useIngredients } from 'components/Ingredient';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import {  useEffect, useRef, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { ICocktail } from 'types/cocktail';
 import { IIngredient } from 'types/ingredient';

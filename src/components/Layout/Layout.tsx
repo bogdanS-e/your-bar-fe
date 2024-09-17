@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactNode, useEffect, useState } from 'react';
+import {  ReactNode, useEffect, useState } from 'react';
 import { Roboto } from 'next/font/google';
 import Link from 'next/link';
 import styled from 'styled-components';
@@ -10,7 +10,7 @@ import useGlobalStore from '../../globalStore';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import useIngredients from 'components/Ingredient/useIngredients';
+import {useIngredients} from 'components/Ingredient';
 import AddNew from 'components/AddNew';
 import useCocktails from 'components/Cocktail/useCocktails';
 
@@ -44,7 +44,7 @@ const Layout = ({ children }: ILayoutProps) => {
     if (query1.data && query2.data) {
       stopLoading();
     }
-  }, [query1.isError, query2.isError, query1.data, query2.data]);
+  }, [query1.isError, query2.isError, query1.data, query2.data, stopLoading]);
 
   return (
     <>

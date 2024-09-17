@@ -1,7 +1,8 @@
 import Card from 'components/Card';
 import TagButton from 'components/Tag/TagButton';
 import Head from 'next/head';
-import { useMemo } from 'react';
+import Image from 'next/image'
+
 import useStore from 'store';
 import styled from 'styled-components';
 import { Column, Row } from 'styles/components';
@@ -38,7 +39,7 @@ const IngredientPage = ({ ingredient }: IIngredientPageProps) => {
       </Head>
       <Container>
         <Row $alignItems="stretch" $gap="50px">
-          <Image src={image || ''} alt={nameEn} />
+          <StyledImage width={200} height={400} src={image || ''} alt={nameEn} />
           <Column $alignItems="flex-start">
             <Title>{nameEn}</Title>
             <Description>{descriptionEn}</Description>
@@ -101,8 +102,10 @@ const Container = styled.section`
   max-width: 1450px;
 `;
 
-const Image = styled.img`
+const StyledImage = styled(Image)`
   display: block;
   max-width: 200px;
   max-height: 400px;
+  width: auto;
+  height: auto;
 `;
