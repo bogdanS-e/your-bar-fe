@@ -1,6 +1,7 @@
-import { getIngredient, getIngredients } from "api/ingredients";
-import { GetStaticPaths, GetStaticProps } from "next";
-import { IIngredient } from "types/ingredient";
+import { getIngredient, getIngredients } from 'api/ingredients';
+import { default as IngredientPageComponent } from 'components/Ingredient/IngredientPage';
+import { GetStaticPaths, GetStaticProps } from 'next';
+import { IIngredient } from 'types/ingredient';
 
 interface IIngredientsProps {
   ingredient: IIngredient | null;
@@ -8,19 +9,11 @@ interface IIngredientsProps {
 
 const IngredientPage = ({ ingredient }: IIngredientsProps) => {
   if (!ingredient) {
-    return (
-      <h1>Ingredient not found</h1>
-    )
+    return <h1>Ingredient not found</h1>;
   }
 
-  return (
-    <div>
-      <pre>
-        {JSON.stringify(ingredient, null, 2)}
-      </pre>
-    </div>
-  )
-}
+  return <IngredientPageComponent ingredient={ingredient} />;
+};
 
 export default IngredientPage;
 
@@ -28,16 +21,18 @@ export default IngredientPage;
 export const getStaticPaths: GetStaticPaths = async () => {
   const ingredients = await getIngredients();
   const paths = ingredients.map(({ _id }) => ({
-    params: { ingredientId: _id }
+    params: { ingredientId: _id },
   }));
 
   return {
     paths,
     fallback: true,
-  }
-}
+  };
+};
 
-export const getStaticProps: GetStaticProps<IIngredientsProps> = async ({ params }) => {
+export const getStaticProps: GetStaticProps<IIngredientsProps> = async ({
+  params,
+}) => {
   try {
     const ingredient = await getIngredient(params!.ingredientId as string);
     return {

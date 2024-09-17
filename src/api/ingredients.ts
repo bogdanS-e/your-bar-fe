@@ -1,5 +1,5 @@
-import { IIngredient, IngredientTag } from "types/ingredient";
-import axiosInstance from "./axiosInstance";
+import { IIngredient, IngredientTag } from 'types/ingredient';
+import axiosInstance from './axiosInstance';
 
 export const getIngredients = async () => {
   const { data } = await axiosInstance.get<IIngredient[]>('/ingredients');
@@ -7,11 +7,11 @@ export const getIngredients = async () => {
   return data;
 };
 
-export const getIngredient =  async (id: string) => {
+export const getIngredient = async (id: string) => {
   const { data } = await axiosInstance.get<IIngredient>(`/ingredient/${id}`);
 
   return data;
-} 
+};
 
 export interface ICreateIngredientParams {
   name: string;

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import useStore from 'store';
 import styled from 'styled-components';
 import { Row } from 'styles/components';
@@ -7,21 +8,26 @@ interface ISearchResultProps {
 }
 
 const SearchResult = ({ resultId }: ISearchResultProps) => {
-  const { getObjectById } = useStore();
-
-  const object = getObjectById(resultId);
+  const object = useStore(({ getObjectById }) => getObjectById(resultId));
 
   if (!object) {
     return null;
   }
 
   const { nameEn, image } = object;
+  //cocktails have ingredients
+  const url =
+    'ingredients' in object
+      ? `/cocktail/${resultId}`
+      : `/ingredient/${resultId}`;
 
   return (
-    <Row $gap="20px">
-      <Image url={image || ''} />
-      <Title>{nameEn}</Title>
-    </Row>
+    <Link prefetch={false} href={url}>
+      <Row $gap="20px">
+        <Image url={image || ''} />
+        <Title>{nameEn}</Title>
+      </Row>
+    </Link>
   );
 };
 

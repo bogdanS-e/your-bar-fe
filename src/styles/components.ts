@@ -43,3 +43,7 @@ export const Row = styled.div<IFlexProps>`
   flex-wrap: ${({ $flexWrap }) => $flexWrap || 'nowrap'};
   gap: ${({ $gap }) => $gap || '0'};
 `;
+
+export const Column = styled(Row)`
+  flex-direction: column;
+`;

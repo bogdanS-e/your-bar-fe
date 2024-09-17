@@ -11,7 +11,7 @@ import SearchResult from './SearchResult';
 interface ISearchBarProps {
   placeholder?: string;
   value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (value: string) => void;
   autoFocus?: boolean;
 }
 
@@ -56,7 +56,7 @@ const SearchBar = ({
 
   return (
     <StyledDropdown
-      onOptionClick={() => {}}
+      onOptionClick={() => onChange('')}
       items={[
         {
           name: 'Cocktails',
@@ -73,7 +73,7 @@ const SearchBar = ({
           <SearchInput
             type="text"
             value={value}
-            onChange={onChange}
+            onChange={({ currentTarget }) => onChange(currentTarget.value)}
             autoFocus={autoFocus}
           />
           <PlaceholderWrapper $hasValue={value.length > 0}>

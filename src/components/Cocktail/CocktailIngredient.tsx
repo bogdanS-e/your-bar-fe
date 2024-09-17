@@ -158,7 +158,7 @@ const CocktailIngredient = ({
         <SearchBar
           autoFocus
           placeholder="Search ingredient"
-          onChange={({ currentTarget }) => setSearchValue(currentTarget.value)}
+          onChange={(newValue) => setSearchValue(newValue)}
           value={searchValue}
         />
         <IngredientsWrapper>
@@ -167,11 +167,11 @@ const CocktailIngredient = ({
               <Image $image={image || ''} />
               <Content>
                 <Name>{nameEn}</Name>
-                <Tags>
+                <Row $gap="10px">
                   {tags.map((tag) => (
                     <TagButton key={tag} tag={tag} isIngredient />
                   ))}
-                </Tags>
+                </Row>
               </Content>
             </Ingredient>
           ))}
@@ -260,11 +260,6 @@ const Content = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 15px;
-`;
-
-const Tags = styled.div`
-  display: flex;
-  gap: 10px;
 `;
 
 const IngredientsWrapper = styled.div`

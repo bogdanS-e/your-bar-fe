@@ -14,7 +14,6 @@ interface IIngredientsPageProps {
 }
 
 const cocktailsFilter = Object.values(cocktailTagInfo);
-const gap = '20px';
 
 const AllCocktailsTab = ({ initialData }: IIngredientsPageProps) => {
   const { data: queryData } = useCocktails();
@@ -67,10 +66,10 @@ const AllCocktailsTab = ({ initialData }: IIngredientsPageProps) => {
         >
           <Article>
             <ArticleTitle>{cocktailTagInfo[tag].title}</ArticleTitle>
-            <Row $gap={gap} $flexWrap="wrap">
+            <Row $gap="20px" $flexWrap="wrap">
               {cocktails.map(
                 ({ _id, nameEn, descriptionEn, image, tags, ingredients }) => (
-                  <StyledCard
+                  <Card
                     key={_id}
                     name={nameEn}
                     description={descriptionEn}
@@ -128,7 +127,4 @@ const Title = styled.h1`
 
 const ArticleTitle = styled(Title)`
   margin: 40px 0 20px;
-`;
-const StyledCard = styled(Card)`
-  width: calc((100% - 4 * ${gap}) / 5);
 `;

@@ -15,8 +15,6 @@ interface IIngredientsListProps {
   selectedTags: IngredientTag[];
 }
 
-const gap = '20px';
-
 const IngredientsList = ({
   initialData,
   selectedTags,
@@ -65,10 +63,10 @@ const IngredientsList = ({
         >
           <Article>
             <Title>{ingredientTagInfo[tag].title}</Title>
-            <Row $gap={gap} $flexWrap="wrap">
+            <Row $gap="20px" $flexWrap="wrap">
               {ingredients.map(
                 ({ _id, nameEn, descriptionEn, image, tags }) => (
-                  <StyledCard
+                  <Card
                     key={_id}
                     href={`ingredient/${_id}`}
                     name={nameEn}
@@ -101,8 +99,4 @@ const Title = styled.h2`
   font-size: 1.5rem;
   color: #8f8f8f;
   margin: 40px 0 20px;
-`;
-
-const StyledCard = styled(Card)`
-  width: calc((100% - 4 * ${gap}) / 5);
 `;

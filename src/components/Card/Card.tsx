@@ -71,10 +71,10 @@ const Ingredients = styled.div`
     }
   }
 `;
-
+const gap = '20px';
 const CardContainer = styled(Link)`
   display: block;
-  width: 300px;
+  width: calc((100% - 4 * ${gap}) / 5);
   border-radius: 10px;
   overflow: hidden;
   cursor: pointer;

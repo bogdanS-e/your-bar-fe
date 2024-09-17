@@ -32,10 +32,8 @@ const Layout = ({ children }: ILayoutProps) => {
   const query1 = useIngredients();
   const query2 = useCocktails();
 
-  const handleSearchChange = ({
-    currentTarget,
-  }: ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(currentTarget.value);
+  const handleSearchChange = (value: string) => {
+    setSearchValue(value);
   };
 
   useEffect(() => {
