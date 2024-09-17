@@ -51,7 +51,7 @@ const IngredientPage = ({ ingredient }: IIngredientPageProps) => {
         </Row>
 
         <CocktailsContainer>
-          <CocktailTitle>Cocktails with "{nameEn}":</CocktailTitle>
+          <CocktailTitle>Cocktails with &quot;{nameEn}&quot;:</CocktailTitle>
           <Row $gap="20px">
             {availableCoctails.map(
               ({ _id, nameEn, descriptionEn, image, tags, ingredients }) => (
