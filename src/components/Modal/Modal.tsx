@@ -44,11 +44,11 @@ const Modal = ({
         className={className}
         onMouseDown={(e) => e.stopPropagation()}
       >
-        <ModalHeader>
+        <ModalHeader className="modal-header">
           <h2>{title}</h2>
           <CloseButton onClick={onClose}>&times;</CloseButton>
         </ModalHeader>
-        <ModalBody>{children}</ModalBody>
+        <ModalBody className="modal-body">{children}</ModalBody>
       </ModalContent>
     </ModalOverlay>,
     window.document.getElementById('modal-root')!
@@ -71,7 +71,7 @@ const ModalOverlay = styled.div`
 
 const ModalContent = styled.div`
   background: #fff;
-  padding: 2rem;
+  padding: 32px;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   min-width: 500px;
@@ -85,7 +85,7 @@ const ModalHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #eee;
-  padding-bottom: 1rem;
+  padding-bottom: 16px;
 `;
 
 const CloseButton = styled.button`

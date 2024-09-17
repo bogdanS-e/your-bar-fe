@@ -1,7 +1,7 @@
 import CocktailIngredient from './CocktailIngredient';
 import { useFormikContext } from 'formik';
 import { useMemo } from 'react';
-import {useIngredients} from 'components/Ingredient';
+import { useIngredients } from 'components/Ingredient';
 import { ICocktailFormValues } from './useCreateCocktail';
 
 const AddIngredients = () => {

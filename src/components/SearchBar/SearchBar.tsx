@@ -2,7 +2,7 @@ import { useCocktails } from 'components/Cocktail';
 import Dropdown from 'components/Dropdown';
 import IconButton from 'components/IconButton';
 import { useIngredients } from 'components/Ingredient';
-import {  useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { ICocktail } from 'types/cocktail';
 import { IIngredient } from 'types/ingredient';
@@ -13,6 +13,7 @@ interface ISearchBarProps {
   value: string;
   onChange: (value: string) => void;
   autoFocus?: boolean;
+  hideResults?: boolean;
 }
 
 type TSearchItem = ICocktail | IIngredient;
@@ -22,6 +23,7 @@ const SearchBar = ({
   value,
   onChange,
   autoFocus,
+  hideResults,
 }: ISearchBarProps) => {
   const { data: ingredients } = useIngredients();
   const { data: cocktails } = useCocktails();
@@ -31,6 +33,10 @@ const SearchBar = ({
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (hideResults) {
+      return;
+    }
+
     const findMatch = ({ nameEn }: TSearchItem) =>
       nameEn.toLowerCase().includes(value.toLowerCase());
 
@@ -52,7 +58,7 @@ const SearchBar = ({
 
     setCocktailIds([]);
     setIngredientIds([]);
-  }, [value, cocktails, ingredients]);
+  }, [value, cocktails, ingredients, hideResults]);
 
   return (
     <StyledDropdown

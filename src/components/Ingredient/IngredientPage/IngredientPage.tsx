@@ -1,7 +1,7 @@
 import Card from 'components/Card';
 import TagButton from 'components/Tag/TagButton';
 import Head from 'next/head';
-import Image from 'next/image'
+import Image from 'next/image';
 
 import useStore from 'store';
 import styled from 'styled-components';
@@ -39,7 +39,12 @@ const IngredientPage = ({ ingredient }: IIngredientPageProps) => {
       </Head>
       <Container>
         <Row $alignItems="stretch" $gap="50px">
-          <StyledImage width={200} height={400} src={image || ''} alt={nameEn} />
+          <StyledImage
+            width={200}
+            height={400}
+            src={image || ''}
+            alt={nameEn}
+          />
           <Column $alignItems="flex-start">
             <Title>{nameEn}</Title>
             <Description>{descriptionEn}</Description>
