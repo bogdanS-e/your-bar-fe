@@ -4,11 +4,9 @@ import {
   ingredientTagInfo,
 } from 'types/ingredient';
 import useIngredients from './useIngredients';
-import styled from 'styled-components';
 import { useMemo } from 'react';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import Card from 'components/Card';
-import { Row } from 'styles/components';
+import { TransitionGroup } from 'react-transition-group';
+import IngredientArticle from './IngredientArticle';
 
 interface IIngredientsListProps {
   initialData: IIngredient[];
@@ -55,31 +53,7 @@ const IngredientsList = ({
         continue;
       }
 
-      articles.push(
-        <CSSTransition
-          key={tag}
-          timeout={{ enter: 1000, exit: 300 }}
-          classNames="article"
-        >
-          <Article>
-            <Title>{ingredientTagInfo[tag].title}</Title>
-            <Row $gap="20px" $flexWrap="wrap">
-              {ingredients.map(
-                ({ _id, nameEn, descriptionEn, image, tags }) => (
-                  <Card
-                    key={_id}
-                    href={`ingredient/${_id}`}
-                    name={nameEn}
-                    description={descriptionEn}
-                    image={image}
-                    tags={tags}
-                  />
-                )
-              )}
-            </Row>
-          </Article>
-        </CSSTransition>
-      );
+      articles.push(<IngredientArticle key={tag} ingredients={ingredients} title={ingredientTagInfo[tag].title} />);
     }
 
     return <TransitionGroup component={null}>{articles}</TransitionGroup>;
@@ -89,14 +63,3 @@ const IngredientsList = ({
 };
 
 export default IngredientsList;
-
-const Article = styled.article`
-  display: block;
-`;
-
-const Title = styled.h2`
-  font-weight: 400;
-  font-size: 1.5rem;
-  color: #8f8f8f;
-  margin: 40px 0 20px;
-`;
