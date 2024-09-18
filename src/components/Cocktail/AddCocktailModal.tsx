@@ -1,8 +1,7 @@
 import Modal from 'components/Modal';
-import { FieldArray, Form, Formik, useFormik } from 'formik';
+import { FieldArray, Form, Formik } from 'formik';
 import { z, ZodType } from 'zod';
 import { toFormikValidate } from 'zod-formik-adapter';
-import { IngredientTag, ingredientTagInfo } from 'types/ingredient';
 import AddTags from 'components/Tag/AddTags';
 import Input from 'components/Input';
 import styled from 'styled-components';
@@ -14,10 +13,8 @@ import { AxiosError } from 'axios';
 import { IResError } from 'types/common';
 import getAxiosError from 'utils/getAxiosError';
 import {
-  CocktailTag,
   cocktailTagInfo,
   CocktailUnit,
-  ICocktailIngredient,
 } from 'types/cocktail';
 import AddIngredients from './AddIngredients';
 import useCreateCocktail, { ICocktailFormValues } from './useCreateCocktail';
@@ -86,7 +83,7 @@ const AddCocktailModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
         pending: 'Creating a new cocktail',
         success: {
           render: ({ data: toastData }) => {
-            close();
+            onClose();
 
             return (
               <span>
