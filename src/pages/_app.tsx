@@ -50,7 +50,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta property="og:site_name" content="Your bar" />
-        <meta property="og:url" content="https://your-bar-be.onrender.com" />
+        <meta property="og:url" content="https://your-bar-fe.onrender.com" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <GlobalStyle />
