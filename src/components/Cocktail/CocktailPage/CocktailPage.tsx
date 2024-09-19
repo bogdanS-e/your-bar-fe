@@ -1,22 +1,16 @@
-import Card from 'components/Card';
 import TagButton from 'components/Tag/TagButton';
 import Head from 'next/head';
 import Image from 'next/image';
-
-import useStore from 'store';
 import styled from 'styled-components';
 import { Column, Row } from 'styles/components';
-import { IIngredient } from 'types/ingredient';
+import { ICocktail } from 'types/cocktail';
 
-interface IIngredientPageProps {
-  ingredient: IIngredient;
+interface ICocktailPageProps {
+  cocktail: ICocktail;
 }
 
-const IngredientPage = ({ ingredient }: IIngredientPageProps) => {
-  const { nameEn, image, descriptionEn, tags, _id } = ingredient;
-  const { getIngredientsName, getCocktailsByIngredientId } = useStore();
-
-  const availableCocktails = getCocktailsByIngredientId(_id);
+const CocktailPage = ({ cocktail }: ICocktailPageProps) => {
+  const { nameEn, image, descriptionEn, tags, ingredients, _id } = cocktail;
 
   return (
     <>
@@ -25,7 +19,7 @@ const IngredientPage = ({ ingredient }: IIngredientPageProps) => {
         <meta name="description" content={descriptionEn} />
         <meta
           name="keywords"
-          content={`ingredient, cocktail recipes, cocktails with ${nameEn}, ${nameEn} drinks, how to use ${nameEn}, make cocktails with ${nameEn}, ${nameEn} cocktails, cocktail ingredients, drink recipes, mixology with ${nameEn}, bartending recipes, cocktail ideas`}
+          content={`${nameEn} recipe, how to make ${nameEn}, ${nameEn} ingredients, ${nameEn} preparation, easy ${nameEn} recipe, classic ${nameEn} recipe, mixology guide, cocktail recipes, how to prepare cocktails, step-by-step cocktail recipe, cocktail making guide, home bartending, DIY ${nameEn}, bartender tips for ${nameEn}, best ${nameEn} recipe, cocktail mixing techniques, ${nameEn} drink recipe, how to serve ${nameEn}, cocktail preparation instructions, mixology at home, cocktail ideas, perfect ${nameEn}, ${nameEn} with variations, quick ${nameEn} recipe, professional cocktail making, essential cocktail recipes, cocktail garnishes, summer cocktails, refreshing cocktails, signature cocktails, popular cocktails`}
         />
         <meta property="og:title" content={nameEn} />
         <meta property="og:description" content={descriptionEn} />
@@ -44,15 +38,15 @@ const IngredientPage = ({ ingredient }: IIngredientPageProps) => {
             <Description>{descriptionEn}</Description>
             <Row $gap="10px">
               {tags.map((tag) => (
-                <TagButton key={tag} tag={tag} isIngredient />
+                <TagButton key={tag} tag={tag} isIngredient={false} />
               ))}
             </Row>
           </Column>
         </Row>
 
-        <CocktailsContainer>
+        {/* <CocktailsContainer>
           <CocktailTitle>Cocktails with &quot;{nameEn}&quot;:</CocktailTitle>
-          <Row $gap="20px" $alignItems="stretch">
+          <Row $gap="20px">
             {availableCocktails.map(
               ({ _id, nameEn, descriptionEn, image, tags, ingredients }) => (
                 <Card
@@ -67,13 +61,13 @@ const IngredientPage = ({ ingredient }: IIngredientPageProps) => {
               )
             )}
           </Row>
-        </CocktailsContainer>
+        </CocktailsContainer> */}
       </Container>
     </>
   );
 };
 
-export default IngredientPage;
+export default CocktailPage;
 
 const CocktailTitle = styled.h2`
   font-size: 1.5rem;

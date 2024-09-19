@@ -2,8 +2,8 @@ import { GetStaticProps } from 'next';
 
 import { ICocktail } from 'types/cocktail';
 
-import CocktailsPage from 'components/Cocktail';
-import { getCocktails } from 'components/Cocktail/useCocktails';
+import { CocktailsPage } from 'components/Cocktail';
+import { getCocktails } from 'api/cocktails';
 
 interface ICocktailsProps {
   initialData: ICocktail[];

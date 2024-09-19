@@ -66,7 +66,7 @@ const AllCocktailsTab = ({ initialData }: IIngredientsPageProps) => {
         >
           <Article>
             <ArticleTitle>{cocktailTagInfo[tag].title}</ArticleTitle>
-            <Row $gap="20px" $flexWrap="wrap">
+            <Row $gap="20px" $flexWrap="wrap" $alignItems="stretch">
               {cocktails.map(
                 ({ _id, nameEn, descriptionEn, image, tags, ingredients }) => (
                   <Card
@@ -75,7 +75,7 @@ const AllCocktailsTab = ({ initialData }: IIngredientsPageProps) => {
                     description={descriptionEn}
                     image={image}
                     tags={tags}
-                    href={`coctail/${_id}`}
+                    href={`cocktail/${_id}`}
                     ingredients={getIngredientsName(ingredients)}
                   />
                 )

@@ -1,30 +1,40 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axiosInstance from 'api/axiosInstance';
-import { CocktailTag, ICocktailIngredient } from 'types/cocktail';
+import { CocktailTag, ICocktail, ICocktailIngredient } from 'types/cocktail';
+import axiosInstance from './axiosInstance';
 
-interface ICocktailIngredientFormValues
-  extends Omit<ICocktailIngredient, 'value'> {
+export const getCocktails = async () => {
+  const { data } = await axiosInstance.get<ICocktail[]>('/cocktails');
+
+  return data;
+};
+
+export const getCocktail = async (id: string) => {
+  const { data } = await axiosInstance.get<ICocktail>(`/cocktail/${id}`);
+
+  return data;
+};
+
+interface IIngredientParams extends Omit<ICocktailIngredient, 'value'> {
   name: string;
   value: number | string;
 }
 
-export interface ICocktailFormValues {
+export interface ICreateCocktailParams {
   name: string;
   description: string;
   recipe: string;
   tags: CocktailTag[];
   image?: null | File;
-  ingredients: ICocktailIngredientFormValues[];
+  ingredients: IIngredientParams[];
 }
 
-const submitCocktail = async ({
+export const createCocktail = async ({
   name,
   description,
   recipe,
   tags,
   image,
   ingredients,
-}: ICocktailFormValues) => {
+}: ICreateCocktailParams) => {
   const formData = new FormData();
 
   for (const ingredient of ingredients) {
@@ -41,7 +51,7 @@ const submitCocktail = async ({
     formData.append('image', image);
   }
 
-  const { data } = await axiosInstance.post<ICocktailFormValues>(
+  const { data } = await axiosInstance.post<ICreateCocktailParams>(
     '/add-cocktail',
     formData,
     {
@@ -53,18 +63,3 @@ const submitCocktail = async ({
 
   return data;
 };
-
-const useCreateCocktail = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: submitCocktail,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['cocktails'],
-      });
-    },
-  });
-};
-
-export default useCreateCocktail;

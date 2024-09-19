@@ -12,19 +12,17 @@ import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 import { IResError } from 'types/common';
 import getAxiosError from 'utils/getAxiosError';
-import {
-  cocktailTagInfo,
-  CocktailUnit,
-} from 'types/cocktail';
+import { cocktailTagInfo, CocktailUnit } from 'types/cocktail';
 import AddIngredients from './AddIngredients';
-import useCreateCocktail, { ICocktailFormValues } from './useCreateCocktail';
+import useCreateCocktail from './useCreateCocktail';
+import { ICreateCocktailParams } from 'api/cocktails';
 
-interface IAddIngredientModalProps {
+interface ICreateIngredientModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const cocktailSchema: ZodType<ICocktailFormValues> = z.object({
+const cocktailSchema: ZodType<ICreateCocktailParams> = z.object({
   name: z.string().min(1, 'Cocktail name is required').max(30, 'Name too long'),
   description: z
     .string()
@@ -73,11 +71,14 @@ const emptyIngredient = {
   isDecoration: false,
 };
 
-const AddCocktailModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
+const CreateCocktailModal = ({
+  isOpen,
+  onClose,
+}: ICreateIngredientModalProps) => {
   const createCocktailMutation = useCreateCocktail();
 
-  const onCreate = (values: ICocktailFormValues) => {
-    return toast.promise<ICocktailFormValues, AxiosError<IResError>>(
+  const onCreate = (values: ICreateCocktailParams) => {
+    return toast.promise<ICreateCocktailParams, AxiosError<IResError>>(
       async () => await createCocktailMutation.mutateAsync(values),
       {
         pending: 'Creating a new cocktail',
@@ -216,7 +217,7 @@ const AddCocktailModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
   );
 };
 
-export default AddCocktailModal;
+export default CreateCocktailModal;
 
 const StyledModal = styled(Modal)`
   max-width: 500px !important;

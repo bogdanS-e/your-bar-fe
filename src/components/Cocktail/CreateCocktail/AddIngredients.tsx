@@ -1,14 +1,14 @@
-import CocktailIngredient from './CocktailIngredient';
+import CocktailIngredient from './SearchCocktailIngredient';
 import { useFormikContext } from 'formik';
 import { useMemo } from 'react';
 import { useIngredients } from 'components/Ingredient';
-import { ICocktailFormValues } from './useCreateCocktail';
+import { ICreateCocktailParams } from 'api/cocktails';
 
 const AddIngredients = () => {
   const { data: allIngredients } = useIngredients();
   const {
     values: { ingredients },
-  } = useFormikContext<ICocktailFormValues>();
+  } = useFormikContext<ICreateCocktailParams>();
 
   const filteredIngredients = useMemo(() => {
     if (!allIngredients) {

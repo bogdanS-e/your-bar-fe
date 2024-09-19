@@ -41,10 +41,10 @@ const SearchBar = ({
       nameEn.toLowerCase().includes(value.toLowerCase());
 
     if (value) {
-      const coctailMatches = cocktails?.filter(findMatch);
+      const cocktailMatches = cocktails?.filter(findMatch);
 
-      if (coctailMatches) {
-        setCocktailIds(coctailMatches.map(({ _id }) => _id));
+      if (cocktailMatches) {
+        setCocktailIds(cocktailMatches.map(({ _id }) => _id));
       }
 
       const ingredientMatches = ingredients?.filter(findMatch);

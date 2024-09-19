@@ -9,18 +9,18 @@ import { Row } from 'styles/components';
 import { IIngredient } from 'types/ingredient';
 import { CocktailUnit, cocktailUnitInfo } from 'types/cocktail';
 import Checkbox from 'components/Checkbox';
-import { ICocktailFormValues } from './useCreateCocktail';
 import SearchIngredientModal from 'components/Ingredient/SearchIngredientModal';
+import { ICreateCocktailParams } from 'api/cocktails';
 
-interface ICocktailIngredientProps {
+interface ISearchCocktailIngredientProps {
   index: number;
   allIngredients: IIngredient[];
 }
 
-const CocktailIngredient = ({
+const SearchCocktailIngredient = ({
   index,
   allIngredients,
-}: ICocktailIngredientProps) => {
+}: ISearchCocktailIngredientProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
@@ -28,7 +28,7 @@ const CocktailIngredient = ({
     errors,
     setFieldValue,
     handleChange,
-  } = useFormikContext<ICocktailFormValues>();
+  } = useFormikContext<ICreateCocktailParams>();
 
   const onUnitChange = (unit: CocktailUnit) => {
     setFieldValue(`ingredients.${index}.unit`, unit);
@@ -45,7 +45,7 @@ const CocktailIngredient = ({
   const onIngredientChoose = (ingredientId: string, ingredientName: string) => {
     setFieldValue(`ingredients.${index}.ingredientId`, ingredientId);
     setFieldValue(`ingredients.${index}.name`, ingredientName);
-  }
+  };
 
   const getError = (key: string) => {
     let err = errors as any;
@@ -69,7 +69,7 @@ const CocktailIngredient = ({
             label="name"
             name={`ingredients.${index}.name`}
             value={ingredients[index].name}
-            onChange={() => { }}
+            onChange={() => {}}
             readOnly
             onClick={() => setIsModalOpen(true)}
           />
@@ -141,7 +141,7 @@ const CocktailIngredient = ({
   );
 };
 
-export default CocktailIngredient;
+export default SearchCocktailIngredient;
 
 const CheckboxWrapper = styled(Row)`
   margin-top: 5px;

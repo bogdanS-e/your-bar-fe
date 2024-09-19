@@ -1,4 +1,4 @@
-import { AddCocktailModal } from 'components/Cocktail';
+import { CreateCocktailModal } from 'components/Cocktail';
 import Dropdown from 'components/Dropdown';
 import IconButton from 'components/IconButton';
 import { AddIngredientModal } from 'components/Ingredient';
@@ -58,7 +58,7 @@ const AddNew = () => {
         isOpen={isAddIngredientOpen}
         onClose={() => setIsAddIngredientOpen(false)}
       />
-      <AddCocktailModal
+      <CreateCocktailModal
         isOpen={isAddCocktailOpen}
         onClose={() => setIsAddCocktailOpen(false)}
       />

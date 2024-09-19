@@ -53,7 +53,13 @@ const IngredientsList = ({
         continue;
       }
 
-      articles.push(<IngredientArticle key={tag} ingredients={ingredients} title={ingredientTagInfo[tag].title} />);
+      articles.push(
+        <IngredientArticle
+          key={tag}
+          ingredients={ingredients}
+          title={ingredientTagInfo[tag].title}
+        />
+      );
     }
 
     return <TransitionGroup component={null}>{articles}</TransitionGroup>;

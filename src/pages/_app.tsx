@@ -49,6 +49,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:site_name" content="Your bar" />
+        <meta property="og:url" content="https://your-bar-be.onrender.com" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <GlobalStyle />

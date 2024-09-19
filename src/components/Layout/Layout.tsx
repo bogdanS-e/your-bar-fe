@@ -12,7 +12,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useIngredients } from 'components/Ingredient';
 import AddNew from 'components/AddNew';
-import useCocktails from 'components/Cocktail/useCocktails';
+import useCocktails from 'components/Cocktail/CocktailsPage/useCocktails';
 
 interface ILayoutProps {
   children: ReactNode;

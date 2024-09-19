@@ -1,13 +1,13 @@
-import { useVirtualizer } from "@tanstack/react-virtual";
-import { useMemo, useRef, useState } from "react";
-import styled from "styled-components";
-import { Row } from "styles/components";
+import { useVirtualizer } from '@tanstack/react-virtual';
+import { useMemo, useRef, useState } from 'react';
+import styled from 'styled-components';
+import { Row } from 'styles/components';
 
-import { IIngredient } from "types/ingredient";
+import { IIngredient } from 'types/ingredient';
 
-import Modal from "components/Modal";
-import SearchBar from "components/SearchBar";
-import TagButton from "components/Tag/TagButton";
+import Modal from 'components/Modal';
+import SearchBar from 'components/SearchBar';
+import TagButton from 'components/Tag/TagButton';
 
 interface ISearchIngredientModalProps {
   allIngredients: IIngredient[];
@@ -16,7 +16,12 @@ interface ISearchIngredientModalProps {
   onChoose: (ingredientId: string, ingredientName: string) => void;
 }
 
-const SearchIngredientModal = ({ allIngredients, isOpen, onClose, onChoose }: ISearchIngredientModalProps) => {
+const SearchIngredientModal = ({
+  allIngredients,
+  isOpen,
+  onClose,
+  onChoose,
+}: ISearchIngredientModalProps) => {
   const parentRef = useRef<HTMLDivElement>(null);
   const [searchValue, setSearchValue] = useState('');
 
@@ -87,11 +92,9 @@ const SearchIngredientModal = ({ allIngredients, isOpen, onClose, onChoose }: IS
                 <Content>
                   <Name>{filteredIngredients[virtualItem.index].nameEn}</Name>
                   <Row $gap="10px">
-                    {filteredIngredients[virtualItem.index].tags.map(
-                      (tag) => (
-                        <TagButton key={tag} tag={tag} isIngredient />
-                      )
-                    )}
+                    {filteredIngredients[virtualItem.index].tags.map((tag) => (
+                      <TagButton key={tag} tag={tag} isIngredient />
+                    ))}
                   </Row>
                 </Content>
               </Ingredient>
@@ -104,7 +107,7 @@ const SearchIngredientModal = ({ allIngredients, isOpen, onClose, onChoose }: IS
       </VirtualContainer>
     </StyledModal>
   );
-}
+};
 
 export default SearchIngredientModal;
 
