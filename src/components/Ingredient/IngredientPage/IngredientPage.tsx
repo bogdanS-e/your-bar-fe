@@ -61,7 +61,7 @@ const IngredientPage = ({ ingredient }: IIngredientPageProps) => {
                   description={descriptionEn}
                   image={image}
                   tags={tags}
-                  href={`cocktail/${_id}`}
+                  href={`/cocktail/${_id}`}
                   ingredients={getIngredientsName(ingredients)}
                 />
               )
