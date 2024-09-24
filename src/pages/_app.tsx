@@ -51,6 +51,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta property="og:site_name" content="Your bar" />
         <meta property="og:url" content="https://your-bar-fe.onrender.com" />
+        <meta name="google-site-verification" content="lQBCPlJVvkLKiNa2Ex2BjEANdAWvNyT8V8cmL7x1Nec" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <GlobalStyle />
