@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import React from 'react';
 import styled from 'styled-components';
-import { Row } from 'styles/components';
+import { Column, Row } from 'styles/components';
 import { CocktailTag } from 'types/cocktail';
 import { IngredientTag } from 'types/ingredient';
 
@@ -38,16 +38,18 @@ const Card = ({
         />
       </ImageWrapper>
       <Content>
-        <Title>{name}</Title>
-        <Description>{description}</Description>
+        <div style={{ width: '100%' }}>
+          <Title>{name}</Title>
+          <Description>{description}</Description>
 
-        {!!ingredients?.length && (
-          <Ingredients>
-            {ingredients.map((ingredient) => (
-              <span key={ingredient}>{ingredient}</span>
-            ))}
-          </Ingredients>
-        )}
+          {!!ingredients?.length && (
+            <Ingredients>
+              {ingredients.map((ingredient) => (
+                <span key={ingredient}>{ingredient}</span>
+              ))}
+            </Ingredients>
+          )}
+        </div>
 
         <TagsWrapper>
           {tags.map((tag) => (
@@ -80,7 +82,8 @@ const Ingredients = styled.div`
 `;
 const gap = '20px';
 const CardContainer = styled(Link)`
-  display: block;
+  display: flex;
+  flex-direction: column;
   width: calc((100% - 4 * ${gap}) / 5);
   border-radius: 10px;
   overflow: hidden;
@@ -104,14 +107,18 @@ const ImageWrapper = styled(Row)`
 
 const StyledImage = styled(Image)`
   height: 100%;
+  width: auto;
   object-fit: contain;
   transition: transform 0.3s ease;
   border-radius: 5px;
 `;
 
-const Content = styled.div`
+const Content = styled(Column)`
   padding: 16px;
   background-color: white;
+  flex: 1;
+  align-items: flex-start;
+  justify-content: space-between;
 `;
 
 const Title = styled.h3`

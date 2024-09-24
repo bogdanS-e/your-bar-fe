@@ -54,9 +54,16 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <GlobalStyle />
-      <Layout>
+
+      {/* when there is no error status code will be undefined  */}
+      {pageProps.statusCode ? (
         <Component {...pageProps} />
-      </Layout>
+      ) : (
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      )}
+
       <ReactQueryDevtools />
     </QueryClientProvider>
   );

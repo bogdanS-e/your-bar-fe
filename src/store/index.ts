@@ -17,6 +17,7 @@ interface IActionsProps {
   getObjectById: (id: string) => IIngredient | ICocktail | null;
   getCocktailById: (id: string) => ICocktail | null;
   getCocktailsByIngredientId: (id: string) => ICocktail[];
+  getIngredientById: (id: string) => IIngredient | null;
 }
 
 const useStore = create<IStoreProps & IActionsProps>()((set, get) => ({
@@ -86,6 +87,11 @@ const useStore = create<IStoreProps & IActionsProps>()((set, get) => ({
     }
 
     return cocktails;
+  },
+  getIngredientById: (id) => {
+    const { ingredientsMap } = get();
+
+    return ingredientsMap.get(id) || null;
   },
 }));
 

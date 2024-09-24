@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import styled from 'styled-components';
 
 type TFlexAlignment =
@@ -46,4 +47,12 @@ export const Row = styled.div<IFlexProps>`
 
 export const Column = styled(Row)`
   flex-direction: column;
+`;
+
+export const ImageCircle = styled(Image)`
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 50%;
+  border: 1px solid #ccc;
 `;

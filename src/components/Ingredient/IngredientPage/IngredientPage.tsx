@@ -21,7 +21,7 @@ const IngredientPage = ({ ingredient }: IIngredientPageProps) => {
   return (
     <>
       <Head>
-        <title>{nameEn}</title>
+        <title>{`${nameEn} | Your Bar`}</title>
         <meta name="description" content={descriptionEn} />
         <meta
           name="keywords"
@@ -52,7 +52,7 @@ const IngredientPage = ({ ingredient }: IIngredientPageProps) => {
 
         <CocktailsContainer>
           <CocktailTitle>Cocktails with &quot;{nameEn}&quot;:</CocktailTitle>
-          <Row $gap="20px" $alignItems="stretch">
+          <Row $gap="20px" $alignItems="stretch" $flexWrap="wrap">
             {availableCocktails.map(
               ({ _id, nameEn, descriptionEn, image, tags, ingredients }) => (
                 <Card
