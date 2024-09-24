@@ -134,6 +134,11 @@ const IngredientItem = styled(Row)`
   justify-content: space-between;
   padding: 5px 10px;
   transition: background 0.15s;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow:
+    5px 5px 10px #ebdddd,
+    -4px -2px 10px #ededed;
 
   &:hover {
     background-color: #fff6f6;
@@ -146,23 +151,22 @@ const Ingredients = styled.ul`
   color: #575757;
   list-style: none;
 
-  li {
+  /* li {
     border-bottom: 1px solid #aaa;
 
     &:first-child {
       border-top: 1px solid #aaa;
     }
-  }
+  } */
 `;
 
 const Recipe = styled.div`
   white-space: pre-line;
   padding: 15px 20px;
   border-radius: 10px;
-  background: linear-gradient(145deg, #e6e6e6, #ffffff);
   box-shadow:
-    23px 23px 29px #ededed,
-    -23px -23px 29px #ffffff;
+    5px 5px 10px #ebdddd,
+    -4px -2px 10px #ededed;
   line-height: 1.5;
   font-size: 1.125rem;
   color: #575757;

@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import styled from 'styled-components';
 
 export interface IFilterItem<T> {
@@ -31,9 +32,16 @@ const Filter = <T extends string | number>({
     <Container>
       {items.map(({ title, key, image }) => (
         <Item key={key} onClick={() => handleClick(key)}>
-          <Image $image={image}>
+          <ImageWrapper>
+            <StyledImage
+              src={image}
+              width={80}
+              height={80}
+              alt="Filter image"
+            />
             <Selected $isSelected={selectedTags.includes(key)} />
-          </Image>
+          </ImageWrapper>
+
           {title}
         </Item>
       ))}
@@ -59,15 +67,19 @@ const Item = styled.div`
   align-items: center;
 `;
 
-const Image = styled.span<{ $image: string }>`
+const ImageWrapper = styled.div`
   width: 80px;
   height: 80px;
+  position: relative;
+`;
+
+const StyledImage = styled(Image)`
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   display: block;
   margin-bottom: 8px;
-  background: url(${({ $image }) => $image}) center;
-  background-size: cover;
-  position: relative;
+  object-fit: cover;
 `;
 
 const Selected = styled.span<{ $isSelected: boolean }>`

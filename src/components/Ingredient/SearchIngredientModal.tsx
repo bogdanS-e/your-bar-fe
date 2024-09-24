@@ -8,6 +8,7 @@ import { IIngredient } from 'types/ingredient';
 import Modal from 'components/Modal';
 import SearchBar from 'components/SearchBar';
 import TagButton from 'components/Tag/TagButton';
+import Image from 'next/image';
 
 interface ISearchIngredientModalProps {
   allIngredients: IIngredient[];
@@ -86,8 +87,11 @@ const SearchIngredientModal = ({
                   filteredIngredients[virtualItem.index].nameEn
                 )}
               >
-                <Image
-                  $image={filteredIngredients[virtualItem.index].image || ''}
+                <StyledImage
+                  height={100}
+                  width={100}
+                  src={filteredIngredients[virtualItem.index].image || ''}
+                  alt={filteredIngredients[virtualItem.index].nameEn}
                 />
                 <Content>
                   <Name>{filteredIngredients[virtualItem.index].nameEn}</Name>
@@ -175,10 +179,9 @@ const Ingredient = styled.div`
   }
 `;
 
-const Image = styled.span<{ $image: string }>`
+const StyledImage = styled(Image)`
   width: 100px;
-  aspect-ratio: 1 / 1;
-  background: #df00000a url(${({ $image }) => $image}) no-repeat center;
-  background-size: contain;
+  height: 100px;
+  object-fit: contain;
   border-radius: 10px;
 `;
