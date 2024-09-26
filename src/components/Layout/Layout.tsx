@@ -13,6 +13,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useIngredients } from 'components/Ingredient';
 import AddNew from 'components/AddNew';
 import useCocktails from 'components/Cocktail/CocktailsPage/useCocktails';
+import { Row } from 'styles/components';
+import AuthHandler from 'components/AuthHandler';
 
 interface ILayoutProps {
   children: ReactNode;
@@ -119,7 +121,10 @@ const Layout = ({ children }: ILayoutProps) => {
           <AddNew />
         </Sidebar>
         <Main>
-          <SearchBar value={searchValue} onChange={handleSearchChange} />
+          <Row $justifyContent="space-between">
+            <SearchBar value={searchValue} onChange={handleSearchChange} />
+            <AuthHandler />
+          </Row>
           {children}
         </Main>
         <div id="modal-root" />

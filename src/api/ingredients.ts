@@ -1,8 +1,12 @@
 import { IIngredient, IngredientTag } from 'types/ingredient';
 import axiosInstance from './axiosInstance';
 
-export const getIngredients = async () => {
-  const { data } = await axiosInstance.get<IIngredient[]>('/ingredients');
+export const getIngredients = async (token?: string) => {
+  const { data } = await axiosInstance.get<IIngredient[]>('/ingredients', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   return data;
 };

@@ -13,6 +13,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import useStore from 'store';
 import { IIngredient } from 'types/ingredient';
 import { ICocktail } from 'types/cocktail';
+import { Auth0Provider } from '@auth0/auth0-react';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const { updateIngredients, updateCocktails } = useStore();
@@ -44,7 +45,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         queryCache,
       })
   );
-
+  // display?: 'page' | 'popup' | 'touch' | 'wap';
+  //
   return (
     <QueryClientProvider client={queryClient}>
       <Head>
@@ -63,9 +65,18 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       {pageProps.statusCode ? (
         <Component {...pageProps} />
       ) : (
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <Auth0Provider
+          domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN!}
+          clientId={process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID!}
+          authorizationParams={{
+            redirect_uri: process.env.NEXT_PUBLIC_AUTH0_BASE_URL,
+            audience: process.env.NEXT_PUBLIC_AUTH0_AUDIENTCE,
+          }}
+        >
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </Auth0Provider>
       )}
 
       <ReactQueryDevtools />
