@@ -15,8 +15,11 @@ const UserProfile = () => {
     throw new Error('No user found');
   }
 
+  const handleLogout = () => {
+    logout({ logoutParams: { returnTo: process.env.NEXT_PUBLIC_AUTH0_BASE_URL } })
+  }
+
   const { name, email, picture, given_name } = user;
-  console.log(user);
 
   return (
     <Row $gap="10px">
@@ -48,7 +51,7 @@ const UserProfile = () => {
             Log out
           </Row>
         )}
-        onOptionClick={() => logout()}
+        onOptionClick={handleLogout}
       />
     </Row>
   );
