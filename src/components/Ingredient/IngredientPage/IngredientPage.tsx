@@ -1,7 +1,6 @@
 import Card from 'components/Card';
 import TagButton from 'components/Tag/TagButton';
 import Head from 'next/head';
-import Image from 'next/image';
 
 import useStore from 'store';
 import styled from 'styled-components';
@@ -101,7 +100,7 @@ const Container = styled.section`
   max-width: 1450px;
 `;
 
-const StyledImage = styled(Image)`
+const StyledImage = styled.img`
   display: block;
   max-width: 200px;
   max-height: 400px;

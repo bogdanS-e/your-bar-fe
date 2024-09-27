@@ -8,7 +8,6 @@ import { IIngredient } from 'types/ingredient';
 import Modal from 'components/Modal';
 import SearchBar from 'components/SearchBar';
 import TagButton from 'components/Tag/TagButton';
-import Image from 'next/image';
 
 interface ISearchIngredientModalProps {
   allIngredients: IIngredient[];
@@ -179,7 +178,7 @@ const Ingredient = styled.div`
   }
 `;
 
-const StyledImage = styled(Image)`
+const StyledImage = styled.img`
   width: 100px;
   height: 100px;
   object-fit: contain;

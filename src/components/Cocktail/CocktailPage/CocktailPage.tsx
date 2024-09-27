@@ -1,6 +1,5 @@
 import TagButton from 'components/Tag/TagButton';
 import Head from 'next/head';
-import Image from 'next/image';
 import styled from 'styled-components';
 import { Column, ImageCircle, Row } from 'styles/components';
 import { cocktailUnitInfo, ICocktail } from 'types/cocktail';
@@ -193,7 +192,7 @@ const Container = styled.section`
   max-width: 1450px;
 `;
 
-const StyledImage = styled(Image)`
+const StyledImage = styled.img`
   display: block;
   max-width: 200px;
   max-height: 400px;

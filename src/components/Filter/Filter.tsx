@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import styled from 'styled-components';
 
 export interface IFilterItem<T> {
@@ -73,7 +72,7 @@ const ImageWrapper = styled.div`
   position: relative;
 `;
 
-const StyledImage = styled(Image)`
+const StyledImage = styled.img`
   width: 100%;
   height: 100%;
   border-radius: 50%;

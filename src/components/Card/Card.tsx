@@ -1,6 +1,5 @@
 import TagButton from 'components/Tag/TagButton';
 import Link from 'next/link';
-import Image from 'next/image';
 import React from 'react';
 import styled from 'styled-components';
 import { Column, Row } from 'styles/components';
@@ -30,7 +29,6 @@ const Card = ({
     <CardContainer className={className} href={href} prefetch={false}>
       <ImageWrapper $justifyContent="center">
         <StyledImage
-          priority
           width={200}
           height={140}
           src={image || ''}
@@ -105,7 +103,7 @@ const ImageWrapper = styled(Row)`
   overflow: hidden;
 `;
 
-const StyledImage = styled(Image)`
+const StyledImage = styled.img`
   height: 100%;
   width: auto;
   object-fit: contain;
