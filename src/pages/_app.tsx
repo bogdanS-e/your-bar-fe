@@ -20,13 +20,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   const queryCache = new QueryCache({
     onSuccess: (data, query) => {
-      if (JSON.stringify(query.queryKey) === JSON.stringify(['ingredients'])) {
+      if (query.queryKey[0] === 'ingredients') {
         updateIngredients(data as IIngredient[]);
 
         return;
       }
 
-      if (JSON.stringify(query.queryKey) === JSON.stringify(['cocktails'])) {
+      if (query.queryKey[0] === 'cocktails') {
         updateCocktails(data as ICocktail[]);
       }
     },

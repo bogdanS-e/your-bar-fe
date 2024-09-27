@@ -5,7 +5,7 @@ import {
 } from 'types/ingredient';
 import useIngredients from './useIngredients';
 import { useMemo } from 'react';
-import { TransitionGroup } from 'react-transition-group';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import IngredientArticle from './IngredientArticle';
 
 interface IIngredientsListProps {
@@ -54,11 +54,16 @@ const IngredientsList = ({
       }
 
       articles.push(
-        <IngredientArticle
+        <CSSTransition
           key={tag}
-          ingredients={ingredients}
-          title={ingredientTagInfo[tag].title}
-        />
+          timeout={{ enter: 1000, exit: 300 }}
+          classNames="article"
+        >
+          <IngredientArticle
+            ingredients={ingredients}
+            title={ingredientTagInfo[tag].title}
+          />
+        </CSSTransition>
       );
     }
 

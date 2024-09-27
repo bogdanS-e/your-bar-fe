@@ -3,11 +3,13 @@ import Avatar from 'components/Avatar';
 import Dropdown from 'components/Dropdown';
 import styled from 'styled-components';
 import { Column, Row } from 'styles/components';
+import useUser from './useUser';
 
 const UserProfile = () => {
-  const { user, isAuthenticated, logout } = useAuth0();
+  const { isAuthenticated, logout } = useAuth0();
+  const { data: user, isLoading } = useUser();
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated || isLoading) {
     return null;
   }
 
@@ -16,8 +18,10 @@ const UserProfile = () => {
   }
 
   const handleLogout = () => {
-    logout({ logoutParams: { returnTo: process.env.NEXT_PUBLIC_AUTH0_BASE_URL } })
-  }
+    logout({
+      logoutParams: { returnTo: process.env.NEXT_PUBLIC_AUTH0_BASE_URL },
+    });
+  };
 
   const { name, email, picture, given_name } = user;
 

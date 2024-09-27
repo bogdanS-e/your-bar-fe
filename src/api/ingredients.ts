@@ -24,12 +24,11 @@ export interface ICreateIngredientParams {
   image?: File | null;
 }
 
-export const createIngredient = async ({
-  image,
-  name,
-  description,
-  tags,
-}: ICreateIngredientParams) => {
+export const createIngredient = async (
+  params: ICreateIngredientParams,
+  token: string
+) => {
+  const { image, name, description, tags } = params;
   const formData = new FormData();
 
   formData.append('name', name);
@@ -46,6 +45,7 @@ export const createIngredient = async ({
     {
       headers: {
         'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`,
       },
     }
   );

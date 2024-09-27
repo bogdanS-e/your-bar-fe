@@ -1,5 +1,4 @@
 import Card from 'components/Card';
-import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
 import { Row } from 'styles/components';
 
@@ -12,23 +11,21 @@ interface IIngredientArticleProps {
 
 const IngredientArticle = ({ ingredients, title }: IIngredientArticleProps) => {
   return (
-    <CSSTransition timeout={{ enter: 1000, exit: 300 }} classNames="article">
-      <Article>
-        <Title>{title}</Title>
-        <Row $gap="20px" $flexWrap="wrap" $alignItems="stretch">
-          {ingredients.map(({ _id, nameEn, descriptionEn, image, tags }) => (
-            <Card
-              key={_id}
-              href={`ingredient/${_id}`}
-              name={nameEn}
-              description={descriptionEn}
-              image={image}
-              tags={tags}
-            />
-          ))}
-        </Row>
-      </Article>
-    </CSSTransition>
+    <Article>
+      <Title>{title}</Title>
+      <Row $gap="20px" $flexWrap="wrap" $alignItems="stretch">
+        {ingredients.map(({ _id, nameEn, descriptionEn, image, tags }) => (
+          <Card
+            key={_id}
+            href={`ingredient/${_id}`}
+            name={nameEn}
+            description={descriptionEn}
+            image={image}
+            tags={tags}
+          />
+        ))}
+      </Row>
+    </Article>
   );
 };
 

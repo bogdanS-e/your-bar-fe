@@ -1,3 +1,5 @@
+import { useAuth0 } from '@auth0/auth0-react';
+import { LoginModal } from 'components/AuthHandler';
 import { CreateCocktailModal } from 'components/Cocktail';
 import Dropdown from 'components/Dropdown';
 import IconButton from 'components/IconButton';
@@ -7,10 +9,18 @@ import { useState } from 'react';
 type TTypeToAdd = 'ingredient' | 'cocktail';
 
 const AddNew = () => {
+  const { isAuthenticated } = useAuth0();
+
   const [isAddIngredientOpen, setIsAddIngredientOpen] = useState(false);
   const [isAddCocktailOpen, setIsAddCocktailOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   const handleOptionClick = (type: TTypeToAdd) => {
+    if (!isAuthenticated) {
+      setIsLoginOpen(true);
+
+      return;
+    }
     if (type === 'ingredient') {
       setIsAddIngredientOpen(true);
 
@@ -62,6 +72,7 @@ const AddNew = () => {
         isOpen={isAddCocktailOpen}
         onClose={() => setIsAddCocktailOpen(false)}
       />
+      <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
     </>
   );
 };

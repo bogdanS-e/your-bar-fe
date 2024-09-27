@@ -1,10 +1,11 @@
 import { ReactNode } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface IButtonProps {
   children: ReactNode;
   onClick?: () => void;
   disabled?: boolean;
+  variant?: 'regular' | 'error';
   type?: 'button' | 'submit' | 'reset';
   className?: string;
 }
@@ -15,9 +16,11 @@ const Button = ({
   onClick,
   disabled,
   className,
+  variant = 'regular',
 }: IButtonProps) => {
   return (
     <StyledButton
+      $variant={variant}
       onClick={onClick}
       disabled={disabled}
       type={type}
@@ -30,16 +33,17 @@ const Button = ({
 
 export default Button;
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<{ $variant: 'regular' | 'error' }>`
   padding: 6px 16px;
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.75;
   letter-spacing: 0.02857em;
-  border: 1px solid #1976d2;
   border-radius: 4px;
   background-color: transparent;
   color: #1976d2;
+  border: 1px solid currentColor;
+
   cursor: pointer;
   transition:
     background-color 0.3s,
@@ -48,7 +52,6 @@ const StyledButton = styled.button`
 
   &:hover {
     background-color: rgba(25, 118, 210, 0.04);
-    border-color: #1976d2;
   }
 
   &:disabled {
@@ -56,4 +59,14 @@ const StyledButton = styled.button`
     border-color: rgba(25, 118, 210, 0.5);
     pointer-events: none;
   }
+
+  ${({ $variant }) =>
+    $variant === 'error' &&
+    css`
+      color: #f44336;
+
+      &:hover {
+        background-color: rgba(244, 67, 54, 0.08);
+      }
+    `}
 `;
