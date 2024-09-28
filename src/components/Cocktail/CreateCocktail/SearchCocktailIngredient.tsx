@@ -3,7 +3,7 @@ import IconButton from 'components/IconButton';
 import Input from 'components/Input';
 
 import { FieldArray, useFormikContext } from 'formik';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Row } from 'styles/components';
 import { IIngredient } from 'types/ingredient';
@@ -21,6 +21,8 @@ const SearchCocktailIngredient = ({
   index,
   allIngredients,
 }: ISearchCocktailIngredientProps) => {
+  const unitInputRef = useRef<HTMLInputElement>(null);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
@@ -45,6 +47,11 @@ const SearchCocktailIngredient = ({
   const onIngredientChoose = (ingredientId: string, ingredientName: string) => {
     setFieldValue(`ingredients.${index}.ingredientId`, ingredientId);
     setFieldValue(`ingredients.${index}.name`, ingredientName);
+
+    if (unitInputRef.current) {
+      unitInputRef.current.focus();
+      unitInputRef.current.select();
+    }
   };
 
   const getError = (key: string) => {
@@ -79,6 +86,7 @@ const SearchCocktailIngredient = ({
 
         <div>
           <Input
+            ref={unitInputRef}
             label="quantity"
             name={`ingredients.${index}.value`}
             type="tel"

@@ -1,4 +1,10 @@
-import { ChangeEvent, InputHTMLAttributes, useId, useState } from 'react';
+import {
+  ChangeEvent,
+  forwardRef,
+  InputHTMLAttributes,
+  useId,
+  useState,
+} from 'react';
 import styled from 'styled-components';
 
 interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -7,31 +13,34 @@ interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = ({ label, value, placeholder, ...rest }: IInputProps) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const id = useId();
+const Input = forwardRef<HTMLInputElement, IInputProps>(
+  ({ label, value, placeholder, ...rest }, ref) => {
+    const [isFocused, setIsFocused] = useState(false);
+    const id = useId();
 
-  return (
-    <InputContainer>
-      <StyledInput
-        id={id}
-        value={value}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-        placeholder={placeholder}
-        {...rest}
-      />
-      <StyledLabel
-        htmlFor={id}
-        $isActive={
-          !!placeholder || isFocused || !!value || typeof value === 'number'
-        }
-      >
-        {label}
-      </StyledLabel>
-    </InputContainer>
-  );
-};
+    return (
+      <InputContainer>
+        <StyledInput
+          id={id}
+          value={value}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          placeholder={placeholder}
+          ref={ref}
+          {...rest}
+        />
+        <StyledLabel
+          htmlFor={id}
+          $isActive={
+            !!placeholder || isFocused || !!value || typeof value === 'number'
+          }
+        >
+          {label}
+        </StyledLabel>
+      </InputContainer>
+    );
+  }
+);
 
 export default Input;
 

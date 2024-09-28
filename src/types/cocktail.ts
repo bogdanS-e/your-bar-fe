@@ -79,6 +79,7 @@ export enum CocktailUnit {
   Cup,
   Quarter,
   Scoop,
+  Items,
 }
 
 export const cocktailUnitInfo: Record<
@@ -92,6 +93,10 @@ export const cocktailUnitInfo: Record<
   [CocktailUnit.Oz]: {
     title: 'oz',
     key: CocktailUnit.Oz,
+  },
+  [CocktailUnit.Items]: {
+    title: 'items',
+    key: CocktailUnit.Items,
   },
   [CocktailUnit.BarSpoon]: {
     title: 'bar spoon',

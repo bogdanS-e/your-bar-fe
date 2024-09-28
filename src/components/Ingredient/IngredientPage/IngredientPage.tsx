@@ -1,4 +1,5 @@
 import Card from 'components/Card';
+import GoBackButton from 'components/GoBackButton';
 import TagButton from 'components/Tag/TagButton';
 import Head from 'next/head';
 
@@ -30,6 +31,7 @@ const IngredientPage = ({ ingredient }: IIngredientPageProps) => {
         <meta property="og:description" content={descriptionEn} />
         <meta property="og:image" content={image || ''} />
       </Head>
+      <GoBackButton />
       <Container>
         <Row $alignItems="stretch" $gap="50px">
           <StyledImage

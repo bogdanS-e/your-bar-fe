@@ -5,6 +5,7 @@ import { Column, ImageCircle, Row } from 'styles/components';
 import { cocktailUnitInfo, ICocktail } from 'types/cocktail';
 import useStore from 'store';
 import Link from 'next/link';
+import GoBackButton from 'components/GoBackButton';
 
 interface ICocktailPageProps {
   cocktail: ICocktail;
@@ -28,6 +29,7 @@ const CocktailPage = ({ cocktail }: ICocktailPageProps) => {
         <meta property="og:description" content={descriptionEn} />
         <meta property="og:image" content={image || ''} />
       </Head>
+      <GoBackButton />
       <Container>
         <Row $alignItems="stretch">
           <StyledImage

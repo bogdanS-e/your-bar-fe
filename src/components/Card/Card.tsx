@@ -28,12 +28,7 @@ const Card = ({
   return (
     <CardContainer className={className} href={href} prefetch={false}>
       <ImageWrapper $justifyContent="center">
-        <StyledImage
-          width={200}
-          height={140}
-          src={image || ''}
-          alt={name}
-        />
+        <StyledImage width={200} height={140} src={image || ''} alt={name} />
       </ImageWrapper>
       <Content>
         <div style={{ width: '100%' }}>
