@@ -42,6 +42,8 @@ const Input = forwardRef<HTMLInputElement, IInputProps>(
   }
 );
 
+Input.displayName = 'Input';
+
 export default Input;
 
 const InputContainer = styled.div`
