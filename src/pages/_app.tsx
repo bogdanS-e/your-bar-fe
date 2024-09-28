@@ -14,6 +14,7 @@ import useStore from 'store';
 import { IIngredient } from 'types/ingredient';
 import { ICocktail } from 'types/cocktail';
 import { Auth0Provider } from '@auth0/auth0-react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const { updateIngredients, updateCocktails } = useStore();
@@ -80,6 +81,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       )}
 
       <ReactQueryDevtools />
+      <SpeedInsights />
     </QueryClientProvider>
   );
 }
