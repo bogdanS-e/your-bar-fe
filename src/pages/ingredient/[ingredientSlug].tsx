@@ -8,11 +8,7 @@ interface IIngredientsProps {
 }
 
 const IngredientPage = ({ ingredient }: IIngredientsProps) => {
-  if (!ingredient) {
-    return <h1>Ingredient not found</h1>;
-  }
-
-  return <IngredientPageComponent ingredient={ingredient} />;
+  return <IngredientPageComponent initialData={ingredient} />;
 };
 
 export default IngredientPage;

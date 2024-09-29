@@ -2,6 +2,7 @@ import Card from 'components/Card';
 import GoBackButton from 'components/GoBackButton';
 import TagButton from 'components/Tag/TagButton';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 import useStore from 'store';
 import styled from 'styled-components';
@@ -9,13 +10,20 @@ import { Column, Row } from 'styles/components';
 import { IIngredient } from 'types/ingredient';
 
 interface IIngredientPageProps {
-  ingredient: IIngredient;
+  initialData: IIngredient | null;
 }
 
-const IngredientPage = ({ ingredient }: IIngredientPageProps) => {
-  const { nameEn, image, descriptionEn, tags, _id, slug } = ingredient;
-  const { getIngredientsName, getCocktailsByIngredientId } = useStore();
+const IngredientPage = ({ initialData }: IIngredientPageProps) => {
+  const { getIngredientsName, getCocktailsByIngredientId, getIngredientBySlug } = useStore();
+  const router = useRouter();
 
+  const ingredient = initialData || getIngredientBySlug(router.query.ingredientSlug as string);
+
+  if (!ingredient) {
+    return <h1>Ingredient not found</h1>;
+  }
+
+  const { nameEn, image, descriptionEn, tags, _id } = ingredient;
   const availableCocktails = getCocktailsByIngredientId(_id);
 
   return (

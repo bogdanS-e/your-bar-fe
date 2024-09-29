@@ -13,11 +13,15 @@ interface IStoreProps {
 interface IActionsProps {
   updateIngredients: (ingredients: IIngredient[]) => void;
   updateCocktails: (ingredients: ICocktail[]) => void;
+
   getIngredientsName: (cocktailIngredients: ICocktailIngredient[]) => string[];
+
   getObjectById: (id: string) => IIngredient | ICocktail | null;
   getCocktailById: (id: string) => ICocktail | null;
   getCocktailsByIngredientId: (id: string) => ICocktail[];
   getIngredientById: (id: string) => IIngredient | null;
+
+  getIngredientBySlug: (slug: string) => IIngredient | null;
 }
 
 const useStore = create<IStoreProps & IActionsProps>()((set, get) => ({
@@ -93,6 +97,17 @@ const useStore = create<IStoreProps & IActionsProps>()((set, get) => ({
 
     return ingredientsMap.get(id) || null;
   },
+  getIngredientBySlug: (slug) => {
+    const { ingredientsMap } = get();
+
+    for (const ingredient of ingredientsMap.values()) {
+      if (slug === ingredient.slug) {
+        return ingredient;
+      }
+    }
+
+    return null;
+   }
 }));
 
 export default useStore;
