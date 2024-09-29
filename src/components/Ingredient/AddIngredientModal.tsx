@@ -52,7 +52,7 @@ const AddIngredientModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
         pending: 'Creating a new ingredient',
         success: {
           render: ({ data: toastData }) => {
-            close();
+            onClose();
 
             return (
               <span>
