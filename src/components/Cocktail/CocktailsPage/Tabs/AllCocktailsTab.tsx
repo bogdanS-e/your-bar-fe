@@ -92,8 +92,7 @@ const AllCocktailsTab = ({ initialData }: IIngredientsPageProps) => {
   return (
     <>
       <Head>
-        <title>Cocktails</title>
-        <meta name="description" content="Cocktails" />
+        <title>All Cocktails | Your Bar</title>
       </Head>
       <Main>
         <Title>Cocktails</Title>

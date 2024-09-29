@@ -10,7 +10,7 @@ const CocktailsPage = ({ initialData }: ICocktailsPageProps) => {
   return (
     <>
       <Head>
-        <title>{`Cocktails | Your Bar`}</title>
+        <title>Cocktails | Your Bar</title>
         <meta
           name="description"
           content="Discover our complete list of cocktails in one place. Browse and explore cocktail recipes, from classic favorites to new creations, perfect for any occasion."

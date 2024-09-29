@@ -19,7 +19,7 @@ const IngredientsPage = ({ initialData }: IIngredientsPageProps) => {
   return (
     <>
       <Head>
-        <title>{`Ingredients | Your Bar`}</title>
+        <title>Ingredients | Your Bar</title>
         <meta
           name="description"
           content="Explore a wide range of cocktail ingredients in our online cocktails app. Search for cocktails by ingredient and discover recipes to craft the perfect drink at home."
@@ -28,7 +28,7 @@ const IngredientsPage = ({ initialData }: IIngredientsPageProps) => {
           name="keywords"
           content="cocktail ingredients, cocktail recipes, online cocktails, search cocktails by ingredient, drink recipes, mixology, cocktail app, cocktail search, craft cocktails, cocktail recipes online"
         />
-        <meta property="og:title" content="All ingredients | Your Bar" />
+        <meta property="og:title" content="Ingredients | Your Bar" />
         <meta
           property="og:description"
           content="Explore a wide range of cocktail ingredients in our online cocktails app. Search for cocktails by ingredient and discover recipes to craft the perfect drink at home."
