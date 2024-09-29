@@ -19,8 +19,24 @@ const IngredientsPage = ({ initialData }: IIngredientsPageProps) => {
   return (
     <>
       <Head>
-        <title>Ingredients</title>
-        <meta name="description" content="Ingredients" />
+        <title>{`Ingredients | Your Bar`}</title>
+        <meta
+          name="description"
+          content="Explore a wide range of cocktail ingredients in our online cocktails app. Search for cocktails by ingredient and discover recipes to craft the perfect drink at home."
+        />
+        <meta
+          name="keywords"
+          content="cocktail ingredients, cocktail recipes, online cocktails, search cocktails by ingredient, drink recipes, mixology, cocktail app, cocktail search, craft cocktails, cocktail recipes online"
+        />
+        <meta property="og:title" content="All ingredients | Your Bar" />
+        <meta
+          property="og:description"
+          content="Explore a wide range of cocktail ingredients in our online cocktails app. Search for cocktails by ingredient and discover recipes to craft the perfect drink at home."
+        />
+        <meta
+          property="og:image"
+          content="https://res.cloudinary.com/dl6mqzurj/image/upload/v1727598448/180131-wondrich-bad-cocktail-tease_wghhv8_thumbnail_720x720_tof3bg.png"
+        />
       </Head>
       <Main>
         <Title>Ingredients</Title>
