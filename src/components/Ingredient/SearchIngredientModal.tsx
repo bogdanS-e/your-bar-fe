@@ -3,25 +3,24 @@ import { useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Row } from 'styles/components';
 
-import { IIngredient } from 'types/ingredient';
+import useIngredients from './IngredientsPage/useIngredients';
 
 import Modal from 'components/Modal';
 import SearchBar from 'components/SearchBar';
 import TagButton from 'components/Tag/TagButton';
 
 interface ISearchIngredientModalProps {
-  allIngredients: IIngredient[];
   isOpen: boolean;
   onClose: () => void;
   onChoose: (ingredientId: string, ingredientName: string) => void;
 }
 
 const SearchIngredientModal = ({
-  allIngredients,
   isOpen,
   onClose,
   onChoose,
 }: ISearchIngredientModalProps) => {
+  const { data: allIngredients } = useIngredients();
   const parentRef = useRef<HTMLDivElement>(null);
   const [searchValue, setSearchValue] = useState('');
 

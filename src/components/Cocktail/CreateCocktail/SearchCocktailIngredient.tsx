@@ -6,7 +6,6 @@ import { FieldArray, useFormikContext } from 'formik';
 import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Row } from 'styles/components';
-import { IIngredient } from 'types/ingredient';
 import { CocktailUnit, cocktailUnitInfo } from 'types/cocktail';
 import Checkbox from 'components/Checkbox';
 import SearchIngredientModal from 'components/Ingredient/SearchIngredientModal';
@@ -14,12 +13,10 @@ import { ICreateCocktailParams } from 'api/cocktails';
 
 interface ISearchCocktailIngredientProps {
   index: number;
-  allIngredients: IIngredient[];
 }
 
 const SearchCocktailIngredient = ({
   index,
-  allIngredients,
 }: ISearchCocktailIngredientProps) => {
   const unitInputRef = useRef<HTMLInputElement>(null);
 
@@ -63,10 +60,6 @@ const SearchCocktailIngredient = ({
 
     return err?.[`ingredients.${index}.${key}`];
   };
-
-  if (!allIngredients) {
-    return null;
-  }
 
   return (
     <Container>
@@ -141,7 +134,6 @@ const SearchCocktailIngredient = ({
       </CheckboxWrapper>
       <SearchIngredientModal
         isOpen={isModalOpen}
-        allIngredients={allIngredients}
         onClose={() => setIsModalOpen(false)}
         onChoose={onIngredientChoose}
       />
