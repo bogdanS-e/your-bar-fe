@@ -55,8 +55,7 @@ const useStore = create<IStoreProps & IActionsProps>()((set, get) => ({
     const ingredientsName: string[] = [];
 
     for (let i = 0; i < 3; i++) {
-      const { ingredientId } = cocktailIngredients[i];
-
+      const { ingredientId } = cocktailIngredients[i] || {};
       const { nameEn } = ingredientsMap.get(ingredientId) || {};
 
       if (!nameEn) {
