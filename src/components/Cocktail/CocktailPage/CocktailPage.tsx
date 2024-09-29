@@ -12,9 +12,10 @@ interface ICocktailPageProps {
 }
 
 const CocktailPage = ({ cocktail }: ICocktailPageProps) => {
-  const { getIngredientById } = useStore();
   const { nameEn, image, descriptionEn, tags, ingredients, recipeEn } =
     cocktail;
+
+  const { getIngredientById } = useStore();
 
   return (
     <>
@@ -31,7 +32,7 @@ const CocktailPage = ({ cocktail }: ICocktailPageProps) => {
       </Head>
       <GoBackButton />
       <Container>
-        <Row $alignItems="stretch">
+        <Row $alignItems="stretch" $gap="20px">
           <StyledImage
             width={200}
             height={400}
@@ -64,11 +65,11 @@ const CocktailPage = ({ cocktail }: ICocktailPageProps) => {
                     return null;
                   }
 
-                  const { nameEn, image } = ingredient;
+                  const { nameEn, image, slug } = ingredient;
 
                   return (
                     <li key={ingredientId}>
-                      <Link href={`/ingredient/${ingredientId}`}>
+                      <Link href={`/ingredient/${slug}`}>
                         <IngredientItem>
                           <Row $alignItems="center" $gap="20px">
                             <ImageCircle

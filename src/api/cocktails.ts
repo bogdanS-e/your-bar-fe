@@ -7,8 +7,8 @@ export const getCocktails = async () => {
   return data;
 };
 
-export const getCocktail = async (id: string) => {
-  const { data } = await axiosInstance.get<ICocktail>(`/cocktail/${id}`);
+export const getCocktail = async (slug: string) => {
+  const { data } = await axiosInstance.get<ICocktail>(`/cocktail/${slug}`);
 
   return data;
 };

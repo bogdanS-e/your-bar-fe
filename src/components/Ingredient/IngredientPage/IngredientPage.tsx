@@ -13,7 +13,7 @@ interface IIngredientPageProps {
 }
 
 const IngredientPage = ({ ingredient }: IIngredientPageProps) => {
-  const { nameEn, image, descriptionEn, tags, _id } = ingredient;
+  const { nameEn, image, descriptionEn, tags, _id, slug } = ingredient;
   const { getIngredientsName, getCocktailsByIngredientId } = useStore();
 
   const availableCocktails = getCocktailsByIngredientId(_id);
@@ -55,14 +55,22 @@ const IngredientPage = ({ ingredient }: IIngredientPageProps) => {
           <CocktailTitle>Cocktails with &quot;{nameEn}&quot;:</CocktailTitle>
           <Row $gap="20px" $alignItems="stretch" $flexWrap="wrap">
             {availableCocktails.map(
-              ({ _id, nameEn, descriptionEn, image, tags, ingredients }) => (
+              ({
+                _id,
+                slug,
+                nameEn,
+                descriptionEn,
+                image,
+                tags,
+                ingredients,
+              }) => (
                 <Card
                   key={_id}
                   name={nameEn}
                   description={descriptionEn}
                   image={image}
                   tags={tags}
-                  href={`/cocktail/${_id}`}
+                  href={`/cocktail/${slug}`}
                   ingredients={getIngredientsName(ingredients)}
                 />
               )

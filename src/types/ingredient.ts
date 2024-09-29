@@ -71,4 +71,5 @@ export interface IIngredient {
   descriptionEn: string;
   image: string | null;
   tags: IngredientTag[];
+  slug: string;
 }

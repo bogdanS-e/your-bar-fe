@@ -20,8 +20,8 @@ export default IngredientPage;
 // This function gets called at build time
 export const getStaticPaths: GetStaticPaths = async () => {
   const ingredients = await getIngredients();
-  const paths = ingredients.map(({ _id }) => ({
-    params: { ingredientId: _id },
+  const paths = ingredients.map(({ slug }) => ({
+    params: { ingredientSlug: slug },
   }));
 
   return {
@@ -34,7 +34,7 @@ export const getStaticProps: GetStaticProps<IIngredientsProps> = async ({
   params,
 }) => {
   try {
-    const ingredient = await getIngredient(params!.ingredientId as string);
+    const ingredient = await getIngredient(params!.ingredientSlug as string);
     return {
       props: {
         ingredient,

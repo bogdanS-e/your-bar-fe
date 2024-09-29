@@ -20,8 +20,8 @@ export default CocktailPage;
 // This function gets called at build time
 export const getStaticPaths: GetStaticPaths = async () => {
   const cocktails = await getCocktails();
-  const paths = cocktails.map(({ _id }) => ({
-    params: { cocktailId: _id },
+  const paths = cocktails.map(({ slug }) => ({
+    params: { cocktailSlug: slug },
   }));
 
   return {
@@ -34,7 +34,7 @@ export const getStaticProps: GetStaticProps<ICocktailPageProps> = async ({
   params,
 }) => {
   try {
-    const cocktail = await getCocktail(params!.cocktailId as string);
+    const cocktail = await getCocktail(params!.cocktailSlug as string);
     return {
       props: {
         cocktail,

@@ -11,8 +11,8 @@ export const getIngredients = async (token?: string) => {
   return data;
 };
 
-export const getIngredient = async (id: string) => {
-  const { data } = await axiosInstance.get<IIngredient>(`/ingredient/${id}`);
+export const getIngredient = async (slug: string) => {
+  const { data } = await axiosInstance.get<IIngredient>(`/ingredient/${slug}`);
 
   return data;
 };

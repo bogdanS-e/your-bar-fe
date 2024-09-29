@@ -14,12 +14,10 @@ const SearchResult = ({ resultId }: ISearchResultProps) => {
     return null;
   }
 
-  const { nameEn, image } = object;
+  const { nameEn, image, slug } = object;
   //cocktails have ingredients
   const url =
-    'ingredients' in object
-      ? `/cocktail/${resultId}`
-      : `/ingredient/${resultId}`;
+    'ingredients' in object ? `/cocktail/${slug}` : `/ingredient/${slug}`;
 
   return (
     <Link prefetch={false} href={url}>

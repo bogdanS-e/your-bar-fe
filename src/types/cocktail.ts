@@ -200,4 +200,5 @@ export interface ICocktail {
   image: string | null;
   tags: CocktailTag[];
   ingredients: ICocktailIngredient[];
+  slug: string;
 }
