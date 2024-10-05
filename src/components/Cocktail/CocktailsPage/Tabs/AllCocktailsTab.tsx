@@ -123,18 +123,12 @@ const AllCocktailsTab = ({
       <Head>
         <title>All Cocktails | Your Bar</title>
       </Head>
-      <Main>
-        <section>{renderArticles()}</section>
-      </Main>
+      <section>{renderArticles()}</section>
     </>
   );
 };
 
 export default AllCocktailsTab;
-
-const Main = styled.div`
-  margin: 20px 0;
-`;
 
 const Article = styled.article`
   display: block;
@@ -145,5 +139,5 @@ const Title = styled.h1`
   font-weight: 400;
   font-size: 1.5rem;
   color: #8f8f8f;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;

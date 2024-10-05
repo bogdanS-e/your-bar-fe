@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, MouseEvent } from 'react';
 import styled from 'styled-components';
 
 interface IIconButtonProps {
@@ -6,7 +6,7 @@ interface IIconButtonProps {
   size?: number;
   className?: string;
   disabled?: boolean;
-  onClick?: () => void;
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
 const IconButton = ({

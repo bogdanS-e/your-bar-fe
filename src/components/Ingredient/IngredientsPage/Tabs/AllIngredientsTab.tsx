@@ -3,10 +3,11 @@ import {
   IngredientTag,
   ingredientTagInfo,
 } from 'types/ingredient';
-import useIngredients from './useIngredients';
+import useIngredients from '../useIngredients';
 import { useMemo } from 'react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import IngredientArticle from './IngredientArticle';
+import IngredientArticle from '../IngredientArticle';
+import Head from 'next/head';
 
 interface IIngredientsListProps {
   initialData: IIngredient[];
@@ -70,7 +71,14 @@ const IngredientsList = ({
     return <TransitionGroup component={null}>{articles}</TransitionGroup>;
   };
 
-  return <section>{renderArticles()}</section>;
+  return (
+    <>
+      <Head>
+        <title>All Ingredients | Your Bar</title>
+      </Head>
+      <section>{renderArticles()}</section>
+    </>
+  );
 };
 
 export default IngredientsList;

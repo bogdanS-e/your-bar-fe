@@ -1,6 +1,8 @@
+import IconButton from 'components/IconButton';
+import { CheckmarkIcon } from 'components/Icons';
 import TagButton from 'components/Tag/TagButton';
 import Link from 'next/link';
-import React from 'react';
+import { MouseEvent } from 'react';
 import styled from 'styled-components';
 import { Column, Row } from 'styles/components';
 import { CocktailTag } from 'types/cocktail';
@@ -12,8 +14,10 @@ interface ICardProps {
   description: string;
   tags: (IngredientTag | CocktailTag)[];
   href: string;
+  isAvailable?: boolean;
   ingredients?: string[];
   className?: string;
+  onIconClick?: () => void;
 }
 
 const Card = ({
@@ -22,14 +26,39 @@ const Card = ({
   description,
   tags,
   href,
+  isAvailable = false,
   ingredients,
   className,
+  onIconClick,
 }: ICardProps) => {
+  const isIngredient = typeof ingredients === 'undefined';
+
+  const handleIconClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    onIconClick?.();
+  };
+
   return (
-    <CardContainer className={className} href={href} prefetch={false}>
+    <CardContainer
+      $isAvailable={isAvailable}
+      className={className}
+      href={href}
+      prefetch={false}
+    >
       <ImageWrapper $justifyContent="center">
         <StyledImage width={200} height={140} src={image || ''} alt={name} />
       </ImageWrapper>
+
+      {onIconClick && (
+        <StyledIconButton
+          size={40}
+          $isAvailable={isAvailable}
+          onClick={handleIconClick}
+        >
+          <CheckmarkIcon />
+        </StyledIconButton>
+      )}
+
       <Content>
         <div style={{ width: '100%' }}>
           <Title>{name}</Title>
@@ -60,6 +89,15 @@ const Card = ({
 
 export default Card;
 
+const StyledIconButton = styled(IconButton)<{ $isAvailable: boolean }>`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.05);
+  color: ${({ $isAvailable }) => ($isAvailable ? '#4CAF50' : '#ccc')};
+`;
+
 const Ingredients = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -74,7 +112,8 @@ const Ingredients = styled.div`
   }
 `;
 const gap = '20px';
-const CardContainer = styled(Link)`
+const CardContainer = styled(Link)<{ $isAvailable: boolean }>`
+  position: relative;
   display: flex;
   flex-direction: column;
   width: calc((100% - 4 * ${gap}) / 5);
@@ -82,6 +121,7 @@ const CardContainer = styled(Link)`
   overflow: hidden;
   cursor: pointer;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  background: ${({ $isAvailable }) => ($isAvailable ? '#E8F5E9' : 'none')};
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
@@ -108,7 +148,6 @@ const StyledImage = styled.img`
 
 const Content = styled(Column)`
   padding: 16px;
-  background-color: white;
   flex: 1;
   align-items: flex-start;
   justify-content: space-between;

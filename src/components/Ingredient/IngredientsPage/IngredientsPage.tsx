@@ -2,8 +2,10 @@ import { TagsFilter } from 'components/Filter';
 import Head from 'next/head';
 import styled from 'styled-components';
 import { IIngredient, ingredientTagInfo } from 'types/ingredient';
-import { useState } from 'react';
-import IngredientsList from './IngredientsList';
+import { useMemo, useState } from 'react';
+import AllIngredientsTab from './Tabs/AllIngredientsTab';
+import { useAuth0 } from '@auth0/auth0-react';
+import { Tabs } from 'components/Tabs';
 
 interface IIngredientsPageProps {
   initialData: IIngredient[];
@@ -12,9 +14,30 @@ interface IIngredientsPageProps {
 const ingrediensFilter = Object.values(ingredientTagInfo);
 
 const IngredientsPage = ({ initialData }: IIngredientsPageProps) => {
+  const { isAuthenticated } = useAuth0();
+
+  const [activeTab, setActiveTab] = useState(0);
   const [selectedTags, setSelectedTags] = useState(
     ingrediensFilter.map(({ key }) => key)
   );
+
+  const tabData = useMemo(() => {
+    return [
+      {
+        label: 'My Ingredients',
+        content: <div>My Ingredients</div>,
+      },
+      {
+        label: 'All Ingredients',
+        content: (
+          <AllIngredientsTab
+            selectedTags={selectedTags}
+            initialData={initialData}
+          />
+        ),
+      },
+    ];
+  }, [initialData, selectedTags]);
 
   return (
     <>
@@ -45,16 +68,29 @@ const IngredientsPage = ({ initialData }: IIngredientsPageProps) => {
           selectedTags={selectedTags}
           onChange={setSelectedTags}
         />
-        <IngredientsList
-          selectedTags={selectedTags}
-          initialData={initialData}
-        />
+
+        {isAuthenticated ? (
+          <StyledTabs
+            tabs={tabData}
+            activeTab={activeTab}
+            onChange={setActiveTab}
+          />
+        ) : (
+          <AllIngredientsTab
+            selectedTags={selectedTags}
+            initialData={initialData}
+          />
+        )}
       </Main>
     </>
   );
 };
 
 export default IngredientsPage;
+
+const StyledTabs = styled(Tabs)`
+  margin-top: 10px;
+`;
 
 const Main = styled.div`
   margin: 20px 0;

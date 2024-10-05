@@ -133,6 +133,7 @@ const TabContentWrapper = styled.div`
   width: 100%;
   display: grid;
   overflow: hidden;
+  padding-top: 20px;
 `;
 
 const TabContent = styled.div`

@@ -35,11 +35,12 @@ export default IngredientArticle;
 
 const Article = styled.article`
   display: block;
+  margin-bottom: 20px;
 `;
 
 const Title = styled.h2`
   font-weight: 400;
+  margin-bottom: 10px;
   font-size: 1.5rem;
   color: #8f8f8f;
-  margin: 40px 0 20px;
 `;
