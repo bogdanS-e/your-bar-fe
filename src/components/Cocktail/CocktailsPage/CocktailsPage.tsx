@@ -1,9 +1,11 @@
 import { cocktailTagInfo, ICocktail } from 'types/cocktail';
 import AllCocktailsTab from './Tabs/AllCocktailsTab';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { IngredientsFilter, TagsFilter } from 'components/Filter';
 import styled from 'styled-components';
+import { Tabs } from 'components/Tabs';
+import { useAuth0 } from '@auth0/auth0-react';
 
 interface ICocktailsPageProps {
   initialData: ICocktail[];
@@ -12,10 +14,36 @@ interface ICocktailsPageProps {
 const cocktailsFilter = Object.values(cocktailTagInfo);
 
 const CocktailsPage = ({ initialData }: ICocktailsPageProps) => {
+  const { isAuthenticated } = useAuth0();
+
   const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState(
     cocktailsFilter.map(({ key }) => key)
   );
+  const [activeTab, setActiveTab] = useState(0);
+
+  const tabData = useMemo(() => {
+    return [
+      {
+        label: 'My Cocktails',
+        content: <div>My coctails</div>,
+      },
+      {
+        label: 'All Cocktails',
+        content: (
+          <AllCocktailsTab
+            initialData={initialData}
+            selectedTags={selectedTags}
+            selectedIngredients={selectedIngredients}
+          />
+        ),
+      },
+      {
+        label: 'Favorite Cocktails',
+        content: <div>Favorite coctails</div>,
+      },
+    ];
+  }, [initialData, selectedTags, selectedIngredients]);
 
   return (
     <>
@@ -49,16 +77,29 @@ const CocktailsPage = ({ initialData }: ICocktailsPageProps) => {
         selectedIngredients={selectedIngredients}
         onChange={setSelectedIngredients}
       />
-      <AllCocktailsTab
-        initialData={initialData}
-        selectedTags={selectedTags}
-        selectedIngredients={selectedIngredients}
-      />
+
+      {isAuthenticated ? (
+        <StyledTabs
+          tabs={tabData}
+          activeTab={activeTab}
+          onChange={setActiveTab}
+        />
+      ) : (
+        <AllCocktailsTab
+          initialData={initialData}
+          selectedTags={selectedTags}
+          selectedIngredients={selectedIngredients}
+        />
+      )}
     </>
   );
 };
 
 export default CocktailsPage;
+
+const StyledTabs = styled(Tabs)`
+  margin-top: 10px;
+`;
 
 const Title = styled.h1`
   font-weight: 400;

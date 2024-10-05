@@ -37,7 +37,7 @@ const IngredientsFilter = ({
 
   return (
     <Container $justifyContent="flex-start" $gap="10px" $flexWrap="wrap">
-      <Title>My cocktail should have:</Title>
+      <Title>Cocktails should have:</Title>
 
       {!selectedIngredients.length && (
         <ChipButton key="example">choose your ingredient</ChipButton>
@@ -71,9 +71,7 @@ const IngredientsFilter = ({
 
 export default IngredientsFilter;
 
-const Container = styled(Row)`
-  margin-top: 15px;
-`;
+const Container = styled(Row)``;
 
 const Title = styled.span`
   color: #8f8f8f;

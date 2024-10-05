@@ -86,7 +86,7 @@ const AllCocktailsTab = ({
           classNames="article"
         >
           <Article>
-            <ArticleTitle>{cocktailTagInfo[tag].title}</ArticleTitle>
+            <Title>{cocktailTagInfo[tag].title}</Title>
             <Row $gap="20px" $flexWrap="wrap" $alignItems="stretch">
               {cocktails.map(
                 ({
@@ -138,6 +138,7 @@ const Main = styled.div`
 
 const Article = styled.article`
   display: block;
+  margin-bottom: 20px;
 `;
 
 const Title = styled.h1`
@@ -145,8 +146,4 @@ const Title = styled.h1`
   font-size: 1.5rem;
   color: #8f8f8f;
   margin-bottom: 20px;
-`;
-
-const ArticleTitle = styled(Title)`
-  margin: 40px 0 20px;
 `;
