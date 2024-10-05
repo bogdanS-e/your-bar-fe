@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
+import { useToggle } from 'hooks';
 
 type TPosition = 'top' | 'bottom' | 'left';
 type TKey = number | string;
@@ -27,12 +28,12 @@ const Dropdown = <T extends TKey>({
   renderItem,
   onOptionClick,
 }: IDropdownProps<T>) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, isOpenHandler] = useToggle(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const onItemClick = (item: T) => {
     onOptionClick(item);
-    setIsOpen(false);
+    isOpenHandler.off();
   };
 
   useEffect(() => {
@@ -41,7 +42,7 @@ const Dropdown = <T extends TKey>({
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
-        setIsOpen(false);
+        isOpenHandler.off();
       }
     };
 
@@ -95,9 +96,7 @@ const Dropdown = <T extends TKey>({
 
   return (
     <DropdownContainer ref={dropdownRef} className={className}>
-      <DropdownTrigger onClick={() => setIsOpen(true)}>
-        {trigger}
-      </DropdownTrigger>
+      <DropdownTrigger onClick={isOpenHandler.on}>{trigger}</DropdownTrigger>
       <CSSTransition
         in={isOpen}
         timeout={300}

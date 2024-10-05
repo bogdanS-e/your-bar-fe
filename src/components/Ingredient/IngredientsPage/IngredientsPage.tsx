@@ -1,4 +1,4 @@
-import Filter from 'components/Filter';
+import { TagsFilter } from 'components/Filter';
 import Head from 'next/head';
 import styled from 'styled-components';
 import { IIngredient, ingredientTagInfo } from 'types/ingredient';
@@ -40,7 +40,7 @@ const IngredientsPage = ({ initialData }: IIngredientsPageProps) => {
       </Head>
       <Main>
         <Title>Ingredients</Title>
-        <Filter
+        <TagsFilter
           items={ingrediensFilter}
           selectedTags={selectedTags}
           onChange={setSelectedTags}

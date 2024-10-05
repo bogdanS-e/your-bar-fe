@@ -14,10 +14,15 @@ interface IIngredientPageProps {
 }
 
 const IngredientPage = ({ initialData }: IIngredientPageProps) => {
-  const { getIngredientsName, getCocktailsByIngredientId, getIngredientBySlug } = useStore();
+  const {
+    getIngredientsName,
+    getCocktailsByIngredientId,
+    getIngredientBySlug,
+  } = useStore();
   const router = useRouter();
 
-  const ingredient = initialData || getIngredientBySlug(router.query.ingredientSlug as string);
+  const ingredient =
+    initialData || getIngredientBySlug(router.query.ingredientSlug as string);
 
   if (!ingredient) {
     return <h1>Ingredient not found</h1>;

@@ -10,10 +10,7 @@ const AddIngredients = () => {
   return (
     <div>
       {ingredients.map((_, i) => (
-        <CocktailIngredient
-          key={i}
-          index={i}
-        />
+        <CocktailIngredient key={i} index={i} />
       ))}
     </div>
   );

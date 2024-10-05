@@ -8,8 +8,9 @@ import styled from 'styled-components';
 import { Row } from 'styles/components';
 import { CocktailUnit, cocktailUnitInfo } from 'types/cocktail';
 import Checkbox from 'components/Checkbox';
-import SearchIngredientModal from 'components/Ingredient/SearchIngredientModal';
+import { SearchIngredientModal } from 'components/Ingredient';
 import { ICreateCocktailParams } from 'api/cocktails';
+import { useToggle } from 'hooks';
 
 interface ISearchCocktailIngredientProps {
   index: number;
@@ -20,7 +21,7 @@ const SearchCocktailIngredient = ({
 }: ISearchCocktailIngredientProps) => {
   const unitInputRef = useRef<HTMLInputElement>(null);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, isModalOpenHandler] = useToggle(false);
 
   const {
     values: { ingredients },
@@ -71,7 +72,7 @@ const SearchCocktailIngredient = ({
             value={ingredients[index].name}
             onChange={() => {}}
             readOnly
-            onClick={() => setIsModalOpen(true)}
+            onClick={isModalOpenHandler.on}
           />
 
           {getError('name') && <ErrorText>{getError('name')}</ErrorText>}
@@ -134,7 +135,7 @@ const SearchCocktailIngredient = ({
       </CheckboxWrapper>
       <SearchIngredientModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={isModalOpenHandler.off}
         onChoose={onIngredientChoose}
       />
     </Container>

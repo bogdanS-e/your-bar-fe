@@ -3,7 +3,9 @@ import { LoginModal } from 'components/AuthHandler';
 import { CreateCocktailModal } from 'components/Cocktail';
 import Dropdown from 'components/Dropdown';
 import IconButton from 'components/IconButton';
+import { PlusIcon } from 'components/Icons';
 import { AddIngredientModal } from 'components/Ingredient';
+import { useToggle } from 'hooks';
 import { useState } from 'react';
 
 type TTypeToAdd = 'ingredient' | 'cocktail';
@@ -11,23 +13,23 @@ type TTypeToAdd = 'ingredient' | 'cocktail';
 const AddNew = () => {
   const { isAuthenticated } = useAuth0();
 
-  const [isAddIngredientOpen, setIsAddIngredientOpen] = useState(false);
-  const [isAddCocktailOpen, setIsAddCocktailOpen] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isAddIngredientOpen, addIngredientHandler] = useToggle(false);
+  const [isAddCocktailOpen, addCocktailHandler] = useToggle(false);
+  const [isLoginOpen, isLoginOpenHandler] = useToggle(false);
 
   const handleOptionClick = (type: TTypeToAdd) => {
     if (!isAuthenticated) {
-      setIsLoginOpen(true);
+      isLoginOpenHandler.on();
 
       return;
     }
     if (type === 'ingredient') {
-      setIsAddIngredientOpen(true);
+      addIngredientHandler.on();
 
       return;
     }
 
-    setIsAddCocktailOpen(true);
+    addCocktailHandler.on();
   };
 
   return (
@@ -35,28 +37,7 @@ const AddNew = () => {
       <Dropdown
         trigger={
           <IconButton size={50}>
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-              <g
-                id="SVGRepo_tracerCarrier"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              ></g>
-              <g id="SVGRepo_iconCarrier">
-                {' '}
-                <path
-                  d="M4 12H20M12 4V20"
-                  stroke="#000000"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                ></path>{' '}
-              </g>
-            </svg>
+            <PlusIcon />
           </IconButton>
         }
         renderItem={(type) => `Add ${type}`}
@@ -66,13 +47,13 @@ const AddNew = () => {
       />
       <AddIngredientModal
         isOpen={isAddIngredientOpen}
-        onClose={() => setIsAddIngredientOpen(false)}
+        onClose={addIngredientHandler.off}
       />
       <CreateCocktailModal
         isOpen={isAddCocktailOpen}
-        onClose={() => setIsAddCocktailOpen(false)}
+        onClose={addCocktailHandler.off}
       />
-      <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
+      <LoginModal isOpen={isLoginOpen} onClose={isLoginOpenHandler.off} />
     </>
   );
 };

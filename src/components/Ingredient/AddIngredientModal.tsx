@@ -26,9 +26,7 @@ const ingredientSchema: ZodType<ICreateIngredientParams> = z.object({
     .string()
     .min(1, 'Ingredient name is required')
     .max(30, 'Name too long'),
-  description: z
-    .string()
-    .max(800, 'Description too long'),
+  description: z.string().max(800, 'Description too long'),
   tags: z.array(z.number()).nonempty('At least one tag is required'),
   image: z
     .any() // You can't directly use `z.instanceof(File)` in a Node.js environment, so you use `z.any()` and refine.

@@ -106,7 +106,7 @@ const useStore = create<IStoreProps & IActionsProps>()((set, get) => ({
     }
 
     return null;
-   }
+  },
 }));
 
 export default useStore;

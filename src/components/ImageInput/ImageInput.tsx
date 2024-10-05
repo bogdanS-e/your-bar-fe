@@ -1,6 +1,7 @@
 import React, { useId, useState } from 'react';
 import styled, { css } from 'styled-components';
 import IconButton from 'components/IconButton';
+import { useToggle } from 'hooks';
 
 interface ImageInputProps {
   label?: string;
@@ -18,8 +19,8 @@ const ImageInput = ({
   const inputId = useId();
 
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [isDragOver, setIsDragOver] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isDragOver, isDragOverHandler] = useToggle(false);
+  const [isLoading, isLoadingHandler] = useToggle(false);
 
   const handleImageChange = (file: File | null) => {
     if (file) {
@@ -29,12 +30,12 @@ const ImageInput = ({
         return;
       }
 
-      setIsLoading(true);
+      isLoadingHandler.on();
       const reader = new FileReader();
 
       reader.onloadend = () => {
         setImageUrl(reader.result as string);
-        setIsLoading(false);
+        isLoadingHandler.off();
       };
 
       reader.readAsDataURL(file);
@@ -44,7 +45,7 @@ const ImageInput = ({
     }
 
     setImageUrl(null);
-    setIsLoading(false);
+    isLoadingHandler.off();
   };
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,16 +55,12 @@ const ImageInput = ({
 
   const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
-    setIsDragOver(true);
-  };
-
-  const handleDragLeave = () => {
-    setIsDragOver(false);
+    isDragOverHandler.on();
   };
 
   const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
-    setIsDragOver(false);
+    isDragOverHandler.off();
 
     const file = e.dataTransfer.files?.[0] || null;
 
@@ -84,7 +81,7 @@ const ImageInput = ({
           $isDragOver={isDragOver}
           $isLoading={isLoading}
           onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
+          onDragLeave={isDragOverHandler.off}
           onDrop={handleDrop}
         >
           {!imageUrl && label}

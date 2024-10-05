@@ -1,3 +1,4 @@
+import { useToggle } from 'hooks';
 import {
   ChangeEvent,
   forwardRef,
@@ -15,7 +16,7 @@ interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input = forwardRef<HTMLInputElement, IInputProps>(
   ({ label, value, placeholder, ...rest }, ref) => {
-    const [isFocused, setIsFocused] = useState(false);
+    const [isFocused, isFocusedHandler] = useToggle(false);
     const id = useId();
 
     return (
@@ -23,8 +24,8 @@ const Input = forwardRef<HTMLInputElement, IInputProps>(
         <StyledInput
           id={id}
           value={value}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
+          onFocus={isFocusedHandler.on}
+          onBlur={isFocusedHandler.off}
           placeholder={placeholder}
           ref={ref}
           {...rest}

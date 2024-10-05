@@ -12,7 +12,7 @@ interface IFilterProps<T> {
   onChange: (selectedItems: T[]) => void;
 }
 
-const Filter = <T extends string | number>({
+const TagsFilter = <T extends string | number>({
   items,
   selectedTags,
   onChange,
@@ -25,6 +25,10 @@ const Filter = <T extends string | number>({
     }
 
     onChange([...selectedTags, key]);
+  };
+
+  const handleSelectAll = () => {
+    onChange(items.map(({ key }) => key));
   };
 
   return (
@@ -44,18 +48,30 @@ const Filter = <T extends string | number>({
           {title}
         </Item>
       ))}
+
+      <Item key="select-all" onClick={handleSelectAll}>
+        <ImageWrapper>
+          <StyledImage
+            src="/images/checkmark.jpg"
+            width={80}
+            height={80}
+            alt="Checkmark image"
+          />
+        </ImageWrapper>
+        Select all
+      </Item>
     </Container>
   );
 };
 
-export default Filter;
+export default TagsFilter;
 
 const Container = styled.div`
   display: flex;
-  gap: 50px;
+  gap: 30px;
+  align-items: flex-start;
   color: #8f8f8f;
   font-style: italic;
-  cursor: pointer;
   text-align: center;
 `;
 
@@ -64,12 +80,16 @@ const Item = styled.div`
   flex-direction: column;
   user-select: none;
   align-items: center;
+  cursor: pointer;
+  flex: 1;
+  max-width: 80px;
 `;
 
 const ImageWrapper = styled.div`
   width: 80px;
   height: 80px;
   position: relative;
+  margin-bottom: 5px;
 `;
 
 const StyledImage = styled.img`

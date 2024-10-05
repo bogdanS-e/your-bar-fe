@@ -1,7 +1,6 @@
-import Filter from 'components/Filter';
 import Head from 'next/head';
 import styled from 'styled-components';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { CocktailTag, cocktailTagInfo, ICocktail } from 'types/cocktail';
 import useCocktails from '../useCocktails';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
@@ -11,19 +10,19 @@ import useStore from 'store';
 
 interface IIngredientsPageProps {
   initialData: ICocktail[];
+  selectedTags: CocktailTag[];
+  selectedIngredients: string[];
 }
 
-const cocktailsFilter = Object.values(cocktailTagInfo);
-
-const AllCocktailsTab = ({ initialData }: IIngredientsPageProps) => {
+const AllCocktailsTab = ({
+  initialData,
+  selectedTags,
+  selectedIngredients,
+}: IIngredientsPageProps) => {
   const { data: queryData } = useCocktails();
   const data = queryData || initialData;
 
   const { getIngredientsName } = useStore();
-
-  const [selectedTags, setSelectedTags] = useState(
-    cocktailsFilter.map(({ key }) => key)
-  );
 
   const dataMap = useMemo(() => {
     const map = new Map<CocktailTag, ICocktail[]>();
@@ -31,7 +30,29 @@ const AllCocktailsTab = ({ initialData }: IIngredientsPageProps) => {
       map.set(key, []);
     }
 
+    const filteredData: ICocktail[] = [];
+
+    //filter coctails by ingredients
     for (const cocktail of data) {
+      let found = true;
+
+      for (const id of selectedIngredients) {
+        if (
+          !cocktail.ingredients.find(({ ingredientId }) => ingredientId === id)
+        ) {
+          found = false;
+
+          break;
+        }
+      }
+
+      if (found) {
+        filteredData.push(cocktail);
+      }
+    }
+
+    //filter coctails by tags
+    for (const cocktail of filteredData) {
       for (const tag of cocktail.tags) {
         if (!selectedTags.includes(tag)) {
           continue;
@@ -48,7 +69,7 @@ const AllCocktailsTab = ({ initialData }: IIngredientsPageProps) => {
     }
 
     return map;
-  }, [selectedTags, data]);
+  }, [selectedTags, selectedIngredients, data]);
 
   const renderArticles = () => {
     const articles = [];
@@ -103,12 +124,6 @@ const AllCocktailsTab = ({ initialData }: IIngredientsPageProps) => {
         <title>All Cocktails | Your Bar</title>
       </Head>
       <Main>
-        <Title>Cocktails</Title>
-        <Filter
-          items={cocktailsFilter}
-          selectedTags={selectedTags}
-          onChange={setSelectedTags}
-        />
         <section>{renderArticles()}</section>
       </Main>
     </>

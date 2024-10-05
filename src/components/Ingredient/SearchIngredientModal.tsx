@@ -13,12 +13,14 @@ interface ISearchIngredientModalProps {
   isOpen: boolean;
   onClose: () => void;
   onChoose: (ingredientId: string, ingredientName: string) => void;
+  keepUnmount?: boolean;
 }
 
 const SearchIngredientModal = ({
   isOpen,
   onClose,
   onChoose,
+  keepUnmount = true,
 }: ISearchIngredientModalProps) => {
   const { data: allIngredients } = useIngredients();
   const parentRef = useRef<HTMLDivElement>(null);
@@ -52,7 +54,7 @@ const SearchIngredientModal = ({
   return (
     <StyledModal
       isOpen={isOpen}
-      keepUnmount
+      keepUnmount={keepUnmount}
       onClose={onClose}
       title="Search ingredient"
     >

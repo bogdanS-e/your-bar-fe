@@ -20,6 +20,7 @@
       "utils/*": ["./src/utils/*"],
       "api/*": ["./src/api/*"],
       "store": ["./src/store/index"],
+      "hooks": ["./src/hooks/index"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
