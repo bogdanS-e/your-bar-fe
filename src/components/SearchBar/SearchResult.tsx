@@ -1,7 +1,10 @@
+import { useUser } from 'components/AuthHandler';
 import Link from 'next/link';
 import useStore from 'store';
 import styled from 'styled-components';
 import { ImageCircle, Row } from 'styles/components';
+import SearchCard from './SearchCard';
+import IngredientResult from './IngredientResult';
 
 interface ISearchResultProps {
   resultId: string;
@@ -15,22 +18,23 @@ const SearchResult = ({ resultId }: ISearchResultProps) => {
   }
 
   const { nameEn, image, slug } = object;
-  //cocktails have ingredients
-  const url =
-    'ingredients' in object ? `/cocktail/${slug}` : `/ingredient/${slug}`;
+
+  //only cocktails have ingredients
+  const isCocktail = 'ingredients' in object;
+  const href = isCocktail ? `/cocktail/${slug}` : `/ingredient/${slug}`;
+
+  if (isCocktail) {
+    return <SearchCard href={href} name={nameEn} image={image} />;
+  }
 
   return (
-    <Link prefetch={false} href={url}>
-      <Row $gap="20px">
-        <ImageCircle src={image || ''} width={80} height={80} alt={nameEn} />
-        <Title>{nameEn}</Title>
-      </Row>
-    </Link>
+    <IngredientResult
+      href={href}
+      name={nameEn}
+      image={image}
+      ingredientId={resultId}
+    />
   );
 };
 
 export default SearchResult;
-
-const Title = styled.span`
-  font-size: 1.125rem;
-`;

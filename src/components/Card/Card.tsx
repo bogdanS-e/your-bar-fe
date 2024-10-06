@@ -8,7 +8,7 @@ import { Column, Row } from 'styles/components';
 import { CocktailTag } from 'types/cocktail';
 import { IngredientTag } from 'types/ingredient';
 
-interface ICardProps {
+export interface ICardProps {
   image: string | null;
   name: string;
   description: string;
@@ -31,9 +31,8 @@ const Card = ({
   className,
   onIconClick,
 }: ICardProps) => {
-  const isIngredient = typeof ingredients === 'undefined';
-
   const handleIconClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     e.preventDefault();
     onIconClick?.();
   };

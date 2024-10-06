@@ -3,9 +3,10 @@ import Head from 'next/head';
 import styled from 'styled-components';
 import { IIngredient, ingredientTagInfo } from 'types/ingredient';
 import { useMemo, useState } from 'react';
-import AllIngredientsTab from './Tabs/AllIngredientsTab';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Tabs } from 'components/Tabs';
+import MyIngredientsTab from './Tabs/MyIngredientsTab';
+import AllIngredientsTab from './Tabs/AllIngredientsTab';
 
 interface IIngredientsPageProps {
   initialData: IIngredient[];
@@ -25,7 +26,12 @@ const IngredientsPage = ({ initialData }: IIngredientsPageProps) => {
     return [
       {
         label: 'My Ingredients',
-        content: <div>My Ingredients</div>,
+        content: (
+          <MyIngredientsTab
+            selectedTags={selectedTags}
+            initialData={initialData}
+          />
+        ),
       },
       {
         label: 'All Ingredients',

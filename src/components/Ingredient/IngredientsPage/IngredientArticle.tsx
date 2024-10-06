@@ -1,4 +1,4 @@
-import Card from 'components/Card';
+import { IngredientCard } from 'components/Card';
 import styled from 'styled-components';
 import { Row } from 'styles/components';
 
@@ -16,8 +16,9 @@ const IngredientArticle = ({ ingredients, title }: IIngredientArticleProps) => {
       <Row $gap="20px" $flexWrap="wrap" $alignItems="stretch">
         {ingredients.map(
           ({ _id, slug, nameEn, descriptionEn, image, tags }) => (
-            <Card
+            <IngredientCard
               key={_id}
+              ingredientId={_id}
               href={`ingredient/${slug}`}
               name={nameEn}
               description={descriptionEn}

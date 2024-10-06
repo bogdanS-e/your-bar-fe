@@ -24,6 +24,24 @@ interface IActionsProps {
   getIngredientBySlug: (slug: string) => IIngredient | null;
 }
 
+const getIngredientById =
+  (ingredientsMap: IStoreProps['ingredientsMap'] = new Map()) =>
+  (id: string) => {
+    return ingredientsMap.get(id) || null;
+  };
+
+const getIngredientBySlug =
+  (ingredientsMap: IStoreProps['ingredientsMap'] = new Map()) =>
+  (slug: string) => {
+    for (const ingredient of ingredientsMap.values()) {
+      if (slug === ingredient.slug) {
+        return ingredient;
+      }
+    }
+
+    return null;
+  };
+
 const useStore = create<IStoreProps & IActionsProps>()((set, get) => ({
   ingredientsMap: new Map(),
   cocktaisMap: new Map(),
@@ -34,7 +52,11 @@ const useStore = create<IStoreProps & IActionsProps>()((set, get) => ({
       ingredientsMap.set(ingredient._id, ingredient);
     }
 
-    set({ ingredientsMap });
+    set({
+      ingredientsMap,
+      getIngredientById: getIngredientById(ingredientsMap),
+      getIngredientBySlug: getIngredientBySlug(ingredientsMap),
+    });
   },
   updateCocktails: (cocktails) => {
     const cocktaisMap = new Map<string, ICocktail>();
@@ -91,22 +113,8 @@ const useStore = create<IStoreProps & IActionsProps>()((set, get) => ({
 
     return cocktails;
   },
-  getIngredientById: (id) => {
-    const { ingredientsMap } = get();
-
-    return ingredientsMap.get(id) || null;
-  },
-  getIngredientBySlug: (slug) => {
-    const { ingredientsMap } = get();
-
-    for (const ingredient of ingredientsMap.values()) {
-      if (slug === ingredient.slug) {
-        return ingredient;
-      }
-    }
-
-    return null;
-  },
+  getIngredientById: getIngredientById(),
+  getIngredientBySlug: getIngredientBySlug(),
 }));
 
 export default useStore;

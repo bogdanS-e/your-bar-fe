@@ -138,6 +138,10 @@ const StyledDropdown: typeof Dropdown = styled(Dropdown)`
   .dropdown-menu {
     width: 350px;
     max-height: min(80vh, 800px);
+
+    &-item {
+      padding: 0;
+    }
   }
 `;
 

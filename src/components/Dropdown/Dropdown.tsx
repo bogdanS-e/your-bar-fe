@@ -55,7 +55,11 @@ const Dropdown = <T extends TKey>({
   const renderItems = () => {
     const renderOptions = (items: T[]) => {
       return items.map((item) => (
-        <DropdownItem onClick={() => onItemClick(item)} key={item}>
+        <DropdownItem
+          className="dropdown-menu-item"
+          onClick={() => onItemClick(item)}
+          key={item}
+        >
           {renderItem ? renderItem(item) : item}
         </DropdownItem>
       ));

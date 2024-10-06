@@ -56,7 +56,7 @@ const Tabs = ({ tabs, activeTab, className, onChange }: TabsProps) => {
         {tabs.map((tab, index) => (
           <TabButton
             key={index}
-            isActive={index === activeTab}
+            $isActive={index === activeTab}
             onClick={() => handleTabChange(index)}
           >
             {tab.label}
@@ -99,10 +99,10 @@ const TabList = styled.div`
   border-bottom: 1px solid #ccc;
 `;
 
-const TabButton = styled.button<{ isActive: boolean }>`
+const TabButton = styled.button<{ $isActive: boolean }>`
   padding: 12px 16px;
   font-size: 1rem;
-  color: ${({ isActive }) => (isActive ? '#3f51b5' : '#757575')};
+  color: ${({ $isActive }) => ($isActive ? '#3f51b5' : '#757575')};
   border: none;
   background-color: transparent;
   cursor: pointer;

@@ -54,4 +54,6 @@ export const ImageCircle = styled.img`
   object-fit: contain;
   border-radius: 50%;
   border: 1px solid #ccc;
+  background: #fff;
+  flex-shrink: 0;
 `;
