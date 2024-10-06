@@ -23,7 +23,7 @@ const UserProfile = () => {
     });
   };
 
-  const { name, email, picture, given_name } = user;
+  const { name, email, picture } = user;
 
   return (
     <Row $gap="10px">
@@ -33,7 +33,7 @@ const UserProfile = () => {
       </Column>
       <StyledDropdown
         trigger={
-          <Avatar picture={picture || ''} name={name || given_name || 'U'} />
+          <Avatar picture={picture || ''} name={name || 'U'} />
         }
         items={['logout']}
         position="left"
