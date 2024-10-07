@@ -16,9 +16,7 @@ interface ISearchCocktailIngredientProps {
   index: number;
 }
 
-const SearchCocktailIngredient = ({
-  index,
-}: ISearchCocktailIngredientProps) => {
+const SearchCocktailIngredient = ({ index }: ISearchCocktailIngredientProps) => {
   const unitInputRef = useRef<HTMLInputElement>(null);
 
   const [isModalOpen, isModalOpenHandler] = useToggle(false);
@@ -97,8 +95,7 @@ const SearchCocktailIngredient = ({
               position="top"
               trigger={
                 <Unit $justifyContent="flex-end">
-                  {cocktailUnitInfo[ingredients[index].unit].title}{' '}
-                  <IconButton>▼</IconButton>
+                  {cocktailUnitInfo[ingredients[index].unit].title} <IconButton>▼</IconButton>
                 </Unit>
               }
               items={Object.values(cocktailUnitInfo).map(({ key }) => key)}

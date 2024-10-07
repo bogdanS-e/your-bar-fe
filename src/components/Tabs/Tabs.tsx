@@ -1,10 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import {
-  CSSTransition,
-  SwitchTransition,
-  TransitionGroup,
-} from 'react-transition-group';
+import { CSSTransition, SwitchTransition, TransitionGroup } from 'react-transition-group';
 import { Column } from 'styles/components';
 
 interface Tab {
@@ -31,9 +27,7 @@ const Tabs = ({ tabs, activeTab, className, onChange }: TabsProps) => {
   const [prevTab, setPrevTab] = useState(activeTab);
 
   useEffect(() => {
-    const currentTab = tabsRef.current?.children[
-      activeTab
-    ] as HTMLButtonElement;
+    const currentTab = tabsRef.current?.children[activeTab] as HTMLButtonElement;
 
     if (!currentTab) {
       return;
@@ -62,27 +56,19 @@ const Tabs = ({ tabs, activeTab, className, onChange }: TabsProps) => {
             {tab.label}
           </TabButton>
         ))}
-        <ActiveTabIndicator
-          tabWidth={tabDimensions.width}
-          leftPosition={tabDimensions.left}
-        />
+        <ActiveTabIndicator tabWidth={tabDimensions.width} leftPosition={tabDimensions.left} />
       </TabList>
       <TabContentWrapper>
         <TransitionGroup
           component={null}
           childFactory={(child) =>
             React.cloneElement(child, {
-              classNames:
-                prevTab < activeTab ? 'right-to-left' : 'left-to-right',
+              classNames: prevTab < activeTab ? 'right-to-left' : 'left-to-right',
               timeout: 1000,
             })
           }
         >
-          <CSSTransition
-            key={activeTab}
-            classNames="right-to-left"
-            timeout={1000}
-          >
+          <CSSTransition key={activeTab} classNames="right-to-left" timeout={1000}>
             <TabContent>{tabs[activeTab].content}</TabContent>
           </CSSTransition>
         </TransitionGroup>

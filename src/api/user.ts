@@ -12,35 +12,22 @@ export const getUser = async (token: string) => {
   return data;
 };
 
-export const addIngredientToUser = async (
-  ingredientId: string,
-  token: string
-) => {
-  const { data } = await axiosInstance.post(
-    `/user/ingredient/add/${ingredientId}`,
-    undefined,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+export const addIngredientToUser = async (ingredientId: string, token: string) => {
+  const { data } = await axiosInstance.post(`/user/ingredient/add/${ingredientId}`, undefined, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   return data;
 };
 
-export const deleteIngredientFromUser = async (
-  ingredientId: string,
-  token: string
-) => {
-  const { data } = await axiosInstance.delete(
-    `/user/ingredient/delete/${ingredientId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+export const deleteIngredientFromUser = async (ingredientId: string, token: string) => {
+  const { data } = await axiosInstance.delete(`/user/ingredient/delete/${ingredientId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   return data;
 };

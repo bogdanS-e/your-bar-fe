@@ -10,9 +10,7 @@ const useIngredients = () => {
     queryFn: async () => {
       console.log('isAuthenticated', isAuthenticated);
 
-      const accessToken = isAuthenticated
-        ? await getAccessTokenSilently()
-        : undefined;
+      const accessToken = isAuthenticated ? await getAccessTokenSilently() : undefined;
 
       return await getIngredients(accessToken);
     },

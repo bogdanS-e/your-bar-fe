@@ -10,10 +10,7 @@ interface IMyIngredientsTabProps {
   selectedTags: IngredientTag[];
 }
 
-const MyIngredientsTab = ({
-  initialData,
-  selectedTags,
-}: IMyIngredientsTabProps) => {
+const MyIngredientsTab = ({ initialData, selectedTags }: IMyIngredientsTabProps) => {
   const { data: user } = useUser();
   const { getIngredientById } = useStore();
 

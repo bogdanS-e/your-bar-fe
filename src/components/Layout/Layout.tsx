@@ -54,10 +54,7 @@ const Layout = ({ children }: ILayoutProps) => {
         <Sidebar>
           <nav>
             <Link style={{ display: 'block' }} href="/cocktails">
-              <StyledIconButton
-                size={50}
-                $isActive={router.pathname === '/cocktails'}
-              >
+              <StyledIconButton size={50} $isActive={router.pathname === '/cocktails'}>
                 <svg
                   fill="#000000"
                   height="200px"
@@ -68,11 +65,7 @@ const Layout = ({ children }: ILayoutProps) => {
                   viewBox="0 0 512 512"
                 >
                   <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                  <g
-                    id="SVGRepo_tracerCarrier"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  ></g>
+                  <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
                   <g id="SVGRepo_iconCarrier">
                     {' '}
                     <g>
@@ -87,10 +80,7 @@ const Layout = ({ children }: ILayoutProps) => {
               </StyledIconButton>
             </Link>
             <Link style={{ display: 'block' }} href="/ingredients">
-              <StyledIconButton
-                size={50}
-                $isActive={router.pathname === '/ingredients'}
-              >
+              <StyledIconButton size={50} $isActive={router.pathname === '/ingredients'}>
                 <svg
                   fill="#000000"
                   version="1.1"
@@ -102,11 +92,7 @@ const Layout = ({ children }: ILayoutProps) => {
                   strokeWidth="0.0016"
                 >
                   <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                  <g
-                    id="SVGRepo_tracerCarrier"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  ></g>
+                  <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
                   <g id="SVGRepo_iconCarrier">
                     {' '}
                     <path
@@ -148,6 +134,7 @@ const Sidebar = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  z-index: 1;
 `;
 
 const StyledIconButton = styled(IconButton)<{ $isActive: boolean }>`

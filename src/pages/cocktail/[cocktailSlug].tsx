@@ -30,9 +30,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps<ICocktailPageProps> = async ({
-  params,
-}) => {
+export const getStaticProps: GetStaticProps<ICocktailPageProps> = async ({ params }) => {
   try {
     const cocktail = await getCocktail(params!.cocktailSlug as string);
     return {

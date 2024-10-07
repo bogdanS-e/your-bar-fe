@@ -14,10 +14,7 @@ interface IIngredientsFilterProps {
   onChange: (selectedItems: string[]) => void;
 }
 
-const IngredientsFilter = ({
-  selectedIngredients,
-  onChange,
-}: IIngredientsFilterProps) => {
+const IngredientsFilter = ({ selectedIngredients, onChange }: IIngredientsFilterProps) => {
   const [isModalOpen, isModalOpenHandler] = useToggle(false);
   const { getIngredientById } = useStore();
 
@@ -39,16 +36,11 @@ const IngredientsFilter = ({
     <Container $justifyContent="flex-start" $gap="10px" $flexWrap="wrap">
       <Title>Cocktails should have:</Title>
 
-      {!selectedIngredients.length && (
-        <ChipButton key="example">choose your ingredient</ChipButton>
-      )}
+      {!selectedIngredients.length && <ChipButton key="example">choose your ingredient</ChipButton>}
 
       {selectedIngredients.map((ingredientId, i) => (
         <>
-          <ChipButton
-            onRemove={() => onIngredientRemove(ingredientId)}
-            key={ingredientId}
-          >
+          <ChipButton onRemove={() => onIngredientRemove(ingredientId)} key={ingredientId}>
             {getIngredientById(ingredientId)?.nameEn}
           </ChipButton>
 

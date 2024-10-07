@@ -12,10 +12,7 @@ const isValidImageFile = (file: File | null): boolean => {
   return file?.type.startsWith('image/') ?? false;
 };
 
-const ImageInput = ({
-  label = 'Add image',
-  onImageChange,
-}: ImageInputProps) => {
+const ImageInput = ({ label = 'Add image', onImageChange }: ImageInputProps) => {
   const inputId = useId();
 
   const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -92,12 +89,7 @@ const ImageInput = ({
           </RemoveIcon>
         )}
       </ImagePreviewContainer>
-      <StyledInput
-        id={inputId}
-        type="file"
-        accept="image/*"
-        onChange={handleFileInputChange}
-      />
+      <StyledInput id={inputId} type="file" accept="image/*" onChange={handleFileInputChange} />
     </InputContainer>
   );
 };
@@ -126,8 +118,7 @@ const ImagePreview = styled.label<{
   background: #f0f0f0 url(${({ $imageUrl }) => $imageUrl}) no-repeat center;
   background-size: contain;
   border-radius: 10px;
-  border: ${({ $isDragOver }) =>
-    $isDragOver ? '2px solid #3f51b5' : '2px dashed #ccc'};
+  border: ${({ $isDragOver }) => ($isDragOver ? '2px solid #3f51b5' : '2px dashed #ccc')};
   color: ${({ $isDragOver }) => ($isDragOver ? '#3f51b5' : '#aaa')};
   display: flex;
   justify-content: center;

@@ -37,9 +37,7 @@ const AllCocktailsTab = ({
       let found = true;
 
       for (const id of selectedIngredients) {
-        if (
-          !cocktail.ingredients.find(({ ingredientId }) => ingredientId === id)
-        ) {
+        if (!cocktail.ingredients.find(({ ingredientId }) => ingredientId === id)) {
           found = false;
 
           break;
@@ -80,35 +78,21 @@ const AllCocktailsTab = ({
       }
 
       articles.push(
-        <CSSTransition
-          key={tag}
-          timeout={{ enter: 1000, exit: 300 }}
-          classNames="article"
-        >
+        <CSSTransition key={tag} timeout={{ enter: 1000, exit: 300 }} classNames="article">
           <Article>
             <Title>{cocktailTagInfo[tag].title}</Title>
             <Row $gap="20px" $flexWrap="wrap" $alignItems="stretch">
-              {cocktails.map(
-                ({
-                  _id,
-                  slug,
-                  nameEn,
-                  descriptionEn,
-                  image,
-                  tags,
-                  ingredients,
-                }) => (
-                  <Card
-                    key={_id}
-                    name={nameEn}
-                    description={descriptionEn}
-                    image={image}
-                    tags={tags}
-                    href={`cocktail/${slug}`}
-                    ingredients={getIngredientsName(ingredients)}
-                  />
-                )
-              )}
+              {cocktails.map(({ _id, slug, nameEn, descriptionEn, image, tags, ingredients }) => (
+                <Card
+                  key={_id}
+                  name={nameEn}
+                  description={descriptionEn}
+                  image={image}
+                  tags={tags}
+                  href={`cocktail/${slug}`}
+                  ingredients={getIngredientsName(ingredients)}
+                />
+              ))}
             </Row>
           </Article>
         </CSSTransition>

@@ -1,9 +1,8 @@
-import { MouseEvent } from 'react';
 import IconButton from 'components/IconButton';
-import { CheckmarkIcon } from 'components/Icons';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { Row, ImageCircle } from 'styles/components';
+import { CheckmarkButton } from 'components/Button';
 
 export interface ISearchCardProps {
   href: string;
@@ -13,19 +12,7 @@ export interface ISearchCardProps {
   onIconClick?: () => void;
 }
 
-const SearchCard = ({
-  href,
-  image,
-  name,
-  isAvailable = false,
-  onIconClick,
-}: ISearchCardProps) => {
-  const handleIconClick = (e: MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    e.preventDefault();
-    onIconClick?.();
-  };
-
+const SearchCard = ({ href, image, name, isAvailable = false, onIconClick }: ISearchCardProps) => {
   return (
     <CardContainer prefetch={false} href={href} $isAvailable={isAvailable}>
       <Row $gap="20px">
@@ -33,15 +20,7 @@ const SearchCard = ({
         <TitleWrapper $justifyContent="space-between">
           <Title>{name}</Title>
 
-          {onIconClick && (
-            <StyledIconButton
-              size={40}
-              $isAvailable={isAvailable}
-              onClick={handleIconClick}
-            >
-              <CheckmarkIcon />
-            </StyledIconButton>
-          )}
+          {onIconClick && <CheckmarkButton isActive={isAvailable} onClick={onIconClick} />}
         </TitleWrapper>
       </Row>
     </CardContainer>
@@ -63,10 +42,4 @@ const TitleWrapper = styled(Row)`
 
 const Title = styled.span`
   font-size: 1.125rem;
-`;
-
-const StyledIconButton = styled(IconButton)<{ $isAvailable: boolean }>`
-  padding: 10px;
-  background: rgba(0, 0, 0, 0.05);
-  color: ${({ $isAvailable }) => ($isAvailable ? '#4CAF50' : '#ccc')};
 `;

@@ -1,4 +1,4 @@
-import { useAddIngredientToUser, useUser } from 'components/AuthHandler';
+import { LoginModal, useAddIngredientToUser, useUser } from 'components/AuthHandler';
 import useDeleteIngredientFromUser from 'components/AuthHandler/useDeleteIngredientFromUser';
 import { useToggle } from 'hooks';
 import { useMemo } from 'react';
@@ -8,15 +8,9 @@ interface IngredientResultProps extends ISearchCardProps {
   ingredientId: string;
 }
 
-const IngredientResult = ({
-  href,
-  name,
-  image,
-  ingredientId,
-}: IngredientResultProps) => {
+const IngredientResult = ({ href, name, image, ingredientId }: IngredientResultProps) => {
   const addIngredientToUserMutation = useAddIngredientToUser(ingredientId);
-  const deleteIngredientFromUserMutation =
-    useDeleteIngredientFromUser(ingredientId);
+  const deleteIngredientFromUserMutation = useDeleteIngredientFromUser(ingredientId);
   const { data: user } = useUser();
 
   const [isLoginOpen, isLoginOpenHandler] = useToggle(false);
@@ -42,13 +36,17 @@ const IngredientResult = ({
   };
 
   return (
-    <SearchCard
-      href={href}
-      name={name}
-      image={image}
-      onIconClick={onIconClick}
-      isAvailable={isAvailable}
-    />
+    <>
+      <SearchCard
+        href={href}
+        name={name}
+        image={image}
+        onIconClick={onIconClick}
+        isAvailable={isAvailable}
+      />
+
+      <LoginModal isOpen={isLoginOpen} onClose={isLoginOpenHandler.off} />
+    </>
   );
 };
 

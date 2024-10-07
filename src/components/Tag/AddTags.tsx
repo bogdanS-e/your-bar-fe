@@ -53,9 +53,7 @@ const AddTags = <T extends IngredientTag | CocktailTag>({
         }
         onOptionClick={addTag}
         items={availableTags}
-        renderItem={(tag) => (
-          <TagButton tag={tag} isIngredient={isIngredient} />
-        )}
+        renderItem={(tag) => <TagButton tag={tag} isIngredient={isIngredient} />}
       />
     </Container>
   );

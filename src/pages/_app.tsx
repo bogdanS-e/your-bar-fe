@@ -4,11 +4,7 @@ import Head from 'next/head';
 import Layout from 'components/Layout';
 import GlobalStyle from 'styles/globalStyles';
 import { useState } from 'react';
-import {
-  QueryCache,
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query';
+import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import useStore from 'store';
 import { IIngredient } from 'types/ingredient';

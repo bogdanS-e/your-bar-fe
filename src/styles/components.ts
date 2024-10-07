@@ -11,11 +11,7 @@ type TFlexAlignment =
   | 'safe center'
   | 'unsafe center';
 
-type TAlignItems =
-  | TFlexAlignment
-  | 'normal'
-  | 'first baseline'
-  | 'last baseline';
+type TAlignItems = TFlexAlignment | 'normal' | 'first baseline' | 'last baseline';
 
 type T$justifyContent =
   | TFlexAlignment
@@ -34,6 +30,7 @@ interface IFlexProps {
   $justifyContent?: T$justifyContent;
   $flexWrap?: T$flexWrap;
   $gap?: TGap;
+  $fullWidth?: boolean;
 }
 
 export const Row = styled.div<IFlexProps>`
@@ -42,6 +39,7 @@ export const Row = styled.div<IFlexProps>`
   justify-content: ${({ $justifyContent }) => $justifyContent || 'flex-start'};
   flex-wrap: ${({ $flexWrap }) => $flexWrap || 'nowrap'};
   gap: ${({ $gap }) => $gap || '0'};
+  width: ${({ $fullWidth }) => ($fullWidth ? '100%' : 'auto')};
 `;
 
 export const Column = styled(Row)`

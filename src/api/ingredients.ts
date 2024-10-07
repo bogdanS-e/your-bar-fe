@@ -24,10 +24,7 @@ export interface ICreateIngredientParams {
   image?: File | null;
 }
 
-export const createIngredient = async (
-  params: ICreateIngredientParams,
-  token: string
-) => {
+export const createIngredient = async (params: ICreateIngredientParams, token: string) => {
   const { image, name, description, tags } = params;
   const formData = new FormData();
 
@@ -39,16 +36,12 @@ export const createIngredient = async (
     formData.append('image', image);
   }
 
-  const { data } = await axiosInstance.post<ICreateIngredientParams>(
-    '/add-ingredient',
-    formData,
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const { data } = await axiosInstance.post<ICreateIngredientParams>('/add-ingredient', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   return data;
 };

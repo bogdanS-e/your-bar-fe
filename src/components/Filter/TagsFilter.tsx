@@ -36,12 +36,7 @@ const TagsFilter = <T extends string | number>({
       {items.map(({ title, key, image }) => (
         <Item key={key} onClick={() => handleClick(key)}>
           <ImageWrapper>
-            <StyledImage
-              src={image}
-              width={80}
-              height={80}
-              alt="Filter image"
-            />
+            <StyledImage src={image} width={80} height={80} alt="Filter image" />
             <Selected $isSelected={selectedTags.includes(key)} />
           </ImageWrapper>
 
@@ -51,12 +46,7 @@ const TagsFilter = <T extends string | number>({
 
       <Item key="select-all" onClick={handleSelectAll}>
         <ImageWrapper>
-          <StyledImage
-            src="/images/checkmark.jpg"
-            width={80}
-            height={80}
-            alt="Checkmark image"
-          />
+          <StyledImage src="/images/checkmark.jpg" width={80} height={80} alt="Checkmark image" />
         </ImageWrapper>
         Select all
       </Item>

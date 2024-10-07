@@ -27,14 +27,7 @@ const SearchResult = ({ resultId }: ISearchResultProps) => {
     return <SearchCard href={href} name={nameEn} image={image} />;
   }
 
-  return (
-    <IngredientResult
-      href={href}
-      name={nameEn}
-      image={image}
-      ingredientId={resultId}
-    />
-  );
+  return <IngredientResult href={href} name={nameEn} image={image} ingredientId={resultId} />;
 };
 
 export default SearchResult;

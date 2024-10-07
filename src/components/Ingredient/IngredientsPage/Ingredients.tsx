@@ -1,8 +1,4 @@
-import {
-  IIngredient,
-  IngredientTag,
-  ingredientTagInfo,
-} from 'types/ingredient';
+import { IIngredient, IngredientTag, ingredientTagInfo } from 'types/ingredient';
 import useIngredients from './useIngredients';
 import { useMemo } from 'react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
@@ -14,11 +10,7 @@ interface IIngredientsProps {
   ingredients?: IIngredient[];
 }
 
-const Ingredients = ({
-  initialData,
-  selectedTags,
-  ingredients,
-}: IIngredientsProps) => {
+const Ingredients = ({ initialData, selectedTags, ingredients }: IIngredientsProps) => {
   const { data: queryData } = useIngredients();
   const data = ingredients || queryData || initialData;
 
@@ -56,15 +48,8 @@ const Ingredients = ({
       }
 
       articles.push(
-        <CSSTransition
-          key={tag}
-          timeout={{ enter: 1000, exit: 300 }}
-          classNames="article"
-        >
-          <IngredientArticle
-            ingredients={ingredients}
-            title={ingredientTagInfo[tag].title}
-          />
+        <CSSTransition key={tag} timeout={{ enter: 1000, exit: 300 }} classNames="article">
+          <IngredientArticle ingredients={ingredients} title={ingredientTagInfo[tag].title} />
         </CSSTransition>
       );
     }

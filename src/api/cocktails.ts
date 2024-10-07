@@ -51,15 +51,11 @@ export const createCocktail = async ({
     formData.append('image', image);
   }
 
-  const { data } = await axiosInstance.post<ICreateCocktailParams>(
-    '/add-cocktail',
-    formData,
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    }
-  );
+  const { data } = await axiosInstance.post<ICreateCocktailParams>('/add-cocktail', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 
   return data;
 };

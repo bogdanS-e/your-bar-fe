@@ -33,9 +33,7 @@ const SearchIngredientModal = ({
 
     const search = searchValue.toLowerCase();
 
-    return allIngredients.filter(({ nameEn }) =>
-      nameEn.toLowerCase().includes(search)
-    );
+    return allIngredients.filter(({ nameEn }) => nameEn.toLowerCase().includes(search));
   }, [allIngredients, searchValue]);
 
   const rowVirtualizer = useVirtualizer({
@@ -44,12 +42,11 @@ const SearchIngredientModal = ({
     estimateSize: () => 120,
   });
 
-  const onIngredientChange =
-    (ingredientId: string, ingredientName: string) => () => {
-      onClose();
-      setSearchValue('');
-      onChoose(ingredientId, ingredientName);
-    };
+  const onIngredientChange = (ingredientId: string, ingredientName: string) => () => {
+    onClose();
+    setSearchValue('');
+    onChoose(ingredientId, ingredientName);
+  };
 
   return (
     <StyledModal
@@ -105,8 +102,7 @@ const SearchIngredientModal = ({
             </VirtualItem>
           ))}
 
-          {filteredIngredients.length === 0 &&
-            'No ingredient match your search'}
+          {filteredIngredients.length === 0 && 'No ingredient match your search'}
         </IngredientsWrapper>
       </VirtualContainer>
     </StyledModal>

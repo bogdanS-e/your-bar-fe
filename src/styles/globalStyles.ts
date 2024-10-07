@@ -5,13 +5,19 @@ const GlobalStyle = createGlobalStyle`
     background-color: #ececec;
     color: #080808;
   }
+  
+  #modal-root {
+    z-index: 100;
+  }
 
   a {
     color: inherit;
     text-decoration: none;
   }
 
-  * {
+  *,
+  *::after,
+  *::before {
     box-sizing: border-box;
     margin: 0;
     padding: 0;

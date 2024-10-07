@@ -12,8 +12,7 @@ interface ICocktailPageProps {
 }
 
 const CocktailPage = ({ cocktail }: ICocktailPageProps) => {
-  const { nameEn, image, descriptionEn, tags, ingredients, recipeEn } =
-    cocktail;
+  const { nameEn, image, descriptionEn, tags, ingredients, recipeEn } = cocktail;
 
   const { getIngredientById } = useStore();
 
@@ -33,12 +32,7 @@ const CocktailPage = ({ cocktail }: ICocktailPageProps) => {
       <GoBackButton />
       <Container>
         <Row $alignItems="stretch" $gap="20px">
-          <StyledImage
-            width={200}
-            height={400}
-            src={image || ''}
-            alt={nameEn}
-          />
+          <StyledImage width={200} height={400} src={image || ''} alt={nameEn} />
           <Column $alignItems="flex-start" $justifyContent="space-between">
             <div>
               <Title>{nameEn}</Title>
@@ -57,49 +51,42 @@ const CocktailPage = ({ cocktail }: ICocktailPageProps) => {
             <h2>Ingredients:</h2>
             <br />
             <Ingredients>
-              {ingredients.map(
-                ({ ingredientId, isOptional, isDecoration, value, unit }) => {
-                  const ingredient = getIngredientById(ingredientId);
+              {ingredients.map(({ ingredientId, isOptional, isDecoration, value, unit }) => {
+                const ingredient = getIngredientById(ingredientId);
 
-                  if (!ingredient) {
-                    return null;
-                  }
-
-                  const { nameEn, image, slug } = ingredient;
-
-                  return (
-                    <li key={ingredientId}>
-                      <Link href={`/ingredient/${slug}`}>
-                        <IngredientItem>
-                          <Row $alignItems="center" $gap="20px">
-                            <ImageCircle
-                              src={image || ''}
-                              width={80}
-                              height={80}
-                              alt={nameEn}
-                            />
-                            <Column $alignItems="flex-start">
-                              <span>{nameEn}</span>
-
-                              {(isDecoration || isOptional) && (
-                                <Decoration>
-                                  &#40;
-                                  {isDecoration && <span>decoration</span>}
-                                  {isOptional && <span>optional</span>}
-                                  &#41;
-                                </Decoration>
-                              )}
-                            </Column>
-                          </Row>
-                          <IngredeintValue>
-                            {value} {cocktailUnitInfo[unit].title}
-                          </IngredeintValue>
-                        </IngredientItem>
-                      </Link>
-                    </li>
-                  );
+                if (!ingredient) {
+                  return null;
                 }
-              )}
+
+                const { nameEn, image, slug } = ingredient;
+
+                return (
+                  <li key={ingredientId}>
+                    <Link href={`/ingredient/${slug}`}>
+                      <IngredientItem>
+                        <Row $alignItems="center" $gap="20px">
+                          <ImageCircle src={image || ''} width={80} height={80} alt={nameEn} />
+                          <Column $alignItems="flex-start">
+                            <span>{nameEn}</span>
+
+                            {(isDecoration || isOptional) && (
+                              <Decoration>
+                                &#40;
+                                {isDecoration && <span>decoration</span>}
+                                {isOptional && <span>optional</span>}
+                                &#41;
+                              </Decoration>
+                            )}
+                          </Column>
+                        </Row>
+                        <IngredeintValue>
+                          {value} {cocktailUnitInfo[unit].title}
+                        </IngredeintValue>
+                      </IngredientItem>
+                    </Link>
+                  </li>
+                );
+              })}
             </Ingredients>
           </Article>
           <Article>

@@ -18,29 +18,17 @@ const IngredientsPage = ({ initialData }: IIngredientsPageProps) => {
   const { isAuthenticated } = useAuth0();
 
   const [activeTab, setActiveTab] = useState(0);
-  const [selectedTags, setSelectedTags] = useState(
-    ingrediensFilter.map(({ key }) => key)
-  );
+  const [selectedTags, setSelectedTags] = useState(ingrediensFilter.map(({ key }) => key));
 
   const tabData = useMemo(() => {
     return [
       {
         label: 'My Ingredients',
-        content: (
-          <MyIngredientsTab
-            selectedTags={selectedTags}
-            initialData={initialData}
-          />
-        ),
+        content: <MyIngredientsTab selectedTags={selectedTags} initialData={initialData} />,
       },
       {
         label: 'All Ingredients',
-        content: (
-          <AllIngredientsTab
-            selectedTags={selectedTags}
-            initialData={initialData}
-          />
-        ),
+        content: <AllIngredientsTab selectedTags={selectedTags} initialData={initialData} />,
       },
     ];
   }, [initialData, selectedTags]);
@@ -76,16 +64,9 @@ const IngredientsPage = ({ initialData }: IIngredientsPageProps) => {
         />
 
         {isAuthenticated ? (
-          <StyledTabs
-            tabs={tabData}
-            activeTab={activeTab}
-            onChange={setActiveTab}
-          />
+          <StyledTabs tabs={tabData} activeTab={activeTab} onChange={setActiveTab} />
         ) : (
-          <AllIngredientsTab
-            selectedTags={selectedTags}
-            initialData={initialData}
-          />
+          <AllIngredientsTab selectedTags={selectedTags} initialData={initialData} />
         )}
       </Main>
     </>

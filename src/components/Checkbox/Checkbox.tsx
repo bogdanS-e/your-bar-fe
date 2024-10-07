@@ -16,11 +16,7 @@ const Checkbox: React.FC<CheckboxProps> = ({ label, isChecked, onChange }) => {
   return (
     <CheckboxContainer>
       <HiddenCheckbox checked={isChecked} onChange={handleCheckboxChange} />
-      <StyledCheckbox
-        $isChecked={isChecked}
-        $alignItems="center"
-        $justifyContent="center"
-      />
+      <StyledCheckbox $isChecked={isChecked} $alignItems="center" $justifyContent="center" />
       <LabelText>{label}</LabelText>
     </CheckboxContainer>
   );

@@ -8,10 +8,7 @@ interface IAllIngredientsTabProps {
   selectedTags: IngredientTag[];
 }
 
-const AllIngredientsTab = ({
-  initialData,
-  selectedTags,
-}: IAllIngredientsTabProps) => {
+const AllIngredientsTab = ({ initialData, selectedTags }: IAllIngredientsTabProps) => {
   return (
     <>
       <Head>

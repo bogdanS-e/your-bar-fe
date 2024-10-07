@@ -32,9 +32,7 @@ const UserProfile = () => {
         <Email>{email}</Email>
       </Column>
       <StyledDropdown
-        trigger={
-          <Avatar picture={picture || ''} name={name || 'U'} />
-        }
+        trigger={<Avatar picture={picture || ''} name={name || 'U'} />}
         items={['logout']}
         position="left"
         renderItem={() => (

@@ -1,8 +1,4 @@
-import {
-  LoginModal,
-  useAddIngredientToUser,
-  useUser,
-} from 'components/AuthHandler';
+import { LoginModal, useAddIngredientToUser, useUser } from 'components/AuthHandler';
 import Card, { ICardProps } from './Card';
 import { useMemo } from 'react';
 import useDeleteIngredientFromUser from 'components/AuthHandler/useDeleteIngredientFromUser';
@@ -14,8 +10,7 @@ interface IIngredientCardProps extends ICardProps {
 
 const IngredientCard = ({ ingredientId, ...props }: IIngredientCardProps) => {
   const addIngredientToUserMutation = useAddIngredientToUser(ingredientId);
-  const deleteIngredientFromUserMutation =
-    useDeleteIngredientFromUser(ingredientId);
+  const deleteIngredientFromUserMutation = useDeleteIngredientFromUser(ingredientId);
   const { data: user } = useUser();
 
   const [isLoginOpen, isLoginOpenHandler] = useToggle(false);

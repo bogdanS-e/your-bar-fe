@@ -12,9 +12,7 @@ interface ILoginModalProps {
 const LoginModal = ({ isOpen, onClose }: ILoginModalProps) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Login required">
-      <Description>
-        In order to proceed this operation you need to be logged in
-      </Description>
+      <Description>In order to proceed this operation you need to be logged in</Description>
       <Row $justifyContent="flex-end" $gap="10px">
         <AuthHandler />
         <Button onClick={onClose} variant="error">

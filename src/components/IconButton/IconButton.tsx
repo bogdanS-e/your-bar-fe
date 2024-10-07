@@ -9,21 +9,9 @@ interface IIconButtonProps {
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
-const IconButton = ({
-  children,
-  size,
-  className,
-  disabled,
-  onClick,
-}: IIconButtonProps) => {
+const IconButton = ({ children, size, className, disabled, onClick }: IIconButtonProps) => {
   return (
-    <Button
-      disabled={disabled}
-      $size={size}
-      className={className}
-      onClick={onClick}
-      type="button"
-    >
+    <Button disabled={disabled} $size={size} className={className} onClick={onClick} type="button">
       {children}
     </Button>
   );

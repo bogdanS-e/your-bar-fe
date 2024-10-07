@@ -26,9 +26,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps<IIngredientsProps> = async ({
-  params,
-}) => {
+export const getStaticProps: GetStaticProps<IIngredientsProps> = async ({ params }) => {
   try {
     const ingredient = await getIngredient(params!.ingredientSlug as string);
     return {

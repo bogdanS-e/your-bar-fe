@@ -17,9 +17,7 @@ const CocktailsPage = ({ initialData }: ICocktailsPageProps) => {
   const { isAuthenticated } = useAuth0();
 
   const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
-  const [selectedTags, setSelectedTags] = useState(
-    cocktailsFilter.map(({ key }) => key)
-  );
+  const [selectedTags, setSelectedTags] = useState(cocktailsFilter.map(({ key }) => key));
   const [activeTab, setActiveTab] = useState(0);
 
   const tabData = useMemo(() => {
@@ -68,22 +66,14 @@ const CocktailsPage = ({ initialData }: ICocktailsPageProps) => {
         />
       </Head>
       <Title>Cocktails</Title>
-      <TagsFilter
-        items={cocktailsFilter}
-        selectedTags={selectedTags}
-        onChange={setSelectedTags}
-      />
+      <TagsFilter items={cocktailsFilter} selectedTags={selectedTags} onChange={setSelectedTags} />
       <IngredientsFilter
         selectedIngredients={selectedIngredients}
         onChange={setSelectedIngredients}
       />
 
       {isAuthenticated ? (
-        <StyledTabs
-          tabs={tabData}
-          activeTab={activeTab}
-          onChange={setActiveTab}
-        />
+        <StyledTabs tabs={tabData} activeTab={activeTab} onChange={setActiveTab} />
       ) : (
         <AllCocktailsTab
           initialData={initialData}

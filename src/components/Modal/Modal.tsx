@@ -10,14 +10,7 @@ interface IModalProps {
   keepUnmount?: boolean; //ignore useEffect on isOpen=false
   className?: string;
 }
-const Modal = ({
-  isOpen,
-  onClose,
-  children,
-  title,
-  keepUnmount,
-  className,
-}: IModalProps) => {
+const Modal = ({ isOpen, onClose, children, title, keepUnmount, className }: IModalProps) => {
   useEffect(() => {
     if (!isOpen && keepUnmount) {
       return;
@@ -40,10 +33,7 @@ const Modal = ({
 
   return createPortal(
     <ModalOverlay onMouseDown={onClose}>
-      <ModalContent
-        className={className}
-        onMouseDown={(e) => e.stopPropagation()}
-      >
+      <ModalContent className={className} onMouseDown={(e) => e.stopPropagation()}>
         <ModalHeader className="modal-header">
           <h2>{title}</h2>
           <CloseButton onClick={onClose}>&times;</CloseButton>

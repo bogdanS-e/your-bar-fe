@@ -45,14 +45,8 @@ const AddNew = () => {
         position="top"
         onOptionClick={handleOptionClick}
       />
-      <AddIngredientModal
-        isOpen={isAddIngredientOpen}
-        onClose={addIngredientHandler.off}
-      />
-      <CreateCocktailModal
-        isOpen={isAddCocktailOpen}
-        onClose={addCocktailHandler.off}
-      />
+      <AddIngredientModal isOpen={isAddIngredientOpen} onClose={addIngredientHandler.off} />
+      <CreateCocktailModal isOpen={isAddCocktailOpen} onClose={addCocktailHandler.off} />
       <LoginModal isOpen={isLoginOpen} onClose={isLoginOpenHandler.off} />
     </>
   );

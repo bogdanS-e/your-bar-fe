@@ -9,9 +9,7 @@ interface ICocktailsProps {
   initialData: ICocktail[];
 }
 
-const Cocktails = ({ initialData }: ICocktailsProps) => (
-  <CocktailsPage initialData={initialData} />
-);
+const Cocktails = ({ initialData }: ICocktailsProps) => <CocktailsPage initialData={initialData} />;
 
 export default Cocktails;
 

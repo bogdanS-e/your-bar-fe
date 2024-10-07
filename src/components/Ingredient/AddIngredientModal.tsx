@@ -22,10 +22,7 @@ interface IAddIngredientModalProps {
 }
 
 const ingredientSchema: ZodType<ICreateIngredientParams> = z.object({
-  name: z
-    .string()
-    .min(1, 'Ingredient name is required')
-    .max(30, 'Name too long'),
+  name: z.string().min(1, 'Ingredient name is required').max(30, 'Name too long'),
   description: z.string().max(800, 'Description too long'),
   tags: z.array(z.number()).nonempty('At least one tag is required'),
   image: z
@@ -65,29 +62,23 @@ const AddIngredientModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
     );
   };
 
-  const {
-    handleBlur,
-    handleSubmit,
-    handleChange,
-    setFieldValue,
-    values,
-    errors,
-  } = useFormik<ICreateIngredientParams>({
-    initialValues: {
-      name: '',
-      description: '',
-      tags: [IngredientTag.Custom],
-      image: null,
-    },
-    validateOnChange: false,
-    validateOnBlur: false,
-    validate: toFormikValidate(ingredientSchema),
-    onSubmit: async (values, { resetForm }) => {
-      await onCreate(values);
-      resetForm();
-      onClose();
-    },
-  });
+  const { handleBlur, handleSubmit, handleChange, setFieldValue, values, errors } =
+    useFormik<ICreateIngredientParams>({
+      initialValues: {
+        name: '',
+        description: '',
+        tags: [IngredientTag.Custom],
+        image: null,
+      },
+      validateOnChange: false,
+      validateOnBlur: false,
+      validate: toFormikValidate(ingredientSchema),
+      onSubmit: async (values, { resetForm }) => {
+        await onCreate(values);
+        resetForm();
+        onClose();
+      },
+    });
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Add new ingredient">
@@ -119,9 +110,7 @@ const AddIngredientModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
             </div>
           </div>
           <div>
-            <ImageInput
-              onImageChange={(file) => setFieldValue('image', file)}
-            />
+            <ImageInput onImageChange={(file) => setFieldValue('image', file)} />
 
             {errors?.image && <ErrorText>{errors.image}</ErrorText>}
           </div>

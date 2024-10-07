@@ -38,10 +38,7 @@ const Dropdown = <T extends TKey>({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         isOpenHandler.off();
       }
     };
@@ -55,11 +52,7 @@ const Dropdown = <T extends TKey>({
   const renderItems = () => {
     const renderOptions = (items: T[]) => {
       return items.map((item) => (
-        <DropdownItem
-          className="dropdown-menu-item"
-          onClick={() => onItemClick(item)}
-          key={item}
-        >
+        <DropdownItem className="dropdown-menu-item" onClick={() => onItemClick(item)} key={item}>
           {renderItem ? renderItem(item) : item}
         </DropdownItem>
       ));
@@ -101,17 +94,8 @@ const Dropdown = <T extends TKey>({
   return (
     <DropdownContainer ref={dropdownRef} className={className}>
       <DropdownTrigger onClick={isOpenHandler.on}>{trigger}</DropdownTrigger>
-      <CSSTransition
-        in={isOpen}
-        timeout={300}
-        classNames="dropdown-fade"
-        unmountOnExit
-      >
-        <DropdownMenu
-          className="dropdown-menu"
-          $position={position}
-          $isShown={isMenuShown()}
-        >
+      <CSSTransition in={isOpen} timeout={300} classNames="dropdown-fade" unmountOnExit>
+        <DropdownMenu className="dropdown-menu" $position={position} $isShown={isMenuShown()}>
           {renderItems()}
         </DropdownMenu>
       </CSSTransition>

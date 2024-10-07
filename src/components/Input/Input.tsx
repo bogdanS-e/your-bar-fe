@@ -1,11 +1,5 @@
 import { useToggle } from 'hooks';
-import {
-  ChangeEvent,
-  forwardRef,
-  InputHTMLAttributes,
-  useId,
-  useState,
-} from 'react';
+import { ChangeEvent, forwardRef, InputHTMLAttributes, useId, useState } from 'react';
 import styled from 'styled-components';
 
 interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -32,9 +26,7 @@ const Input = forwardRef<HTMLInputElement, IInputProps>(
         />
         <StyledLabel
           htmlFor={id}
-          $isActive={
-            !!placeholder || isFocused || !!value || typeof value === 'number'
-          }
+          $isActive={!!placeholder || isFocused || !!value || typeof value === 'number'}
         >
           {label}
         </StyledLabel>

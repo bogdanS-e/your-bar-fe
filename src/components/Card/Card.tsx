@@ -1,8 +1,6 @@
-import IconButton from 'components/IconButton';
-import { CheckmarkIcon } from 'components/Icons';
+import { CheckmarkButton } from 'components/Button';
 import TagButton from 'components/Tag/TagButton';
 import Link from 'next/link';
-import { MouseEvent } from 'react';
 import styled from 'styled-components';
 import { Column, Row } from 'styles/components';
 import { CocktailTag } from 'types/cocktail';
@@ -31,32 +29,13 @@ const Card = ({
   className,
   onIconClick,
 }: ICardProps) => {
-  const handleIconClick = (e: MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    e.preventDefault();
-    onIconClick?.();
-  };
-
   return (
-    <CardContainer
-      $isAvailable={isAvailable}
-      className={className}
-      href={href}
-      prefetch={false}
-    >
+    <CardContainer $isAvailable={isAvailable} className={className} href={href} prefetch={false}>
       <ImageWrapper $justifyContent="center">
         <StyledImage width={200} height={140} src={image || ''} alt={name} />
       </ImageWrapper>
 
-      {onIconClick && (
-        <StyledIconButton
-          size={40}
-          $isAvailable={isAvailable}
-          onClick={handleIconClick}
-        >
-          <CheckmarkIcon />
-        </StyledIconButton>
-      )}
+      {onIconClick && <StyledCheckmarkButton isActive={isAvailable} onClick={onIconClick} />}
 
       <Content>
         <div style={{ width: '100%' }}>
@@ -74,11 +53,7 @@ const Card = ({
 
         <TagsWrapper>
           {tags.map((tag) => (
-            <TagButton
-              key={tag}
-              tag={tag}
-              isIngredient={!ingredients?.length}
-            />
+            <TagButton key={tag} tag={tag} isIngredient={!ingredients?.length} />
           ))}
         </TagsWrapper>
       </Content>
@@ -88,13 +63,10 @@ const Card = ({
 
 export default Card;
 
-const StyledIconButton = styled(IconButton)<{ $isAvailable: boolean }>`
+const StyledCheckmarkButton = styled(CheckmarkButton)`
   position: absolute;
   top: 20px;
   right: 20px;
-  padding: 10px;
-  background: rgba(0, 0, 0, 0.05);
-  color: ${({ $isAvailable }) => ($isAvailable ? '#4CAF50' : '#ccc')};
 `;
 
 const Ingredients = styled.div`
@@ -122,7 +94,7 @@ const CardContainer = styled(Link)<{ $isAvailable: boolean }>`
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   background: ${({ $isAvailable }) => ($isAvailable ? '#E8F5E9' : 'none')};
   transition:
-    transform 0.3s ease,
+    background 0.5s,
     box-shadow 0.3s ease;
 
   &:hover {
@@ -141,7 +113,6 @@ const StyledImage = styled.img`
   height: 100%;
   width: auto;
   object-fit: contain;
-  transition: transform 0.3s ease;
   border-radius: 5px;
 `;
 

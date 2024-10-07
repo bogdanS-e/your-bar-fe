@@ -14,19 +14,17 @@ const IngredientArticle = ({ ingredients, title }: IIngredientArticleProps) => {
     <Article>
       <Title>{title}</Title>
       <Row $gap="20px" $flexWrap="wrap" $alignItems="stretch">
-        {ingredients.map(
-          ({ _id, slug, nameEn, descriptionEn, image, tags }) => (
-            <IngredientCard
-              key={_id}
-              ingredientId={_id}
-              href={`ingredient/${slug}`}
-              name={nameEn}
-              description={descriptionEn}
-              image={image}
-              tags={tags}
-            />
-          )
-        )}
+        {ingredients.map(({ _id, slug, nameEn, descriptionEn, image, tags }) => (
+          <IngredientCard
+            key={_id}
+            ingredientId={_id}
+            href={`ingredient/${slug}`}
+            name={nameEn}
+            description={descriptionEn}
+            image={image}
+            tags={tags}
+          />
+        ))}
       </Row>
     </Article>
   );

@@ -82,10 +82,7 @@ export enum CocktailUnit {
   Items,
 }
 
-export const cocktailUnitInfo: Record<
-  CocktailUnit,
-  { title: string; key: CocktailUnit }
-> = {
+export const cocktailUnitInfo: Record<CocktailUnit, { title: string; key: CocktailUnit }> = {
   [CocktailUnit.Cl]: {
     title: 'cl',
     key: CocktailUnit.Cl,

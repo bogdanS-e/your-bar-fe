@@ -24,10 +24,7 @@ interface ICreateIngredientModalProps {
 
 const cocktailSchema: ZodType<ICreateCocktailParams> = z.object({
   name: z.string().min(1, 'Cocktail name is required').max(30, 'Name too long'),
-  description: z
-    .string()
-    .min(1, 'Description is required')
-    .max(800, 'Description too long'),
+  description: z.string().min(1, 'Description is required').max(800, 'Description too long'),
   recipe: z.string().min(1, 'Recipe is required').max(1000, 'Recipe too long'),
   tags: z.array(z.number()).nonempty('At least one tag is required'),
   image: z
@@ -45,10 +42,7 @@ const cocktailSchema: ZodType<ICreateCocktailParams> = z.object({
         ingredientId: z.string(),
         isOptional: z.boolean(),
         isDecoration: z.boolean(),
-        name: z
-          .string()
-          .min(1, 'Ingredient name is required')
-          .max(30, 'Name too long'),
+        name: z.string().min(1, 'Ingredient name is required').max(30, 'Name too long'),
         value: z
           .string()
           .transform((val) => Number(val))
@@ -71,10 +65,7 @@ const emptyIngredient = {
   isDecoration: false,
 };
 
-const CreateCocktailModal = ({
-  isOpen,
-  onClose,
-}: ICreateIngredientModalProps) => {
+const CreateCocktailModal = ({ isOpen, onClose }: ICreateIngredientModalProps) => {
   const createCocktailMutation = useCreateCocktail();
 
   const onCreate = (values: ICreateCocktailParams) => {
@@ -138,9 +129,7 @@ const CreateCocktailModal = ({
 
                 <div>
                   <StyledAddTags
-                    allTags={Object.values(cocktailTagInfo).map(
-                      ({ key }) => key
-                    )}
+                    allTags={Object.values(cocktailTagInfo).map(({ key }) => key)}
                     selectedTags={values.tags}
                     onChange={(selectedOptions) => {
                       setFieldValue('tags', selectedOptions);
@@ -152,9 +141,7 @@ const CreateCocktailModal = ({
                 </div>
               </div>
               <div>
-                <ImageInput
-                  onImageChange={(file) => setFieldValue('image', file)}
-                />
+                <ImageInput onImageChange={(file) => setFieldValue('image', file)} />
 
                 {errors?.image && <ErrorText>{errors.image}</ErrorText>}
               </div>
@@ -190,23 +177,16 @@ const CreateCocktailModal = ({
               <AddIngredients />
               <FieldArray name="ingredients">
                 {({ push }) => (
-                  <AddIngredientButton
-                    type="button"
-                    onClick={() => push({ ...emptyIngredient })}
-                  >
+                  <AddIngredientButton type="button" onClick={() => push({ ...emptyIngredient })}>
                     Add ingredient
                   </AddIngredientButton>
                 )}
               </FieldArray>
-              {errors?.ingredients && (
-                <ErrorText>{errors.ingredients as string}</ErrorText>
-              )}
+              {errors?.ingredients && <ErrorText>{errors.ingredients as string}</ErrorText>}
             </AddIngredientsWrapper>
 
             <ActionWrapper>
-              <Button
-                type="submit" /*  disabled={createIngerientMutation.isPending} */
-              >
+              <Button type="submit" /*  disabled={createIngerientMutation.isPending} */>
                 Submit
               </Button>
             </ActionWrapper>
