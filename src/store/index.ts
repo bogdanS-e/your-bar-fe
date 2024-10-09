@@ -107,6 +107,8 @@ const useStore = create<IStoreProps & IActionsProps>()((set, get) => ({
       for (const { ingredientId } of cocktail.ingredients) {
         if (ingredientId === id) {
           cocktails.push(cocktail);
+
+          break;
         }
       }
     }
