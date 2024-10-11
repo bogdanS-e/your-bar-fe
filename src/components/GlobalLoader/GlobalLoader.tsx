@@ -1,8 +1,8 @@
 import styled, { keyframes } from 'styled-components';
-import useGlobalStore from '../../globalStore';
+import useStore from 'store';
 
 const GlobalLoader = () => {
-  const { isLoading } = useGlobalStore();
+  const { isLoading } = useStore();
 
   return (
     <Container $isLoading={isLoading}>

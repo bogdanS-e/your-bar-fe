@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import IconButton from 'components/IconButton';
 import SearchBar from 'components/SearchBar';
 import GlobalLoader from 'components/GlobalLoader';
-import useGlobalStore from '../../globalStore';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,6 +14,7 @@ import AddNew from 'components/AddNew';
 import useCocktails from 'components/Cocktail/CocktailsPage/useCocktails';
 import { Row } from 'styles/components';
 import AuthHandler from 'components/AuthHandler';
+import useStore from 'store';
 
 interface ILayoutProps {
   children: ReactNode;
@@ -27,7 +27,7 @@ const roboto = Roboto({
 
 const Layout = ({ children }: ILayoutProps) => {
   const router = useRouter();
-  const { stopLoading } = useGlobalStore();
+  const { stopLoading } = useStore();
   const [searchValue, setSearchValue] = useState('');
 
   // prepare global data

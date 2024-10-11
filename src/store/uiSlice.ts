@@ -10,11 +10,13 @@ export interface IUIStoreActions {
   setLoading: (isLoading: boolean) => void;
 }
 
+export type TUISlice = IUIStoreProps & IUIStoreActions;
+
 const initialData: IUIStoreProps = {
   isLoading: true,
 };
 
-const createUiSlice: StateCreator<IUIStoreProps & IUIStoreActions> = (set) => ({
+const createUiSlice: StateCreator<TUISlice> = (set) => ({
   ...initialData,
   startLoading: () => set({ isLoading: true }),
   stopLoading: () => set({ isLoading: false }),
