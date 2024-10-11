@@ -92,7 +92,8 @@ const CardContainer = styled(Link)<{ $isAvailable: boolean }>`
   overflow: hidden;
   cursor: pointer;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-  background: ${({ $isAvailable }) => ($isAvailable ? '#E8F5E9' : 'none')};
+  background: ${({ $isAvailable, theme }) =>
+    $isAvailable ? theme.color.availableBackground : 'none'};
   transition:
     background 0.5s,
     box-shadow 0.3s ease;

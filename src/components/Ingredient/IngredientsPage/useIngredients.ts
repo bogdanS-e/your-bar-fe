@@ -8,8 +8,6 @@ const useIngredients = () => {
   return useQuery({
     queryKey: ['ingredients', isAuthenticated],
     queryFn: async () => {
-      console.log('isAuthenticated', isAuthenticated);
-
       const accessToken = isAuthenticated ? await getAccessTokenSilently() : undefined;
 
       return await getIngredients(accessToken);

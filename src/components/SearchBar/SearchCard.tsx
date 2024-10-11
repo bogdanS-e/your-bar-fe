@@ -32,8 +32,8 @@ export default SearchCard;
 const CardContainer = styled(Link)<{ $isAvailable: boolean }>`
   display: block;
   padding: 8px 12px;
-
-  background: ${({ $isAvailable }) => ($isAvailable ? '#E8F5E9' : 'none')};
+  background: ${({ $isAvailable, theme }) =>
+    $isAvailable ? theme.color.availableBackground : 'none'};
 `;
 
 const TitleWrapper = styled(Row)`

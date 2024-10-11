@@ -121,10 +121,10 @@ export default IngredientPage;
 const IngredientContainer = styled(Row)<{ $isAvailable: boolean }>`
   width: fit-content;
   padding: 20px 20px 20px 10px;
-  background: #e8f5e9;
   border-radius: 10px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-  background: ${({ $isAvailable }) => ($isAvailable ? '#E8F5E9' : 'none')};
+  background: ${({ $isAvailable, theme }) =>
+    $isAvailable ? theme.color.availableBackground : 'none'};
   transition: background 0.5s;
 `;
 

@@ -93,7 +93,7 @@ const Dropdown = <T extends TKey>({
 
   return (
     <DropdownContainer ref={dropdownRef} className={className}>
-      <DropdownTrigger onClick={isOpenHandler.on}>{trigger}</DropdownTrigger>
+      <DropdownTrigger onMouseDown={isOpenHandler.on}>{trigger}</DropdownTrigger>
       <CSSTransition in={isOpen} timeout={300} classNames="dropdown-fade" unmountOnExit>
         <DropdownMenu className="dropdown-menu" $position={position} $isShown={isMenuShown()}>
           {renderItems()}

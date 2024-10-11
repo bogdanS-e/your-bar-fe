@@ -6,6 +6,8 @@ import { cocktailUnitInfo, ICocktail } from 'types/cocktail';
 import useStore from 'store';
 import Link from 'next/link';
 import GoBackButton from 'components/GoBackButton';
+import { useUser } from 'components/AuthHandler';
+import { useMemo } from 'react';
 
 interface ICocktailPageProps {
   cocktail: ICocktail;
@@ -13,8 +15,22 @@ interface ICocktailPageProps {
 
 const CocktailPage = ({ cocktail }: ICocktailPageProps) => {
   const { nameEn, image, descriptionEn, tags, ingredients, recipeEn } = cocktail;
+  const { data: user } = useUser();
 
   const { getIngredientById } = useStore();
+  const userIngredientsSet = useMemo(() => {
+    const set = new Set<string>();
+
+    if (!user) {
+      return set;
+    }
+
+    for (const ingredientId of user.ingredients) {
+      set.add(ingredientId);
+    }
+
+    return set;
+  }, [user]);
 
   return (
     <>
@@ -58,12 +74,12 @@ const CocktailPage = ({ cocktail }: ICocktailPageProps) => {
                   return null;
                 }
 
-                const { nameEn, image, slug } = ingredient;
+                const { nameEn, image, slug, _id } = ingredient;
 
                 return (
                   <li key={ingredientId}>
                     <Link href={`/ingredient/${slug}`}>
-                      <IngredientItem>
+                      <IngredientItem $isAvailable={userIngredientsSet.has(_id)}>
                         <Row $alignItems="center" $gap="20px">
                           <ImageCircle src={image || ''} width={80} height={80} alt={nameEn} />
                           <Column $alignItems="flex-start">
@@ -119,7 +135,7 @@ const Decoration = styled.small`
   }
 `;
 
-const IngredientItem = styled(Row)`
+const IngredientItem = styled(Row)<{ $isAvailable: boolean }>`
   justify-content: space-between;
   padding: 5px 10px;
   transition: background 0.15s;
@@ -128,9 +144,13 @@ const IngredientItem = styled(Row)`
   box-shadow:
     5px 5px 10px #ebdddd,
     -4px -2px 10px #ededed;
+  background: ${({ $isAvailable, theme }) =>
+    $isAvailable ? theme.color.availableBackground : 'none'};
+  border: ${({ $isAvailable, theme }) =>
+    $isAvailable ? `1px solid ${theme.color.availableBorder}` : 'none'};
 
   &:hover {
-    background-color: #fff6f6;
+    background: ${({ $isAvailable }) => ($isAvailable ? '#ecf3ed' : '#fff6f6')};
   }
 `;
 
