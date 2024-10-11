@@ -56,7 +56,7 @@ const Tabs = ({ tabs, activeTab, className, onChange }: TabsProps) => {
             {tab.label}
           </TabButton>
         ))}
-        <ActiveTabIndicator tabWidth={tabDimensions.width} leftPosition={tabDimensions.left} />
+        <ActiveTabIndicator $tabWidth={tabDimensions.width} $leftPosition={tabDimensions.left} />
       </TabList>
       <TabContentWrapper>
         <TransitionGroup
@@ -101,15 +101,15 @@ const TabButton = styled.button<{ $isActive: boolean }>`
 `;
 
 const ActiveTabIndicator = styled.div<{
-  tabWidth: number;
-  leftPosition: number;
+  $tabWidth: number;
+  $leftPosition: number;
 }>`
   position: absolute;
   bottom: 0;
   height: 2px;
   background-color: #3f51b5;
-  width: ${({ tabWidth }) => tabWidth}px;
-  transform: translateX(${({ leftPosition }) => leftPosition}px);
+  width: ${({ $tabWidth }) => $tabWidth}px;
+  transform: translateX(${({ $leftPosition }) => $leftPosition}px);
   transition:
     transform ${transitionTimeout}ms ease,
     width ${transitionTimeout}ms ease;

@@ -6,6 +6,7 @@ import { IngredientsFilter, TagsFilter } from 'components/Filter';
 import styled from 'styled-components';
 import { Tabs } from 'components/Tabs';
 import { useAuth0 } from '@auth0/auth0-react';
+import useStore from 'store';
 
 interface ICocktailsPageProps {
   initialData: ICocktail[];
@@ -16,9 +17,14 @@ const cocktailsFilter = Object.values(cocktailTagInfo);
 const CocktailsPage = ({ initialData }: ICocktailsPageProps) => {
   const { isAuthenticated } = useAuth0();
 
-  const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
-  const [selectedTags, setSelectedTags] = useState(cocktailsFilter.map(({ key }) => key));
-  const [activeTab, setActiveTab] = useState(0);
+  const {
+    selectedCocktailTags,
+    activeCocktailTab,
+    selectedIngredients,
+    setSelectedIngredients,
+    setActiveCocktailTab,
+    setSelectedCocktailTags,
+  } = useStore();
 
   const tabData = useMemo(() => {
     return [
@@ -31,7 +37,7 @@ const CocktailsPage = ({ initialData }: ICocktailsPageProps) => {
         content: (
           <AllCocktailsTab
             initialData={initialData}
-            selectedTags={selectedTags}
+            selectedTags={selectedCocktailTags}
             selectedIngredients={selectedIngredients}
           />
         ),
@@ -41,7 +47,7 @@ const CocktailsPage = ({ initialData }: ICocktailsPageProps) => {
         content: <div>Favorite coctails</div>,
       },
     ];
-  }, [initialData, selectedTags, selectedIngredients]);
+  }, [initialData, selectedCocktailTags, selectedIngredients]);
 
   return (
     <>
@@ -66,18 +72,22 @@ const CocktailsPage = ({ initialData }: ICocktailsPageProps) => {
         />
       </Head>
       <Title>Cocktails</Title>
-      <TagsFilter items={cocktailsFilter} selectedTags={selectedTags} onChange={setSelectedTags} />
+      <TagsFilter
+        items={cocktailsFilter}
+        selectedTags={selectedCocktailTags}
+        onChange={setSelectedCocktailTags}
+      />
       <IngredientsFilter
         selectedIngredients={selectedIngredients}
         onChange={setSelectedIngredients}
       />
 
       {isAuthenticated ? (
-        <StyledTabs tabs={tabData} activeTab={activeTab} onChange={setActiveTab} />
+        <StyledTabs tabs={tabData} activeTab={activeCocktailTab} onChange={setActiveCocktailTab} />
       ) : (
         <AllCocktailsTab
           initialData={initialData}
-          selectedTags={selectedTags}
+          selectedTags={selectedCocktailTags}
           selectedIngredients={selectedIngredients}
         />
       )}
