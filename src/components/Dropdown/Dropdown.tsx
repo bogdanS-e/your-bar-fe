@@ -18,6 +18,7 @@ interface IDropdownProps<T> {
   className?: string;
   renderItem?: (item: T) => ReactNode;
   onOptionClick: (item: T) => void;
+  onClose?: () => void;
 }
 
 const Dropdown = <T extends TKey>({
@@ -27,6 +28,7 @@ const Dropdown = <T extends TKey>({
   className,
   renderItem,
   onOptionClick,
+  onClose,
 }: IDropdownProps<T>) => {
   const [isOpen, isOpenHandler] = useToggle(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -34,12 +36,14 @@ const Dropdown = <T extends TKey>({
   const onItemClick = (item: T) => {
     onOptionClick(item);
     isOpenHandler.off();
+    onClose?.();
   };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         isOpenHandler.off();
+        onClose?.();
       }
     };
 

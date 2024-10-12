@@ -55,9 +55,17 @@ const SearchBar = ({ placeholder, value, onChange, autoFocus, hideResults }: ISe
     setIngredientIds([]);
   }, [value, cocktails, ingredients, hideResults]);
 
+  const onClose = () => {
+    //clear search after closing animation
+    setTimeout(() => {
+      onChange('');
+    }, 500);
+  }
+
   return (
     <StyledDropdown
       onOptionClick={() => onChange('')}
+      onClose={onClose}
       items={[
         {
           name: 'Cocktails',
