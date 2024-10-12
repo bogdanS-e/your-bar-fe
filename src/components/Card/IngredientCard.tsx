@@ -1,6 +1,7 @@
-import { AvailableIngredientButton, useUser } from 'components/AuthHandler';
+import { useUser } from 'components/AuthHandler';
 import Card, { ICardProps } from './Card';
 import { useMemo } from 'react';
+import { AvailableIngredientButton } from 'components/Ingredient';
 
 interface IIngredientCardProps extends Omit<ICardProps, 'Icon'> {
   ingredientId: string;

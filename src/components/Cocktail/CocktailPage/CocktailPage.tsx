@@ -6,8 +6,9 @@ import { cocktailUnitInfo, ICocktail } from 'types/cocktail';
 import useStore from 'store';
 import Link from 'next/link';
 import GoBackButton from 'components/GoBackButton';
-import { FavoriteCocktailButton, useUser } from 'components/AuthHandler';
+import { useUser } from 'components/AuthHandler';
 import { useAvailableCocktailsSet } from 'hooks';
+import FavoriteCocktailButton from '../FavoriteCocktailButton';
 
 interface ICocktailPageProps {
   cocktail: ICocktail;

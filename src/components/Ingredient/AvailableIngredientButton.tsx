@@ -1,10 +1,10 @@
 import { CheckmarkButton } from 'components/Button';
 import { useMemo } from 'react';
-import useUser from './useUser';
+import useUser from '../AuthHandler/useUser';
 import { useToggle } from 'hooks';
-import LoginModal from './LoginModal';
-import useAddIngredientToUser from './useAddIngredientToUser';
-import useDeleteIngredientFromUser from './useDeleteIngredientFromUser';
+import LoginModal from '../AuthHandler/LoginModal';
+import useAddIngredientToUser from '../AuthHandler/useAddIngredientToUser';
+import useDeleteIngredientFromUser from '../AuthHandler/useDeleteIngredientFromUser';
 
 interface IAvailableIngredientButtonProps {
   ingredientId: string;

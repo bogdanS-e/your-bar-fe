@@ -1,6 +1,7 @@
-import { AvailableIngredientButton, useUser } from 'components/AuthHandler';
+import { useUser } from 'components/AuthHandler';
 import { useMemo } from 'react';
 import SearchCard, { ISearchCardProps } from './SearchCard';
+import { AvailableIngredientButton } from 'components/Ingredient';
 
 interface IngredientResultProps extends Omit<ISearchCardProps, 'Icon'> {
   ingredientId: string;

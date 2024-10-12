@@ -1,4 +1,4 @@
-import { AvailableIngredientButton, LoginModal, useUser } from 'components/AuthHandler';
+import { LoginModal, useUser } from 'components/AuthHandler';
 import { CocktailCard } from 'components/Card';
 import GoBackButton from 'components/GoBackButton';
 import TagButton from 'components/Tag/TagButton';
@@ -11,6 +11,7 @@ import useStore from 'store';
 import styled from 'styled-components';
 import { Column, Row } from 'styles/components';
 import { IIngredient } from 'types/ingredient';
+import AvailableIngredientButton from '../AvailableIngredientButton';
 
 interface IIngredientPageProps {
   initialData: IIngredient | null;

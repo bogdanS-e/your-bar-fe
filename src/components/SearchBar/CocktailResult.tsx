@@ -1,4 +1,4 @@
-import { FavoriteCocktailButton, useUser } from 'components/AuthHandler';
+import { FavoriteCocktailButton } from 'components/Cocktail';
 import SearchCard, { ISearchCardProps } from './SearchCard';
 import { useAvailableCocktailsSet } from 'hooks';
 

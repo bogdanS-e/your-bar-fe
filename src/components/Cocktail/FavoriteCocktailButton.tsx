@@ -1,10 +1,10 @@
 import { HeartButton } from 'components/Button';
 import { useMemo } from 'react';
-import useUser from './useUser';
-import useAddFavoriteCocktailToUser from './useAddFavoriteCocktailToUser';
-import useDeleteFavoriteCocktailFromUser from './useDeleteFavoriteCocktailFromUser';
+import useUser from '../AuthHandler/useUser';
+import useAddFavoriteCocktailToUser from '../AuthHandler/useAddFavoriteCocktailToUser';
+import useDeleteFavoriteCocktailFromUser from '../AuthHandler/useDeleteFavoriteCocktailFromUser';
 import { useToggle } from 'hooks';
-import LoginModal from './LoginModal';
+import LoginModal from '../AuthHandler/LoginModal';
 
 interface IFavoriteCocktailButtonProps {
   cocktailId: string;
