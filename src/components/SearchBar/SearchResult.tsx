@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { ImageCircle, Row } from 'styles/components';
 import SearchCard from './SearchCard';
 import IngredientResult from './IngredientResult';
+import CocktailResult from './CocktailResult';
 
 interface ISearchResultProps {
   resultId: string;
@@ -24,7 +25,7 @@ const SearchResult = ({ resultId }: ISearchResultProps) => {
   const href = isCocktail ? `/cocktail/${slug}` : `/ingredient/${slug}`;
 
   if (isCocktail) {
-    return <SearchCard href={href} name={nameEn} image={image} />;
+    return <CocktailResult href={href} name={nameEn} image={image} cocktailId={resultId} />;
   }
 
   return <IngredientResult href={href} name={nameEn} image={image} ingredientId={resultId} />;

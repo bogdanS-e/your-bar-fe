@@ -1,52 +1,24 @@
-import { LoginModal, useAddIngredientToUser, useUser } from 'components/AuthHandler';
-import useDeleteIngredientFromUser from 'components/AuthHandler/useDeleteIngredientFromUser';
-import { useToggle } from 'hooks';
+import { AvailableIngredientButton, useUser } from 'components/AuthHandler';
 import { useMemo } from 'react';
 import SearchCard, { ISearchCardProps } from './SearchCard';
 
-interface IngredientResultProps extends ISearchCardProps {
+interface IngredientResultProps extends Omit<ISearchCardProps, 'Icon'> {
   ingredientId: string;
 }
 
-const IngredientResult = ({ href, name, image, ingredientId }: IngredientResultProps) => {
-  const addIngredientToUserMutation = useAddIngredientToUser(ingredientId);
-  const deleteIngredientFromUserMutation = useDeleteIngredientFromUser(ingredientId);
+const IngredientResult = ({ ingredientId, ...rest }: IngredientResultProps) => {
   const { data: user } = useUser();
-
-  const [isLoginOpen, isLoginOpenHandler] = useToggle(false);
 
   const isAvailable = useMemo(() => {
     return user?.ingredients.includes(ingredientId);
   }, [user]);
 
-  const onIconClick = () => {
-    if (!user) {
-      isLoginOpenHandler.on();
-
-      return;
-    }
-
-    if (isAvailable) {
-      deleteIngredientFromUserMutation.mutate();
-
-      return;
-    }
-
-    addIngredientToUserMutation.mutate();
-  };
-
   return (
-    <>
-      <SearchCard
-        href={href}
-        name={name}
-        image={image}
-        onIconClick={onIconClick}
-        isAvailable={isAvailable}
-      />
-
-      <LoginModal isOpen={isLoginOpen} onClose={isLoginOpenHandler.off} />
-    </>
+    <SearchCard
+      {...rest}
+      isAvailable={isAvailable}
+      Icon={<AvailableIngredientButton ingredientId={ingredientId} />}
+    />
   );
 };
 

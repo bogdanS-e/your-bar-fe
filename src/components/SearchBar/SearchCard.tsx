@@ -1,18 +1,17 @@
-import IconButton from 'components/IconButton';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { Row, ImageCircle } from 'styles/components';
-import { CheckmarkButton } from 'components/Button';
+import { ReactNode } from 'react';
 
 export interface ISearchCardProps {
   href: string;
   name: string;
   image: string | null;
+  Icon: ReactNode;
   isAvailable?: boolean;
-  onIconClick?: () => void;
 }
 
-const SearchCard = ({ href, image, name, isAvailable = false, onIconClick }: ISearchCardProps) => {
+const SearchCard = ({ href, image, name, isAvailable = false, Icon }: ISearchCardProps) => {
   return (
     <CardContainer prefetch={false} href={href} $isAvailable={isAvailable}>
       <Row $gap="20px">
@@ -20,7 +19,7 @@ const SearchCard = ({ href, image, name, isAvailable = false, onIconClick }: ISe
         <TitleWrapper $justifyContent="space-between">
           <Title>{name}</Title>
 
-          {onIconClick && <CheckmarkButton isActive={isAvailable} onClick={onIconClick} />}
+          {Icon}
         </TitleWrapper>
       </Row>
     </CardContainer>
