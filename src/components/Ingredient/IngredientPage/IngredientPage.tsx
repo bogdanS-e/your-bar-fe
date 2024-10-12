@@ -1,7 +1,5 @@
-import { LoginModal, useAddIngredientToUser, useUser } from 'components/AuthHandler';
-import useDeleteIngredientFromUser from 'components/AuthHandler/useDeleteIngredientFromUser';
-import { CheckmarkButton } from 'components/Button';
-import Card, { CocktailCard } from 'components/Card';
+import { AvailableIngredientButton, LoginModal, useUser } from 'components/AuthHandler';
+import { CocktailCard } from 'components/Card';
 import GoBackButton from 'components/GoBackButton';
 import TagButton from 'components/Tag/TagButton';
 import { useAvailableCocktailsSet, useToggle } from 'hooks';
@@ -26,9 +24,6 @@ const IngredientPage = ({ initialData }: IIngredientPageProps) => {
 
   const ingredient = initialData || getIngredientBySlug(router.query.ingredientSlug as string);
 
-  const addIngredientToUserMutation = useAddIngredientToUser(ingredient?._id || '');
-  const deleteIngredientFromUserMutation = useDeleteIngredientFromUser(ingredient?._id || '');
-
   const [isLoginOpen, isLoginOpenHandler] = useToggle(false);
 
   const isAvailable = useMemo(() => {
@@ -38,22 +33,6 @@ const IngredientPage = ({ initialData }: IIngredientPageProps) => {
 
     return !!user?.ingredients.includes(ingredient._id);
   }, [user]);
-
-  const onCheckmarkClick = () => {
-    if (!user) {
-      isLoginOpenHandler.on();
-
-      return;
-    }
-
-    if (isAvailable) {
-      deleteIngredientFromUserMutation.mutate();
-
-      return;
-    }
-
-    addIngredientToUserMutation.mutate();
-  };
 
   if (!ingredient) {
     return <h1>Ingredient not found</h1>;
@@ -96,10 +75,10 @@ const IngredientPage = ({ initialData }: IIngredientPageProps) => {
       <Container>
         <IngredientContainer $alignItems="stretch" $gap="50px" $isAvailable={isAvailable}>
           <StyledImage width={200} height={400} src={image || ''} alt={nameEn} />
-          <Column $alignItems="flex-start">
+          <Column $alignItems="flex-start" $fullWidth>
             <Row $justifyContent="space-between" $fullWidth>
               <Title>{nameEn}</Title>
-              <CheckmarkButton isActive={isAvailable} onClick={onCheckmarkClick} />
+              <AvailableIngredientButton ingredientId={_id} />
             </Row>
             <Description>{descriptionEn}</Description>
             <Row $gap="10px">
@@ -139,6 +118,7 @@ export default IngredientPage;
 
 const IngredientContainer = styled(Row)<{ $isAvailable: boolean }>`
   width: fit-content;
+  min-width: 50%;
   padding: 20px 20px 20px 10px;
   border-radius: 10px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);

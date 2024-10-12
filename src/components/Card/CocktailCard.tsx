@@ -1,34 +1,20 @@
-import { LoginModal, useUser } from 'components/AuthHandler';
+import { FavoriteCocktailButton } from 'components/AuthHandler';
 import Card, { ICardProps } from './Card';
-import { useAvailableCocktailsSet, useToggle } from 'hooks';
+import { useAvailableCocktailsSet } from 'hooks';
 
-interface IIngredientCardProps extends ICardProps {
+interface IIngredientCardProps extends Omit<ICardProps, 'Icon'> {
   cocktailId: string;
 }
 
 const CocktailCard = ({ cocktailId, ...props }: IIngredientCardProps) => {
-  const { data: user } = useUser();
   const availableCocktailsSet = useAvailableCocktailsSet();
 
-  const [isLoginOpen, isLoginOpenHandler] = useToggle(false);
-
-  const onIconClick = () => {
-    if (!user) {
-      isLoginOpenHandler.on();
-
-      return;
-    }
-  };
-
   return (
-    <>
-      <Card
-        {...props}
-        isAvailable={availableCocktailsSet.has(cocktailId)}
-        onIconClick={onIconClick}
-      />
-      <LoginModal isOpen={isLoginOpen} onClose={isLoginOpenHandler.off} />
-    </>
+    <Card
+      {...props}
+      isAvailable={availableCocktailsSet.has(cocktailId)}
+      Icon={<FavoriteCocktailButton cocktailId={cocktailId} />}
+    />
   );
 };
 

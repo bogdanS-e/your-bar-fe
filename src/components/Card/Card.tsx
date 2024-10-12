@@ -1,6 +1,7 @@
 import { CheckmarkButton, HeartButton } from 'components/Button';
 import TagButton from 'components/Tag/TagButton';
 import Link from 'next/link';
+import { ReactNode } from 'react';
 import styled from 'styled-components';
 import { Column, Row } from 'styles/components';
 import { CocktailTag } from 'types/cocktail';
@@ -15,7 +16,7 @@ export interface ICardProps {
   isAvailable?: boolean;
   ingredients?: string[];
   className?: string;
-  onIconClick?: () => void;
+  Icon: ReactNode;
 }
 
 const Card = ({
@@ -27,24 +28,14 @@ const Card = ({
   isAvailable = false,
   ingredients,
   className,
-  onIconClick,
+  Icon,
 }: ICardProps) => {
-  const isIngredient = !ingredients;
-
-  const Icon = isIngredient ? CheckmarkButton : HeartButton;
-
   return (
     <CardContainer $isAvailable={isAvailable} className={className} href={href} prefetch={false}>
       <ImageWrapper $justifyContent="center">
         <StyledImage width={200} height={140} src={image || ''} alt={name} />
       </ImageWrapper>
-
-      {onIconClick && (
-        <IconWrapper>
-          <Icon isActive={isAvailable} onClick={onIconClick} />
-        </IconWrapper>
-      )}
-
+      <IconWrapper>{Icon}</IconWrapper>
       <Content>
         <div style={{ width: '100%' }}>
           <Title>{name}</Title>

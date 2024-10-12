@@ -6,9 +6,8 @@ import { cocktailUnitInfo, ICocktail } from 'types/cocktail';
 import useStore from 'store';
 import Link from 'next/link';
 import GoBackButton from 'components/GoBackButton';
-import { useUser } from 'components/AuthHandler';
+import { FavoriteCocktailButton, useUser } from 'components/AuthHandler';
 import { useAvailableCocktailsSet } from 'hooks';
-import { HeartButton } from 'components/Button';
 
 interface ICocktailPageProps {
   cocktail: ICocktail;
@@ -43,10 +42,10 @@ const CocktailPage = ({ cocktail }: ICocktailPageProps) => {
           $isAvailable={availableCocktailsSet.has(_id)}
         >
           <StyledImage width={200} height={400} src={image || ''} alt={nameEn} />
-          <Column $alignItems="flex-start">
+          <Column $alignItems="flex-start" $fullWidth>
             <Row $justifyContent="space-between" $fullWidth>
               <Title>{nameEn}</Title>
-              <HeartButton isActive={false} onClick={() => {}} />
+              <FavoriteCocktailButton cocktailId={_id} />
             </Row>
             <Description>{descriptionEn}</Description>
             <Row $gap="10px">
@@ -115,6 +114,7 @@ export default CocktailPage;
 
 const CocktailContainer = styled(Row)<{ $isAvailable: boolean }>`
   width: fit-content;
+  min-width: 50%;
   padding: 20px 20px 20px 10px;
   border-radius: 10px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);

@@ -60,7 +60,7 @@ const SearchBar = ({ placeholder, value, onChange, autoFocus, hideResults }: ISe
     setTimeout(() => {
       onChange('');
     }, 500);
-  }
+  };
 
   return (
     <StyledDropdown

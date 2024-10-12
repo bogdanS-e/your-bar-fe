@@ -31,3 +31,27 @@ export const deleteIngredientFromUser = async (ingredientId: string, token: stri
 
   return data;
 };
+
+export const addFavoriteCocktailToUser = async (cocktailId: string, token: string) => {
+  const { data } = await axiosInstance.post(
+    `/user/favorite-cocktail/add/${cocktailId}`,
+    undefined,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return data;
+};
+
+export const deleteFavoriteCocktailFromUser = async (cocktailId: string, token: string) => {
+  const { data } = await axiosInstance.delete(`/user/favorite-cocktail/delete/${cocktailId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
+};

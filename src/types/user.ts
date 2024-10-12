@@ -3,4 +3,5 @@ export interface IUser {
   picture: string;
   email: string;
   ingredients: string[];
+  favoriteCocktails: string[];
 }
