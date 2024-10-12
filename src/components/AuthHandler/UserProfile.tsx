@@ -60,6 +60,7 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
+
 const StyledDropdown = styled(Dropdown)`
   .dropdown-menu {
     color: #686868;

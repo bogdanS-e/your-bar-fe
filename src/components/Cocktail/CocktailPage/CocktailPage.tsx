@@ -7,30 +7,20 @@ import useStore from 'store';
 import Link from 'next/link';
 import GoBackButton from 'components/GoBackButton';
 import { useUser } from 'components/AuthHandler';
-import { useMemo } from 'react';
+import { useAvailableCocktailsSet } from 'hooks';
+import { HeartButton } from 'components/Button';
 
 interface ICocktailPageProps {
   cocktail: ICocktail;
 }
 
 const CocktailPage = ({ cocktail }: ICocktailPageProps) => {
-  const { nameEn, image, descriptionEn, tags, ingredients, recipeEn } = cocktail;
+  const { nameEn, image, descriptionEn, tags, ingredients, recipeEn, _id } = cocktail;
   const { data: user } = useUser();
+  const availableCocktailsSet = useAvailableCocktailsSet();
 
   const { getIngredientById } = useStore();
-  const userIngredientsSet = useMemo(() => {
-    const set = new Set<string>();
-
-    if (!user) {
-      return set;
-    }
-
-    for (const ingredientId of user.ingredients) {
-      set.add(ingredientId);
-    }
-
-    return set;
-  }, [user]);
+  const availableIngredientsSet = new Set(user?.ingredients || []);
 
   return (
     <>
@@ -47,21 +37,22 @@ const CocktailPage = ({ cocktail }: ICocktailPageProps) => {
       </Head>
       <GoBackButton />
       <Container>
-        <Row $alignItems="stretch" $gap="20px">
+        <CocktailContainer $alignItems="stretch" $gap="20px" $isAvailable={availableCocktailsSet.has(_id)}>
           <StyledImage width={200} height={400} src={image || ''} alt={nameEn} />
-          <Column $alignItems="flex-start" $justifyContent="space-between">
-            <div>
+          <Column $alignItems="flex-start">
+            <Row $justifyContent="space-between" $fullWidth>
               <Title>{nameEn}</Title>
-              <Description>{descriptionEn}</Description>
-            </div>
-
+              <HeartButton isActive={false} onClick={() => {}} />
+            </Row>
+            <Description>{descriptionEn}</Description>
             <Row $gap="10px">
               {tags.map((tag) => (
                 <TagButton key={tag} tag={tag} isIngredient={false} />
               ))}
             </Row>
           </Column>
-        </Row>
+        </CocktailContainer>
+
         <Row $alignItems="stretch" $flexWrap="wrap" $gap="50px">
           <Article>
             <h2>Ingredients:</h2>
@@ -79,7 +70,7 @@ const CocktailPage = ({ cocktail }: ICocktailPageProps) => {
                 return (
                   <li key={ingredientId}>
                     <Link href={`/ingredient/${slug}`}>
-                      <IngredientItem $isAvailable={userIngredientsSet.has(_id)}>
+                      <IngredientItem $isAvailable={availableIngredientsSet.has(_id)}>
                         <Row $alignItems="center" $gap="20px">
                           <ImageCircle src={image || ''} width={80} height={80} alt={nameEn} />
                           <Column $alignItems="flex-start">
@@ -118,6 +109,16 @@ const CocktailPage = ({ cocktail }: ICocktailPageProps) => {
 
 export default CocktailPage;
 
+const CocktailContainer = styled(Row) <{ $isAvailable: boolean }>`
+  width: fit-content;
+  padding: 20px 20px 20px 10px;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  background: ${({ $isAvailable, theme }) =>
+    $isAvailable ? theme.color.availableBackground : 'none'};
+  transition: background 0.5s;
+`;
+
 const IngredeintValue = styled.span`
   color: #aaa;
   font-size: 1rem;
@@ -135,7 +136,7 @@ const Decoration = styled.small`
   }
 `;
 
-const IngredientItem = styled(Row)<{ $isAvailable: boolean }>`
+const IngredientItem = styled(Row) <{ $isAvailable: boolean }>`
   justify-content: space-between;
   padding: 5px 10px;
   transition: background 0.15s;

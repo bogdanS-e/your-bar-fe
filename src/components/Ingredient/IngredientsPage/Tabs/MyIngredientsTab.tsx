@@ -10,11 +10,11 @@ interface IMyIngredientsTabProps {
   selectedTags: IngredientTag[];
 }
 
-const MyIngredientsTab = ({ initialData, selectedTags }: IMyIngredientsTabProps) => {
+const MyIngredientsTab = (props: IMyIngredientsTabProps) => {
   const { data: user } = useUser();
   const { getIngredientById } = useStore();
 
-  const filteredIngredients = useMemo(() => {
+  const availableIngredients = useMemo(() => {
     if (!user) {
       return [];
     }
@@ -29,7 +29,7 @@ const MyIngredientsTab = ({ initialData, selectedTags }: IMyIngredientsTabProps)
     }
 
     return ingredients;
-  }, [initialData, user, getIngredientById]);
+  }, [user, getIngredientById]);
 
   if (!user) {
     return null;
@@ -41,9 +41,8 @@ const MyIngredientsTab = ({ initialData, selectedTags }: IMyIngredientsTabProps)
         <title>My Ingredients | Your Bar</title>
       </Head>
       <Ingredients
-        initialData={filteredIngredients}
-        ingredients={filteredIngredients}
-        selectedTags={selectedTags}
+        {...props}
+        ingredients={availableIngredients}
       />
     </>
   );

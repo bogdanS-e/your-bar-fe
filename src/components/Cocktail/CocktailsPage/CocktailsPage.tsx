@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { Tabs } from 'components/Tabs';
 import { useAuth0 } from '@auth0/auth0-react';
 import useStore from 'store';
+import MyCocktailsTab from './Tabs/MyCocktailsTab';
 
 interface ICocktailsPageProps {
   initialData: ICocktail[];
@@ -30,7 +31,13 @@ const CocktailsPage = ({ initialData }: ICocktailsPageProps) => {
     return [
       {
         label: 'My Cocktails',
-        content: <div>My coctails</div>,
+        content: (
+          <MyCocktailsTab
+            initialData={initialData}
+            selectedTags={selectedCocktailTags}
+            selectedIngredients={selectedIngredients}
+          />
+        ),
       },
       {
         label: 'All Cocktails',

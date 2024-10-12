@@ -1,4 +1,4 @@
-import { CheckmarkButton } from 'components/Button';
+import { CheckmarkButton, HeartButton } from 'components/Button';
 import TagButton from 'components/Tag/TagButton';
 import Link from 'next/link';
 import styled from 'styled-components';
@@ -29,13 +29,21 @@ const Card = ({
   className,
   onIconClick,
 }: ICardProps) => {
+  const isIngredient = !ingredients;
+
+  const Icon = isIngredient ? CheckmarkButton : HeartButton;
+
   return (
     <CardContainer $isAvailable={isAvailable} className={className} href={href} prefetch={false}>
       <ImageWrapper $justifyContent="center">
         <StyledImage width={200} height={140} src={image || ''} alt={name} />
       </ImageWrapper>
 
-      {onIconClick && <StyledCheckmarkButton isActive={isAvailable} onClick={onIconClick} />}
+      {onIconClick && (
+        <IconWrapper>
+          <Icon isActive={isAvailable} onClick={onIconClick} />
+        </IconWrapper>
+      )}
 
       <Content>
         <div style={{ width: '100%' }}>
@@ -63,7 +71,7 @@ const Card = ({
 
 export default Card;
 
-const StyledCheckmarkButton = styled(CheckmarkButton)`
+const IconWrapper = styled.div`
   position: absolute;
   top: 20px;
   right: 20px;
@@ -83,7 +91,7 @@ const Ingredients = styled.div`
   }
 `;
 const gap = '20px';
-const CardContainer = styled(Link)<{ $isAvailable: boolean }>`
+const CardContainer = styled(Link) <{ $isAvailable: boolean }>`
   position: relative;
   display: flex;
   flex-direction: column;

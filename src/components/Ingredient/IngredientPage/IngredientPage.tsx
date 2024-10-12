@@ -1,13 +1,13 @@
 import { LoginModal, useAddIngredientToUser, useUser } from 'components/AuthHandler';
 import useDeleteIngredientFromUser from 'components/AuthHandler/useDeleteIngredientFromUser';
 import { CheckmarkButton } from 'components/Button';
-import Card from 'components/Card';
+import Card, { CocktailCard } from 'components/Card';
 import GoBackButton from 'components/GoBackButton';
 import TagButton from 'components/Tag/TagButton';
-import { useToggle } from 'hooks';
+import { useAvailableCocktailsSet, useToggle } from 'hooks';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useMemo } from 'react';
+import {  useMemo } from 'react';
 
 import useStore from 'store';
 import styled from 'styled-components';
@@ -22,6 +22,7 @@ const IngredientPage = ({ initialData }: IIngredientPageProps) => {
   const { getIngredientsName, getCocktailsByIngredientId, getIngredientBySlug } = useStore();
   const router = useRouter();
   const { data: user } = useUser();
+  const availableCocktailsSet = useAvailableCocktailsSet();
 
   const ingredient = initialData || getIngredientBySlug(router.query.ingredientSlug as string);
 
@@ -61,6 +62,23 @@ const IngredientPage = ({ initialData }: IIngredientPageProps) => {
   const { nameEn, image, descriptionEn, tags, _id } = ingredient;
   const availableCocktails = getCocktailsByIngredientId(_id);
 
+  if (user?.ingredients) {
+    availableCocktails.sort((a, b) => {
+      const x = availableCocktailsSet.has(a._id);
+      const y = availableCocktailsSet.has(b._id);
+
+      if (x === y) {
+        return 0;
+      }
+
+      if (x) {
+        return -1
+      }
+
+      return 1;
+    });
+  }
+
   return (
     <>
       <Head>
@@ -97,8 +115,9 @@ const IngredientPage = ({ initialData }: IIngredientPageProps) => {
           <Row $gap="20px" $alignItems="stretch" $flexWrap="wrap">
             {availableCocktails.map(
               ({ _id, slug, nameEn, descriptionEn, image, tags, ingredients }) => (
-                <Card
+                <CocktailCard
                   key={_id}
+                  cocktailId={_id}
                   name={nameEn}
                   description={descriptionEn}
                   image={image}
@@ -118,7 +137,7 @@ const IngredientPage = ({ initialData }: IIngredientPageProps) => {
 
 export default IngredientPage;
 
-const IngredientContainer = styled(Row)<{ $isAvailable: boolean }>`
+const IngredientContainer = styled(Row) <{ $isAvailable: boolean }>`
   width: fit-content;
   padding: 20px 20px 20px 10px;
   border-radius: 10px;
