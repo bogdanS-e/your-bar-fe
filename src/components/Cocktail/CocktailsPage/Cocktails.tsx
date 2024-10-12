@@ -19,7 +19,7 @@ const Cocktails = ({
   initialData,
   selectedTags,
   selectedIngredients,
-  cocktails
+  cocktails,
 }: IIngredientsPageProps) => {
   const { data: queryData } = useCocktails();
   const data = cocktails || queryData || initialData;

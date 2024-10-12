@@ -91,7 +91,7 @@ const Ingredients = styled.div`
   }
 `;
 const gap = '20px';
-const CardContainer = styled(Link) <{ $isAvailable: boolean }>`
+const CardContainer = styled(Link)<{ $isAvailable: boolean }>`
   position: relative;
   display: flex;
   flex-direction: column;

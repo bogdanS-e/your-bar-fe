@@ -1,6 +1,6 @@
-import { useMemo } from "react";
-import { useUser } from "components/AuthHandler"
-import { useCocktails } from "components/Cocktail";
+import { useMemo } from 'react';
+import { useUser } from 'components/AuthHandler';
+import { useCocktails } from 'components/Cocktail';
 
 const useAvailableCocktailsSet = (): Set<String> => {
   const { data: user } = useUser();
@@ -39,6 +39,6 @@ const useAvailableCocktailsSet = (): Set<String> => {
   }, [user]);
 
   return availableCocktailsSet;
-}
+};
 
 export default useAvailableCocktailsSet;

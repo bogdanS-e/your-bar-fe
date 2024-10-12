@@ -34,7 +34,7 @@ const Container = styled.div<{ $isLoading: boolean }>`
     opacity 0.3s;
   visibility: ${({ $isLoading }) => ($isLoading ? 'visible' : 'hidden')};
   opacity: ${({ $isLoading }) => ($isLoading ? '1' : '0')};
-  z-index:1000;
+  z-index: 1000;
 `;
 
 const Loader = styled.div`

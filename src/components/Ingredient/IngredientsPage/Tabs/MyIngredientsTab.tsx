@@ -40,10 +40,7 @@ const MyIngredientsTab = (props: IMyIngredientsTabProps) => {
       <Head>
         <title>My Ingredients | Your Bar</title>
       </Head>
-      <Ingredients
-        {...props}
-        ingredients={availableIngredients}
-      />
+      <Ingredients {...props} ingredients={availableIngredients} />
     </>
   );
 };

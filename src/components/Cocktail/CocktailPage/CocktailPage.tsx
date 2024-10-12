@@ -37,7 +37,11 @@ const CocktailPage = ({ cocktail }: ICocktailPageProps) => {
       </Head>
       <GoBackButton />
       <Container>
-        <CocktailContainer $alignItems="stretch" $gap="20px" $isAvailable={availableCocktailsSet.has(_id)}>
+        <CocktailContainer
+          $alignItems="stretch"
+          $gap="20px"
+          $isAvailable={availableCocktailsSet.has(_id)}
+        >
           <StyledImage width={200} height={400} src={image || ''} alt={nameEn} />
           <Column $alignItems="flex-start">
             <Row $justifyContent="space-between" $fullWidth>
@@ -109,7 +113,7 @@ const CocktailPage = ({ cocktail }: ICocktailPageProps) => {
 
 export default CocktailPage;
 
-const CocktailContainer = styled(Row) <{ $isAvailable: boolean }>`
+const CocktailContainer = styled(Row)<{ $isAvailable: boolean }>`
   width: fit-content;
   padding: 20px 20px 20px 10px;
   border-radius: 10px;
@@ -136,7 +140,7 @@ const Decoration = styled.small`
   }
 `;
 
-const IngredientItem = styled(Row) <{ $isAvailable: boolean }>`
+const IngredientItem = styled(Row)<{ $isAvailable: boolean }>`
   justify-content: space-between;
   padding: 5px 10px;
   transition: background 0.15s;

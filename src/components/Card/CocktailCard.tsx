@@ -18,13 +18,15 @@ const CocktailCard = ({ cocktailId, ...props }: IIngredientCardProps) => {
 
       return;
     }
-
-    
   };
 
   return (
     <>
-      <Card {...props} isAvailable={availableCocktailsSet.has(cocktailId)} onIconClick={onIconClick} />
+      <Card
+        {...props}
+        isAvailable={availableCocktailsSet.has(cocktailId)}
+        onIconClick={onIconClick}
+      />
       <LoginModal isOpen={isLoginOpen} onClose={isLoginOpenHandler.off} />
     </>
   );

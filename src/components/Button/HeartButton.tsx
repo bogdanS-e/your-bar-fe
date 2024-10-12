@@ -19,12 +19,7 @@ const HeartButton = ({ isActive, className, onClick }: IHeartButtonProps) => {
   };
 
   return (
-    <StyledIconButton
-      size={40}
-      $isActive={false}
-      onClick={handleIconClick}
-      className={className}
-    >
+    <StyledIconButton size={40} $isActive={false} onClick={handleIconClick} className={className}>
       <HeartIcon />
     </StyledIconButton>
   );

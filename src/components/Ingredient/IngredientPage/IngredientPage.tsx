@@ -7,7 +7,7 @@ import TagButton from 'components/Tag/TagButton';
 import { useAvailableCocktailsSet, useToggle } from 'hooks';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import {  useMemo } from 'react';
+import { useMemo } from 'react';
 
 import useStore from 'store';
 import styled from 'styled-components';
@@ -72,7 +72,7 @@ const IngredientPage = ({ initialData }: IIngredientPageProps) => {
       }
 
       if (x) {
-        return -1
+        return -1;
       }
 
       return 1;
@@ -137,7 +137,7 @@ const IngredientPage = ({ initialData }: IIngredientPageProps) => {
 
 export default IngredientPage;
 
-const IngredientContainer = styled(Row) <{ $isAvailable: boolean }>`
+const IngredientContainer = styled(Row)<{ $isAvailable: boolean }>`
   width: fit-content;
   padding: 20px 20px 20px 10px;
   border-radius: 10px;

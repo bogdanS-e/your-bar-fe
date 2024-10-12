@@ -1,10 +1,10 @@
-import { useUser } from "components/AuthHandler";
-import Head from "next/head";
-import { useMemo } from "react";
-import { CocktailTag, ICocktail } from "types/cocktail";
-import Cocktails from "../Cocktails";
-import { useAvailableCocktailsSet } from "hooks";
-import useCocktails from "../useCocktails";
+import { useUser } from 'components/AuthHandler';
+import Head from 'next/head';
+import { useMemo } from 'react';
+import { CocktailTag, ICocktail } from 'types/cocktail';
+import Cocktails from '../Cocktails';
+import { useAvailableCocktailsSet } from 'hooks';
+import useCocktails from '../useCocktails';
 
 interface IMyCocktailsProps {
   initialData: ICocktail[];
@@ -42,12 +42,9 @@ const MyCocktailsTab = (props: IMyCocktailsProps) => {
       <Head>
         <title>My Cocktails | Your Bar</title>
       </Head>
-      <Cocktails
-        {...props}
-        cocktails={availableCocktails}
-      />
+      <Cocktails {...props} cocktails={availableCocktails} />
     </>
-  )
-}
+  );
+};
 
 export default MyCocktailsTab;
