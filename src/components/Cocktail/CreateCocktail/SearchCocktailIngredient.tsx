@@ -9,14 +9,16 @@ import { Row } from 'styles/components';
 import { CocktailUnit, cocktailUnitInfo } from 'types/cocktail';
 import Checkbox from 'components/Checkbox';
 import { SearchIngredientModal } from 'components/Ingredient';
-import { ICreateCocktailParams } from 'api/cocktails';
+import { ICreateCocktailParams, IIngredientParam } from 'api/cocktails';
 import { useToggle } from 'hooks';
+import useStore from 'store';
 
 interface ISearchCocktailIngredientProps {
   index: number;
 }
 
 const SearchCocktailIngredient = ({ index }: ISearchCocktailIngredientProps) => {
+  const { getIngredientById } = useStore();
   const unitInputRef = useRef<HTMLInputElement>(null);
 
   const [isModalOpen, isModalOpenHandler] = useToggle(false);
@@ -40,9 +42,8 @@ const SearchCocktailIngredient = ({ index }: ISearchCocktailIngredientProps) => 
     setFieldValue(`ingredients.${index}.isDecoration`, isChecked);
   };
 
-  const onIngredientChoose = (ingredientId: string, ingredientName: string) => {
+  const onIngredientChoose = (ingredientId: string) => {
     setFieldValue(`ingredients.${index}.ingredientId`, ingredientId);
-    setFieldValue(`ingredients.${index}.name`, ingredientName);
 
     if (unitInputRef.current) {
       unitInputRef.current.focus();
@@ -50,7 +51,7 @@ const SearchCocktailIngredient = ({ index }: ISearchCocktailIngredientProps) => 
     }
   };
 
-  const getError = (key: string) => {
+  const getError = (key: keyof IIngredientParam) => {
     let err = errors as any;
 
     if (!index) {
@@ -67,13 +68,13 @@ const SearchCocktailIngredient = ({ index }: ISearchCocktailIngredientProps) => 
           <StyledInput
             label="name"
             name={`ingredients.${index}.name`}
-            value={ingredients[index].name}
+            value={getIngredientById(ingredients[index].ingredientId)?.nameEn || ''}
             onChange={() => {}}
             readOnly
             onClick={isModalOpenHandler.on}
           />
 
-          {getError('name') && <ErrorText>{getError('name')}</ErrorText>}
+          {getError('ingredientId') && <ErrorText>{getError('ingredientId')}</ErrorText>}
         </div>
 
         <div>

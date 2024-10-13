@@ -13,8 +13,7 @@ export const getCocktail = async (slug: string) => {
   return data;
 };
 
-interface IIngredientParams extends Omit<ICocktailIngredient, 'value'> {
-  name: string;
+export interface IIngredientParam extends Omit<ICocktailIngredient, 'value'> {
   value: number | string;
 }
 
@@ -24,10 +23,10 @@ export interface ICreateCocktailParams {
   recipe: string;
   tags: CocktailTag[];
   image?: null | File;
-  ingredients: IIngredientParams[];
+  ingredients: IIngredientParam[];
 }
 
-export const createCocktail = async ({
+const buildCocktailFormData = ({
   name,
   description,
   recipe,
@@ -51,11 +50,33 @@ export const createCocktail = async ({
     formData.append('image', image);
   }
 
-  const { data } = await axiosInstance.post<ICreateCocktailParams>('/add-cocktail', formData, {
+  return formData;
+};
+
+export const createCocktail = async (params: ICreateCocktailParams) => {
+  const formData = buildCocktailFormData(params);
+
+  const { data } = await axiosInstance.post<ICreateCocktailParams>('/cocktail/add', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   });
+
+  return data;
+};
+
+export const editCocktail = async (cocktailId: string, params: ICreateCocktailParams) => {
+  const formData = buildCocktailFormData(params);
+
+  const { data } = await axiosInstance.put<ICreateCocktailParams>(
+    `/cocktail/edit/${cocktailId}`,
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+  );
 
   return data;
 };

@@ -7,8 +7,9 @@ import useStore from 'store';
 import Link from 'next/link';
 import GoBackButton from 'components/GoBackButton';
 import { useUser } from 'components/AuthHandler';
-import { useAvailableCocktailsSet } from 'hooks';
+import { useAvailableCocktailsSet, useToggle } from 'hooks';
 import FavoriteCocktailButton from '../FavoriteCocktailButton';
+import CreateCocktailModal from '../CreateCocktail/CreateCocktailModal';
 
 interface ICocktailPageProps {
   cocktail: ICocktail;
@@ -18,6 +19,8 @@ const CocktailPage = ({ cocktail }: ICocktailPageProps) => {
   const { nameEn, image, descriptionEn, tags, ingredients, recipeEn, _id } = cocktail;
   const { data: user } = useUser();
   const availableCocktailsSet = useAvailableCocktailsSet();
+
+  const [isEditOpen, handleEditOpen] = useToggle(false);
 
   const { getIngredientById } = useStore();
   const availableIngredientsSet = new Set(user?.ingredients || []);
@@ -47,6 +50,7 @@ const CocktailPage = ({ cocktail }: ICocktailPageProps) => {
             <Row $justifyContent="space-between" $fullWidth>
               <Title>{nameEn}</Title>
               <FavoriteCocktailButton cocktailId={_id} />
+              <button onClick={handleEditOpen.on}>edit</button>
             </Row>
             <Description>{descriptionEn}</Description>
             <Row $gap="10px">
@@ -107,6 +111,20 @@ const CocktailPage = ({ cocktail }: ICocktailPageProps) => {
           </Article>
         </Row>
       </Container>
+
+      <CreateCocktailModal
+        isOpen={isEditOpen}
+        onClose={handleEditOpen.off}
+        initialData={{
+          cocktailId: _id,
+          name: nameEn,
+          description: descriptionEn,
+          recipe: recipeEn,
+          tags,
+          ingredients,
+          image: image || '',
+        }}
+      />
     </>
   );
 };

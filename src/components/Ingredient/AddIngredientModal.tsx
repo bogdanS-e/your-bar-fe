@@ -13,7 +13,7 @@ import useCreateIngredient from './useCreateIngredient';
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 import { IResError } from 'types/common';
-import getAxiosError from 'utils/getAxiosError';
+import { getAxiosError } from 'utils/common';
 import { ICreateIngredientParams } from 'api/ingredients';
 
 interface IAddIngredientModalProps {

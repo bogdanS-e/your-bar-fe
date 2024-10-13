@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addFavoriteCocktailToUser } from 'api/user';
 import { IUser } from 'types/user';
-import getAxiosError from 'utils/getAxiosError';
+import { getAxiosError } from 'utils/common';
 import { AxiosError } from 'axios';
 import { IResError } from 'types/common';
 

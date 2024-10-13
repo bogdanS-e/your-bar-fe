@@ -1,5 +1,5 @@
 import Modal from 'components/Modal';
-import { FieldArray, Form, Formik } from 'formik';
+import { FieldArray, Form, Formik, FormikHelpers } from 'formik';
 import { z, ZodType } from 'zod';
 import { toFormikValidate } from 'zod-formik-adapter';
 import AddTags from 'components/Tag/AddTags';
@@ -11,14 +11,22 @@ import Button from 'components/Button/Button';
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 import { IResError } from 'types/common';
-import getAxiosError from 'utils/getAxiosError';
+import { getAxiosError, urlToFile } from 'utils/common';
 import { cocktailTagInfo, CocktailUnit } from 'types/cocktail';
 import AddIngredients from './AddIngredients';
 import useCreateCocktail from './useCreateCocktail';
-import { ICreateCocktailParams } from 'api/cocktails';
+import { ICreateCocktailParams, IIngredientParam } from 'api/cocktails';
+import { useEffect, useState } from 'react';
+import useEditCocktail from './useEditCocktail';
+
+interface IInitialData extends Omit<ICreateCocktailParams, 'image'> {
+  cocktailId: string;
+  image?: string;
+}
 
 interface ICreateIngredientModalProps {
   isOpen: boolean;
+  initialData?: IInitialData;
   onClose: () => void;
 }
 
@@ -39,34 +47,51 @@ const cocktailSchema: ZodType<ICreateCocktailParams> = z.object({
   ingredients: z
     .array(
       z.object({
-        ingredientId: z.string(),
+        ingredientId: z.string().min(1, 'Ingredient is required'),
         isOptional: z.boolean(),
         isDecoration: z.boolean(),
-        name: z.string().min(1, 'Ingredient name is required').max(30, 'Name too long'),
         value: z
-          .string()
-          .transform((val) => Number(val))
-          .refine((val) => !isNaN(val), { message: 'Value must be a number' })
-          .refine((val) => val > 0, {
-            message: 'Value must be greater than 0',
-          }),
+          .union([z.string().transform((val) => Number(val)), z.number()])
+          .refine((val) => !isNaN(val), { message: 'Value must be a valid number' })
+          .refine((val) => val > 0, { message: 'Value must be greater than 0' }),
         unit: z.number().min(0, 'Unit is required'),
       })
     )
     .max(10, 'No cocktail has 10 ingredients'),
 });
 
-const emptyIngredient = {
+const emptyIngredient: IIngredientParam = {
   ingredientId: '',
-  name: '',
   value: '0',
   unit: CocktailUnit.Ml,
   isOptional: false,
   isDecoration: false,
 };
 
-const CreateCocktailModal = ({ isOpen, onClose }: ICreateIngredientModalProps) => {
+const initialFormData: ICreateCocktailParams = {
+  name: '',
+  description: '',
+  recipe: '',
+  tags: [],
+  image: null,
+  ingredients: [emptyIngredient],
+};
+
+const CreateCocktailModal = ({ isOpen, initialData, onClose }: ICreateIngredientModalProps) => {
   const createCocktailMutation = useCreateCocktail();
+  const editCocktailMutation = useEditCocktail();
+  const [initialValues, setInitialValues] = useState(initialFormData);
+
+  useEffect(() => {
+    if (!initialData) {
+      return;
+    }
+
+    setInitialValues({
+      ...initialData,
+      image: null,
+    });
+  }, [initialData]);
 
   const onCreate = (values: ICreateCocktailParams) => {
     return toast.promise<ICreateCocktailParams, AxiosError<IResError>>(
@@ -91,25 +116,60 @@ const CreateCocktailModal = ({ isOpen, onClose }: ICreateIngredientModalProps) =
     );
   };
 
+  const onEdit = (values: ICreateCocktailParams) => {
+    if (!initialData) {
+      throw new Error('Cannot edit cocktail without initial data');
+    }
+
+    return toast.promise<ICreateCocktailParams, AxiosError<IResError>>(
+      async () =>
+        await editCocktailMutation.mutateAsync({ ...values, cocktailId: initialData.cocktailId }),
+      {
+        pending: `Editing cocktail ${initialValues.name}`,
+        success: {
+          render: ({ data: toastData }) => {
+            onClose();
+
+            return (
+              <span>
+                <b>{toastData.name}</b> cocktail has been edited 👌
+              </span>
+            );
+          },
+        },
+        error: {
+          render: ({ data }) => getAxiosError(data),
+        },
+      }
+    );
+  };
+
+  const onSubmit = async (
+    values: ICreateCocktailParams,
+    { resetForm }: FormikHelpers<ICreateCocktailParams>
+  ) => {
+    if (initialData) {
+      await onEdit(values);
+    } else {
+      await onCreate(values);
+    }
+
+    resetForm();
+    onClose();
+  };
+
   return (
-    <StyledModal isOpen={isOpen} onClose={onClose} title="Add new cocktail">
+    <StyledModal
+      isOpen={isOpen}
+      onClose={onClose}
+      title={initialData ? 'Edit cocktail' : 'Add new cocktail'}
+    >
       <Formik
-        initialValues={{
-          name: '',
-          description: '',
-          recipe: '',
-          tags: [],
-          image: null,
-          ingredients: [emptyIngredient],
-        }}
+        initialValues={initialValues}
         validate={toFormikValidate(cocktailSchema)}
         validateOnChange={false}
         validateOnBlur={false}
-        onSubmit={async (values, { resetForm }) => {
-          await onCreate(values);
-          resetForm();
-          onClose();
-        }}
+        onSubmit={onSubmit}
       >
         {({ values, setFieldValue, handleBlur, handleChange, errors }) => (
           <StyledForm>
@@ -141,7 +201,10 @@ const CreateCocktailModal = ({ isOpen, onClose }: ICreateIngredientModalProps) =
                 </div>
               </div>
               <div>
-                <ImageInput onImageChange={(file) => setFieldValue('image', file)} />
+                <ImageInput
+                  initialImage={initialData?.image}
+                  onImageChange={(file) => setFieldValue('image', file)}
+                />
 
                 {errors?.image && <ErrorText>{errors.image}</ErrorText>}
               </div>

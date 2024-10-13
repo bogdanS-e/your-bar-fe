@@ -1,10 +1,12 @@
-import React, { useId, useState } from 'react';
+import React, { useEffect, useId, useState } from 'react';
 import styled, { css } from 'styled-components';
 import IconButton from 'components/IconButton';
 import { useToggle } from 'hooks';
+import { urlToFile } from 'utils/common';
 
 interface ImageInputProps {
   label?: string;
+  initialImage?: string;
   onImageChange: (file: File | null) => void;
 }
 
@@ -12,12 +14,20 @@ const isValidImageFile = (file: File | null): boolean => {
   return file?.type.startsWith('image/') ?? false;
 };
 
-const ImageInput = ({ label = 'Add image', onImageChange }: ImageInputProps) => {
+const ImageInput = ({ label = 'Add image', initialImage, onImageChange }: ImageInputProps) => {
   const inputId = useId();
 
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isDragOver, isDragOverHandler] = useToggle(false);
   const [isLoading, isLoadingHandler] = useToggle(false);
+
+  useEffect(() => {
+    if (!initialImage) {
+      return;
+    }
+
+    urlToFile(initialImage).then(handleImageChange);
+  }, [initialImage]);
 
   const handleImageChange = (file: File | null) => {
     if (file) {
