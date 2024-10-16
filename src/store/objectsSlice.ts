@@ -22,6 +22,7 @@ interface IStoreActions {
   getIngredientById: (id: string) => IIngredient | null;
 
   getIngredientBySlug: (slug: string) => IIngredient | null;
+  getCocktailBySlug: (slug: string) => ICocktail | null;
 }
 
 export type TObjectsSlice = IStoreProps & IStoreActions;
@@ -38,6 +39,18 @@ const getIngredientBySlug =
     for (const ingredient of ingredientsMap.values()) {
       if (slug === ingredient.slug) {
         return ingredient;
+      }
+    }
+
+    return null;
+  };
+
+const getCocktailBySlug =
+  (cocktailMap: IStoreProps['cocktaisMap'] = new Map()) =>
+  (slug: string) => {
+    for (const cocktail of cocktailMap.values()) {
+      if (slug === cocktail.slug) {
+        return cocktail;
       }
     }
 
@@ -67,7 +80,10 @@ const createObjectsSlice: StateCreator<TObjectsSlice> = (set, get) => ({
       cocktaisMap.set(cocktail._id, cocktail);
     }
 
-    set({ cocktaisMap });
+    set({
+      cocktaisMap,
+      getCocktailBySlug: getCocktailBySlug(cocktaisMap),
+    });
   },
   getIngredientsName: (cocktailIngredients) => {
     const { ingredientsMap } = get();
@@ -119,6 +135,7 @@ const createObjectsSlice: StateCreator<TObjectsSlice> = (set, get) => ({
   },
   getIngredientById: getIngredientById(),
   getIngredientBySlug: getIngredientBySlug(),
+  getCocktailBySlug: getCocktailBySlug(),
 });
 
 export default createObjectsSlice;

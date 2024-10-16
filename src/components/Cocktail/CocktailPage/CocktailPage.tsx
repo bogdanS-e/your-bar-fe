@@ -10,20 +10,27 @@ import { useUser } from 'components/AuthHandler';
 import { useAvailableCocktailsSet, useToggle } from 'hooks';
 import FavoriteCocktailButton from '../FavoriteCocktailButton';
 import CreateCocktailModal from '../CreateCocktail/CreateCocktailModal';
+import { useRouter } from 'next/router';
 
 interface ICocktailPageProps {
-  cocktail: ICocktail;
+  initialData: ICocktail | null;
 }
 
-const CocktailPage = ({ cocktail }: ICocktailPageProps) => {
-  const { nameEn, image, descriptionEn, tags, ingredients, recipeEn, _id } = cocktail;
+const CocktailPage = ({ initialData }: ICocktailPageProps) => {
   const { data: user } = useUser();
+  const router = useRouter();
   const availableCocktailsSet = useAvailableCocktailsSet();
+  const { getIngredientById, getCocktailBySlug } = useStore();
 
   const [isEditOpen, handleEditOpen] = useToggle(false);
-
-  const { getIngredientById } = useStore();
   const availableIngredientsSet = new Set(user?.ingredients || []);
+  const cocktail = getCocktailBySlug(router.query.cocktailSlug as string) || initialData;
+
+  if (!cocktail) {
+    return <h1>Ingredient not found</h1>;
+  }
+
+  const { nameEn, image, descriptionEn, tags, ingredients, recipeEn, _id } = cocktail;
 
   return (
     <>
@@ -61,7 +68,7 @@ const CocktailPage = ({ cocktail }: ICocktailPageProps) => {
           </Column>
         </CocktailContainer>
 
-        <Row $alignItems="stretch" $flexWrap="wrap" $gap="50px">
+        <Row $alignItems="stretch" $flexWrap="wrap">
           <Article>
             <h2>Ingredients:</h2>
             <br />
@@ -207,7 +214,11 @@ const Recipe = styled.div`
 
 const Article = styled.article`
   margin: 50px 0;
-  flex: 1;
+  width: 50%;
+
+  &:last-child {
+    padding-left: 50px;
+  }
 `;
 
 const Description = styled.p`

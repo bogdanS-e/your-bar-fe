@@ -1,5 +1,6 @@
 import { CocktailTag, ICocktail, ICocktailIngredient } from 'types/cocktail';
 import axiosInstance from './axiosInstance';
+import axios from 'axios';
 
 export const getCocktails = async () => {
   const { data } = await axiosInstance.get<ICocktail[]>('/cocktails');
@@ -68,15 +69,17 @@ export const createCocktail = async (params: ICreateCocktailParams) => {
 export const editCocktail = async (cocktailId: string, params: ICreateCocktailParams) => {
   const formData = buildCocktailFormData(params);
 
-  const { data } = await axiosInstance.put<ICreateCocktailParams>(
-    `/cocktail/edit/${cocktailId}`,
-    formData,
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    }
-  );
+  const { data } = await axiosInstance.put<ICocktail>(`/cocktail/edit/${cocktailId}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+
+  return data;
+};
+
+export const revalidateCocktail = async (slug: string) => {
+  const { data } = await axios.get(`/api/revalidate-cocktail?slug=${slug}`);
 
   return data;
 };
