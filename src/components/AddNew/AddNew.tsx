@@ -4,9 +4,8 @@ import { CreateCocktailModal } from 'components/Cocktail';
 import Dropdown from 'components/Dropdown';
 import IconButton from 'components/IconButton';
 import { PlusIcon } from 'components/Icons';
-import { AddIngredientModal } from 'components/Ingredient';
+import { CreateIngredientModal } from 'components/Ingredient';
 import { useToggle } from 'hooks';
-import { useState } from 'react';
 
 type TTypeToAdd = 'ingredient' | 'cocktail';
 
@@ -45,7 +44,7 @@ const AddNew = () => {
         position="top"
         onOptionClick={handleOptionClick}
       />
-      <AddIngredientModal isOpen={isAddIngredientOpen} onClose={addIngredientHandler.off} />
+      <CreateIngredientModal isOpen={isAddIngredientOpen} onClose={addIngredientHandler.off} />
       <CreateCocktailModal isOpen={isAddCocktailOpen} onClose={addCocktailHandler.off} />
       <LoginModal isOpen={isLoginOpen} onClose={isLoginOpenHandler.off} />
     </>

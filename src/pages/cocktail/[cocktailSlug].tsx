@@ -12,7 +12,7 @@ const CocktailPage = ({ cocktail }: ICocktailPageProps) => {
     return <h1>Cocktail not found</h1>;
   }
 
-  return <CocktailPageComponent cocktail={cocktail} />;
+  return <CocktailPageComponent initialData={cocktail} />;
 };
 
 export default CocktailPage;

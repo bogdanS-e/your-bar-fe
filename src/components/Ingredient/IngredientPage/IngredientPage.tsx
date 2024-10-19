@@ -1,4 +1,4 @@
-import { LoginModal, useUser } from 'components/AuthHandler';
+import { useUser } from 'components/AuthHandler';
 import { CocktailCard } from 'components/Card';
 import GoBackButton from 'components/GoBackButton';
 import TagButton from 'components/Tag/TagButton';
@@ -12,6 +12,7 @@ import styled from 'styled-components';
 import { Column, Row } from 'styles/components';
 import { IIngredient } from 'types/ingredient';
 import AvailableIngredientButton from '../AvailableIngredientButton';
+import CreateIngredientModal from '../CreateIngredientModal';
 
 interface IIngredientPageProps {
   initialData: IIngredient | null;
@@ -25,7 +26,7 @@ const IngredientPage = ({ initialData }: IIngredientPageProps) => {
 
   const ingredient = initialData || getIngredientBySlug(router.query.ingredientSlug as string);
 
-  const [isLoginOpen, isLoginOpenHandler] = useToggle(false);
+  const [isEditOpen, handleEditOpen] = useToggle(false);
 
   const isAvailable = useMemo(() => {
     if (!ingredient) {
@@ -80,6 +81,7 @@ const IngredientPage = ({ initialData }: IIngredientPageProps) => {
             <Row $justifyContent="space-between" $fullWidth>
               <Title>{nameEn}</Title>
               <AvailableIngredientButton ingredientId={_id} />
+              <button onClick={handleEditOpen.on}>edit</button>
             </Row>
             <Description>{descriptionEn}</Description>
             <Row $gap="10px">
@@ -109,8 +111,18 @@ const IngredientPage = ({ initialData }: IIngredientPageProps) => {
             )}
           </Row>
         </CocktailsContainer>
+        <CreateIngredientModal
+          isOpen={isEditOpen}
+          onClose={handleEditOpen.off}
+          initialData={{
+            ingredientId: _id,
+            name: nameEn,
+            description: descriptionEn,
+            tags,
+            image: image || '',
+          }}
+        />
       </Container>
-      <LoginModal isOpen={isLoginOpen} onClose={isLoginOpenHandler.off} />
     </>
   );
 };

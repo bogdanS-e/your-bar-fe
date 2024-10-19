@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 import { IResError } from 'types/common';
 import { getAxiosError, urlToFile } from 'utils/common';
-import { cocktailTagInfo, CocktailUnit } from 'types/cocktail';
+import { cocktailTagInfo, CocktailUnit, ICocktail } from 'types/cocktail';
 import AddIngredients from './AddIngredients';
 import useCreateCocktail from './useCreateCocktail';
 import { ICreateCocktailParams, IIngredientParam } from 'api/cocktails';
@@ -121,7 +121,7 @@ const CreateCocktailModal = ({ isOpen, initialData, onClose }: ICreateIngredient
       throw new Error('Cannot edit cocktail without initial data');
     }
 
-    return toast.promise<ICreateCocktailParams, AxiosError<IResError>>(
+    return toast.promise<ICocktail, AxiosError<IResError>>(
       async () =>
         await editCocktailMutation.mutateAsync({ ...values, cocktailId: initialData.cocktailId }),
       {
@@ -132,7 +132,7 @@ const CreateCocktailModal = ({ isOpen, initialData, onClose }: ICreateIngredient
 
             return (
               <span>
-                <b>{toastData.name}</b> cocktail has been edited 👌
+                <b>{toastData.nameEn}</b> cocktail has been edited 👌
               </span>
             );
           },

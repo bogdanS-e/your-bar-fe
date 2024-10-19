@@ -1,8 +1,8 @@
 import Modal from 'components/Modal';
-import { useFormik } from 'formik';
+import { FormikHelpers, useFormik } from 'formik';
 import { z, ZodType } from 'zod';
 import { toFormikValidate } from 'zod-formik-adapter';
-import { IngredientTag, ingredientTagInfo } from 'types/ingredient';
+import { IIngredient, IngredientTag, ingredientTagInfo } from 'types/ingredient';
 import AddTags from 'components/Tag/AddTags';
 import Input from 'components/Input';
 import styled from 'styled-components';
@@ -15,9 +15,17 @@ import { AxiosError } from 'axios';
 import { IResError } from 'types/common';
 import { getAxiosError } from 'utils/common';
 import { ICreateIngredientParams } from 'api/ingredients';
+import { useEffect, useState } from 'react';
+import useEditIngredient from './useEditIngredient';
+
+interface IInitialData extends Omit<ICreateIngredientParams, 'image'> {
+  ingredientId: string;
+  image?: string;
+}
 
 interface IAddIngredientModalProps {
   isOpen: boolean;
+  initialData?: IInitialData;
   onClose: () => void;
 }
 
@@ -36,8 +44,29 @@ const ingredientSchema: ZodType<ICreateIngredientParams> = z.object({
     .nullable(),
 });
 
-const AddIngredientModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
+const initialFormData = {
+  name: '',
+  description: '',
+  tags: [IngredientTag.Custom],
+  image: null,
+};
+
+const CreateIngredientModal = ({ isOpen, initialData, onClose }: IAddIngredientModalProps) => {
   const createIngerientMutation = useCreateIngredient();
+  const editIngredientMutation = useEditIngredient();
+
+  const [initialValues, setInitialValues] = useState(initialFormData);
+
+  useEffect(() => {
+    if (!initialData) {
+      return;
+    }
+
+    setInitialValues({
+      ...initialData,
+      image: null,
+    });
+  }, [initialData]);
 
   const onCreate = (values: ICreateIngredientParams) => {
     return toast.promise<ICreateIngredientParams, AxiosError<IResError>>(
@@ -62,26 +91,67 @@ const AddIngredientModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
     );
   };
 
+  const onEdit = (values: ICreateIngredientParams) => {
+    if (!initialData) {
+      throw new Error('Cannot edit ingredient without initial data');
+    }
+
+    return toast.promise<IIngredient, AxiosError<IResError>>(
+      async () =>
+        await editIngredientMutation.mutateAsync({
+          ...values,
+          ingredientId: initialData.ingredientId,
+        }),
+      {
+        pending: `Editing ingredient ${initialValues.name}`,
+        success: {
+          render: ({ data: toastData }) => {
+            onClose();
+
+            return (
+              <span>
+                <b>{toastData.nameEn}</b> ingredient has been edited 👌
+              </span>
+            );
+          },
+        },
+        error: {
+          render: ({ data }) => getAxiosError(data),
+        },
+      }
+    );
+  };
+
+  const onSubmit = async (
+    values: ICreateIngredientParams,
+    { resetForm }: FormikHelpers<ICreateIngredientParams>
+  ) => {
+    if (initialData) {
+      await onEdit(values);
+    } else {
+      await onCreate(values);
+    }
+
+    resetForm();
+    onClose();
+  };
+
   const { handleBlur, handleSubmit, handleChange, setFieldValue, values, errors } =
     useFormik<ICreateIngredientParams>({
-      initialValues: {
-        name: '',
-        description: '',
-        tags: [IngredientTag.Custom],
-        image: null,
-      },
+      initialValues,
+      enableReinitialize: true,
       validateOnChange: false,
       validateOnBlur: false,
       validate: toFormikValidate(ingredientSchema),
-      onSubmit: async (values, { resetForm }) => {
-        await onCreate(values);
-        resetForm();
-        onClose();
-      },
+      onSubmit,
     });
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Add new ingredient">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title={initialData ? 'Edit ingredient' : 'Add new ingredient'}
+    >
       <Form onSubmit={handleSubmit}>
         <NameWrapper>
           <div>
@@ -110,7 +180,10 @@ const AddIngredientModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
             </div>
           </div>
           <div>
-            <ImageInput onImageChange={(file) => setFieldValue('image', file)} />
+            <ImageInput
+              initialImage={initialData?.image}
+              onImageChange={(file) => setFieldValue('image', file)}
+            />
 
             {errors?.image && <ErrorText>{errors.image}</ErrorText>}
           </div>
@@ -137,7 +210,7 @@ const AddIngredientModal = ({ isOpen, onClose }: IAddIngredientModalProps) => {
   );
 };
 
-export default AddIngredientModal;
+export default CreateIngredientModal;
 
 const ErrorText = styled.small`
   font-size: 0.625rem;
