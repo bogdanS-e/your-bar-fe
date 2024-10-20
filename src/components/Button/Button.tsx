@@ -1,11 +1,12 @@
 import { ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 
+export type TButtonVariant = 'regular' | 'error';
 interface IButtonProps {
   children: ReactNode;
   onClick?: () => void;
   disabled?: boolean;
-  variant?: 'regular' | 'error';
+  variant?: TButtonVariant;
   type?: 'button' | 'submit' | 'reset';
   className?: string;
 }
@@ -33,7 +34,7 @@ const Button = ({
 
 export default Button;
 
-const StyledButton = styled.button<{ $variant: 'regular' | 'error' }>`
+const StyledButton = styled.button<{ $variant: TButtonVariant }>`
   padding: 6px 16px;
   font-size: 0.875rem;
   font-weight: 500;

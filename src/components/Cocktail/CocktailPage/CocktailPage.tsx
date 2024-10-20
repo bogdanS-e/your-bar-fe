@@ -11,6 +11,8 @@ import { useAvailableCocktailsSet, useToggle } from 'hooks';
 import FavoriteCocktailButton from '../FavoriteCocktailButton';
 import CreateCocktailModal from '../CreateCocktail/CreateCocktailModal';
 import { useRouter } from 'next/router';
+import EditButton from 'components/Button/EditButton';
+import DeleteButton from 'components/Button/DeleteButton';
 
 interface ICocktailPageProps {
   initialData: ICocktail | null;
@@ -56,8 +58,12 @@ const CocktailPage = ({ initialData }: ICocktailPageProps) => {
           <Column $alignItems="flex-start" $fullWidth>
             <Row $justifyContent="space-between" $fullWidth>
               <Title>{nameEn}</Title>
-              <FavoriteCocktailButton cocktailId={_id} />
-              <button onClick={handleEditOpen.on}>edit</button>
+              <Row $gap="15px">
+                <FavoriteCocktailButton cocktailId={_id} />
+
+                {!!user && <EditButton onClick={handleEditOpen.on} />}
+                <DeleteButton onClick={handleEditOpen.on} />
+              </Row>
             </Row>
             <Description>{descriptionEn}</Description>
             <Row $gap="10px">

@@ -36,5 +36,4 @@ const StyledIconButton = styled(IconButton)<{ $isAvailable: boolean }>`
   padding: 10px;
   background: rgba(0, 0, 0, 0.05);
   color: ${({ $isAvailable }) => ($isAvailable ? '#4CAF50' : '#ccc')};
-  transition: color 0.5s;
 `;

@@ -75,6 +75,16 @@ export const editIngredient = async (params: IEditIngredientParams) => {
   return data;
 };
 
+export const deleteIngredient = async (ingredientId: string, token: string) => {
+  const { data } = await axiosInstance.delete(`/ingredient/delete/${ingredientId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
+};
+
 export const revalidateIngredient = async (slug: string) => {
   const { data } = await axios.get(`/api/revalidate-ingredient?slug=${slug}`);
 

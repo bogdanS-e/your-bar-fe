@@ -35,7 +35,6 @@ export default HeartButton;
 const StyledIconButton = styled(IconButton)<{ $isActive: boolean }>`
   background: rgba(0, 0, 0, 0.05);
   color: ${({ $isActive }) => ($isActive ? 'red' : 'transparent')};
-  transition: color 0.3s;
 
   svg {
     scale: 1.15;

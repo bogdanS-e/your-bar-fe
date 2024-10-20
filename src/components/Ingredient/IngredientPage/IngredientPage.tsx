@@ -10,9 +10,17 @@ import { useMemo } from 'react';
 import useStore from 'store';
 import styled from 'styled-components';
 import { Column, Row } from 'styles/components';
-import { IIngredient } from 'types/ingredient';
+import { IIngredient, IngredientTag } from 'types/ingredient';
 import AvailableIngredientButton from '../AvailableIngredientButton';
 import CreateIngredientModal from '../CreateIngredientModal';
+import EditButton from 'components/Button/EditButton';
+import DeleteButton from 'components/Button/DeleteButton';
+import { ConfirmationModal } from 'components/Modal';
+import useDeleteIngredient from '../useDeleteIngredient';
+import { toast } from 'react-toastify';
+import { AxiosError } from 'axios';
+import { IResError } from 'types/common';
+import { getAxiosError } from 'utils/common';
 
 interface IIngredientPageProps {
   initialData: IIngredient | null;
@@ -23,10 +31,12 @@ const IngredientPage = ({ initialData }: IIngredientPageProps) => {
   const router = useRouter();
   const { data: user } = useUser();
   const availableCocktailsSet = useAvailableCocktailsSet();
+  const deleteIngredientMutation = useDeleteIngredient();
 
   const ingredient = initialData || getIngredientBySlug(router.query.ingredientSlug as string);
 
-  const [isEditOpen, handleEditOpen] = useToggle(false);
+  const [isEditOpen, handleIsEditOpen] = useToggle(false);
+  const [isDeleteOpen, handleisDeleteOpen] = useToggle(false);
 
   const isAvailable = useMemo(() => {
     if (!ingredient) {
@@ -60,6 +70,33 @@ const IngredientPage = ({ initialData }: IIngredientPageProps) => {
     });
   }
 
+  const onDelete = async () => {
+    await toast.promise<unknown, AxiosError<IResError>>(
+      async () => await deleteIngredientMutation.mutateAsync(_id),
+      {
+        pending: 'Deleting ingredient...',
+        success: {
+          render: () => {
+            handleisDeleteOpen.off();
+
+            return (
+              <span>
+                <b>{nameEn}</b> ingredient has been deleted 👌
+              </span>
+            );
+          },
+        },
+        error: {
+          render: ({ data }) => getAxiosError(data),
+        },
+      }
+    );
+
+    router.push('/ingredients');
+  };
+
+  const isCustomIngredient = user && tags.includes(IngredientTag.Custom);
+
   return (
     <>
       <Head>
@@ -80,8 +117,16 @@ const IngredientPage = ({ initialData }: IIngredientPageProps) => {
           <Column $alignItems="flex-start" $fullWidth>
             <Row $justifyContent="space-between" $fullWidth>
               <Title>{nameEn}</Title>
-              <AvailableIngredientButton ingredientId={_id} />
-              <button onClick={handleEditOpen.on}>edit</button>
+              <Row $gap="15px">
+                <AvailableIngredientButton ingredientId={_id} />
+
+                {isCustomIngredient && (
+                  <>
+                    <EditButton onClick={handleIsEditOpen.on} />
+                    <DeleteButton onClick={handleisDeleteOpen.on} />
+                  </>
+                )}
+              </Row>
             </Row>
             <Description>{descriptionEn}</Description>
             <Row $gap="10px">
@@ -113,7 +158,7 @@ const IngredientPage = ({ initialData }: IIngredientPageProps) => {
         </CocktailsContainer>
         <CreateIngredientModal
           isOpen={isEditOpen}
-          onClose={handleEditOpen.off}
+          onClose={handleIsEditOpen.off}
           initialData={{
             ingredientId: _id,
             name: nameEn,
@@ -122,12 +167,41 @@ const IngredientPage = ({ initialData }: IIngredientPageProps) => {
             image: image || '',
           }}
         />
+        <ConfirmationModal
+          isOpen={isDeleteOpen}
+          onClose={handleisDeleteOpen.off}
+          title="Delete ingredient"
+          cancel={{ text: 'Nevermind' }}
+          confirm={{
+            text: 'Delete',
+            variant: 'error',
+            disabled: deleteIngredientMutation.isPending,
+          }}
+          onConfirm={onDelete}
+        >
+          <ConfirmationText>
+            Are you sure want to delete <b>"{nameEn}"</b> ingredient?
+            <ConfirmationWarningText>
+              If you delete the ingredient you won't be able to restore it
+            </ConfirmationWarningText>
+          </ConfirmationText>
+        </ConfirmationModal>
       </Container>
     </>
   );
 };
 
 export default IngredientPage;
+
+const ConfirmationText = styled.div`
+  margin: 10px 0 50px;
+`;
+
+const ConfirmationWarningText = styled.div`
+  margin-top: 5px;
+  font-size: 0.875rem;
+  color: #aaa;
+`;
 
 const IngredientContainer = styled(Row)<{ $isAvailable: boolean }>`
   width: fit-content;

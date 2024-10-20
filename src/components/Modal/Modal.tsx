@@ -2,7 +2,7 @@ import { ReactNode, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 
-interface IModalProps {
+export interface IModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
@@ -10,6 +10,7 @@ interface IModalProps {
   keepUnmount?: boolean; //ignore useEffect on isOpen=false
   className?: string;
 }
+
 const Modal = ({ isOpen, onClose, children, title, keepUnmount, className }: IModalProps) => {
   useEffect(() => {
     if (!isOpen && keepUnmount) {
