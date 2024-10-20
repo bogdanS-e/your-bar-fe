@@ -180,9 +180,9 @@ const IngredientPage = ({ initialData }: IIngredientPageProps) => {
           onConfirm={onDelete}
         >
           <ConfirmationText>
-            Are you sure want to delete <b>"{nameEn}"</b> ingredient?
+            Are you sure want to delete <b>&quot;{nameEn}&quot;</b> ingredient?
             <ConfirmationWarningText>
-              If you delete the ingredient you won't be able to restore it
+              If you delete the ingredient you won&apos;t be able to restore it
             </ConfirmationWarningText>
           </ConfirmationText>
         </ConfirmationModal>
