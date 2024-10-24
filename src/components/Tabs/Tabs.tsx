@@ -156,4 +156,8 @@ const TabContent = styled.div`
     transform: translateX(100%);
     transition: all ${transitionTimeout}ms ease;
   }
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    padding: 0;
+  }
 `;

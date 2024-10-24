@@ -30,6 +30,7 @@ interface IFlexProps {
   $justifyContent?: T$justifyContent;
   $flexWrap?: T$flexWrap;
   $gap?: TGap;
+  '$sm-gap'?: TGap;
   $fullWidth?: boolean;
 }
 
@@ -40,6 +41,10 @@ export const Row = styled.div<IFlexProps>`
   flex-wrap: ${({ $flexWrap }) => $flexWrap || 'nowrap'};
   gap: ${({ $gap }) => $gap || '0'};
   width: ${({ $fullWidth }) => ($fullWidth ? '100%' : 'auto')};
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    gap: ${({ $gap, ...rest }) => rest['$sm-gap'] || $gap || '0'};
+  }
 `;
 
 export const Column = styled(Row)`

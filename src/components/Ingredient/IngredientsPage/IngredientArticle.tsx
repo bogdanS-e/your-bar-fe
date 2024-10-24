@@ -1,6 +1,7 @@
 import { IngredientCard } from 'components/Card';
 import styled from 'styled-components';
 import { Row } from 'styles/components';
+import Typography from 'styles/Typography';
 
 import { IIngredient } from 'types/ingredient';
 
@@ -12,8 +13,10 @@ interface IIngredientArticleProps {
 const IngredientArticle = ({ ingredients, title }: IIngredientArticleProps) => {
   return (
     <Article>
-      <Title>{title}</Title>
-      <Row $gap="20px" $flexWrap="wrap" $alignItems="stretch">
+      <Title variant="h4" as="h2">
+        {title}
+      </Title>
+      <Row $gap="20px" $sm-gap="0" $flexWrap="wrap" $alignItems="stretch">
         {ingredients.map(({ _id, slug, nameEn, descriptionEn, image, tags }) => (
           <IngredientCard
             key={_id}
@@ -37,9 +40,8 @@ const Article = styled.article`
   margin-bottom: 20px;
 `;
 
-const Title = styled.h2`
+const Title = styled(Typography)`
   font-weight: 400;
   margin-bottom: 10px;
-  font-size: 1.5rem;
   color: #8f8f8f;
 `;

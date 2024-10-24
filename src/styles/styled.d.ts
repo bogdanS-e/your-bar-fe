@@ -6,5 +6,16 @@ declare module 'styled-components' {
       availableBackground: string;
       availableBorder: string;
     };
+    breakpoints: {
+      values: {
+        xs: number;
+        sm: number;
+        md: number;
+        lg: number;
+        xl: number;
+      };
+      up: (key: keyof DefaultTheme['breakpoints']['values']) => string;
+      down: (key: keyof DefaultTheme['breakpoints']['values']) => string;
+    };
   }
 }

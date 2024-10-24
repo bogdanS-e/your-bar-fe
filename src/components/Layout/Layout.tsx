@@ -21,7 +21,7 @@ interface ILayoutProps {
 }
 
 const roboto = Roboto({
-  weight: ['400', '700'],
+  weight: ['300', '400', '700'],
   subsets: ['latin', 'cyrillic'],
 });
 
@@ -150,6 +150,10 @@ const Main = styled.main`
   border-radius: 10px;
   padding: 15px 25px;
   width: 100%;
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    padding: 10px 0;
+  }
 `;
 
 const Page = styled.div`

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ReactNode } from 'react';
 import styled from 'styled-components';
 import { Column, Row } from 'styles/components';
+import Typography from 'styles/Typography';
 import { CocktailTag } from 'types/cocktail';
 import { IngredientTag } from 'types/ingredient';
 
@@ -38,16 +39,20 @@ const Card = ({
       <IconWrapper>{Icon}</IconWrapper>
       <Content>
         <div style={{ width: '100%' }}>
-          <Title>{name}</Title>
-          <Description>{description}</Description>
+          <Typography variant="h5" as="h3">
+            {name}
+          </Typography>
+          <Typography variant="subtitle1">
+            <Description>{description}</Description>
 
-          {!!ingredients?.length && (
-            <Ingredients>
-              {ingredients.map((ingredient) => (
-                <span key={ingredient}>{ingredient}</span>
-              ))}
-            </Ingredients>
-          )}
+            {!!ingredients?.length && (
+              <Ingredients>
+                {ingredients.map((ingredient) => (
+                  <span key={ingredient}>{ingredient}</span>
+                ))}
+              </Ingredients>
+            )}
+          </Typography>
         </div>
 
         <TagsWrapper>
@@ -66,6 +71,10 @@ const IconWrapper = styled.div`
   position: absolute;
   top: 20px;
   right: 20px;
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    top: unset;
+  }
 `;
 
 const Ingredients = styled.div`
@@ -81,12 +90,18 @@ const Ingredients = styled.div`
     }
   }
 `;
+
 const gap = '20px';
+const columns = {
+  xl: 5,
+  lg: 3,
+  sm: 1,
+};
 const CardContainer = styled(Link)<{ $isAvailable: boolean }>`
   position: relative;
   display: flex;
   flex-direction: column;
-  width: calc((100% - 4 * ${gap}) / 5);
+  width: calc((100% - ${columns.xl - 1} * ${gap}) / ${columns.xl});
   border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
@@ -100,6 +115,21 @@ const CardContainer = styled(Link)<{ $isAvailable: boolean }>`
   &:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   }
+
+  ${({ theme }) => theme.breakpoints.down('lg')} {
+    width: calc((100% - ${columns.lg - 1} * ${gap}) / ${columns.lg});
+  }
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    width: calc((100% - ${columns.sm - 1} * ${gap}) / ${columns.sm});
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    padding: 5px;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: 1px dotted #ccc;
+  }
 `;
 
 const ImageWrapper = styled(Row)`
@@ -107,6 +137,18 @@ const ImageWrapper = styled(Row)`
   height: 150px;
   padding-top: 10px;
   overflow: hidden;
+
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    height: 100px;
+  }
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    height: 60px;
+    width: 60px;
+    overflow: hidden;
+    border-radius: 50%;
+    padding: 0;
+  }
 `;
 
 const StyledImage = styled.img`
@@ -121,26 +163,37 @@ const Content = styled(Column)`
   flex: 1;
   align-items: flex-start;
   justify-content: space-between;
-`;
 
-const Title = styled.h3`
-  font-size: 1.25rem;
-  margin: 0;
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    padding: 8px;
+  }
 `;
 
 const Description = styled.p`
-  font-size: 1rem;
   margin: 8px 0;
   display: -webkit-box;
   -webkit-line-clamp: 2; /* Number of lines */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    margin: 0;
+  }
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    display: none;
+  }
 `;
 
 const TagsWrapper = styled.div`
   margin-top: 12px;
   display: flex;
+  align-self: self-start;
   flex-wrap: wrap;
   gap: 10px;
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    margin-top: 5px;
+  }
 `;

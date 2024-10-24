@@ -8,6 +8,7 @@ import { Tabs } from 'components/Tabs';
 import MyIngredientsTab from './Tabs/MyIngredientsTab';
 import AllIngredientsTab from './Tabs/AllIngredientsTab';
 import useStore from 'store';
+import Typography from 'styles/Typography';
 
 interface IIngredientsPageProps {
   initialData: IIngredient[];
@@ -64,7 +65,9 @@ const IngredientsPage = ({ initialData }: IIngredientsPageProps) => {
         />
       </Head>
       <Main>
-        <Title>Ingredients</Title>
+        <Title variant="h4" as="h1">
+          Ingredients
+        </Title>
         <TagsFilter
           items={ingrediensFilter}
           selectedTags={selectedIngredientTags}
@@ -95,9 +98,8 @@ const Main = styled.div`
   margin: 20px 0;
 `;
 
-const Title = styled.h1`
+const Title = styled(Typography)`
   font-weight: 400;
-  font-size: 1.5rem;
   color: #8f8f8f;
   margin-bottom: 20px;
 `;
