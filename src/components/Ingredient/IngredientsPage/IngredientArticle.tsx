@@ -16,7 +16,7 @@ const IngredientArticle = ({ ingredients, title }: IIngredientArticleProps) => {
       <Title variant="h4" as="h2">
         {title}
       </Title>
-      <Row $gap="20px" $sm-gap="0" $flexWrap="wrap" $alignItems="stretch">
+      <Row $gap="20px" $sm-gap="5px" $flexWrap="wrap" $alignItems="stretch">
         {ingredients.map(({ _id, slug, nameEn, descriptionEn, image, tags }) => (
           <IngredientCard
             key={_id}

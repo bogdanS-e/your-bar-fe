@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Typography from 'styles/Typography';
 
 export interface IFilterItem<T> {
   image: string;
@@ -32,25 +33,27 @@ const TagsFilter = <T extends string | number>({
   };
 
   return (
-    <Container>
-      {items.map(({ title, key, image }) => (
-        <Item key={key} onClick={() => handleClick(key)}>
+    <Typography as="span" variant="subtitle1">
+      <Container>
+        {items.map(({ title, key, image }) => (
+          <Item key={key} onClick={() => handleClick(key)}>
+            <ImageWrapper>
+              <StyledImage src={image} width={80} height={80} alt="Filter image" />
+              <Selected $isSelected={selectedTags.includes(key)} />
+            </ImageWrapper>
+
+            {title}
+          </Item>
+        ))}
+
+        <Item key="select-all" onClick={handleSelectAll}>
           <ImageWrapper>
-            <StyledImage src={image} width={80} height={80} alt="Filter image" />
-            <Selected $isSelected={selectedTags.includes(key)} />
+            <StyledImage src="/images/checkmark.jpg" width={80} height={80} alt="Checkmark image" />
           </ImageWrapper>
-
-          {title}
+          Select all
         </Item>
-      ))}
-
-      <Item key="select-all" onClick={handleSelectAll}>
-        <ImageWrapper>
-          <StyledImage src="/images/checkmark.jpg" width={80} height={80} alt="Checkmark image" />
-        </ImageWrapper>
-        Select all
-      </Item>
-    </Container>
+      </Container>
+    </Typography>
   );
 };
 
@@ -63,6 +66,12 @@ const Container = styled.div`
   color: #8f8f8f;
   font-style: italic;
   text-align: center;
+  overflow-x: auto;
+
+  ${({ theme }) => theme.breakpoints.down('lg')} {
+    gap: 20px;
+    padding: 0 5px 5px;
+  }
 `;
 
 const Item = styled.div`
@@ -71,15 +80,31 @@ const Item = styled.div`
   user-select: none;
   align-items: center;
   cursor: pointer;
-  flex: 1;
+  flex: 1 0;
   max-width: 80px;
+
+  ${({ theme }) => theme.breakpoints.down('lg')} {
+    max-width: 70px;
+  }
+
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    max-width: 60px;
+  }
 `;
 
 const ImageWrapper = styled.div`
-  width: 80px;
   height: 80px;
+  aspect-ratio: 1 / 1;
   position: relative;
   margin-bottom: 5px;
+
+  ${({ theme }) => theme.breakpoints.down('lg')} {
+    height: 70px;
+  }
+
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    height: 60px;
+  }
 `;
 
 const StyledImage = styled.img`

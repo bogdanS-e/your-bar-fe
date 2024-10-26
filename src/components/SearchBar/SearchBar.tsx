@@ -110,6 +110,13 @@ const StyledDropdown: typeof Dropdown = styled(Dropdown)`
       padding: 0;
     }
   }
+
+  max-width: 500px;
+  flex: 1;
+
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    max-width: 100%;
+  }
 `;
 
 const fadeUp = keyframes`
@@ -135,7 +142,7 @@ const StyledIconButton = styled(IconButton)`
 
 const SearchBarWrapper = styled.div`
   position: relative;
-  width: 500px;
+  width: 100%;
 `;
 
 const PlaceholderWrapper = styled.div<{ $hasValue: boolean }>`

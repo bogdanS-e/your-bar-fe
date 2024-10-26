@@ -126,9 +126,11 @@ const CardContainer = styled(Link)<{ $isAvailable: boolean }>`
     align-items: center;
     gap: 5px;
     padding: 5px;
-    border-radius: 0;
     box-shadow: none;
-    border-bottom: 1px dotted #ccc;
+
+    &:hover {
+      box-shadow: none;
+    }
   }
 `;
 
@@ -145,7 +147,6 @@ const ImageWrapper = styled(Row)`
   ${({ theme }) => theme.breakpoints.down('sm')} {
     height: 60px;
     width: 60px;
-    overflow: hidden;
     border-radius: 50%;
     padding: 0;
   }
