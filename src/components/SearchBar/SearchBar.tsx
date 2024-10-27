@@ -3,11 +3,13 @@ import Dropdown from 'components/Dropdown';
 import IconButton from 'components/IconButton';
 import { useIngredients } from 'components/Ingredient';
 import { useEffect, useRef, useState } from 'react';
-import styled, { css, keyframes } from 'styled-components';
+import styled, { css, keyframes, useTheme } from 'styled-components';
 import { ICocktail } from 'types/cocktail';
 import { IIngredient } from 'types/ingredient';
 import SearchResult from './SearchResult';
 import { SearchIcon } from 'components/Icons';
+import Typography from 'styles/Typography';
+import { useMediaQuery } from 'hooks';
 
 interface ISearchBarProps {
   placeholder?: string;
@@ -20,6 +22,9 @@ interface ISearchBarProps {
 type TSearchItem = ICocktail | IIngredient;
 
 const SearchBar = ({ placeholder, value, onChange, autoFocus, hideResults }: ISearchBarProps) => {
+  const theme = useTheme();
+  const isMdDown = useMediaQuery(theme.breakpoints.down('md'));
+
   const { data: ingredients } = useIngredients();
   const { data: cocktails } = useCocktails();
 
@@ -85,11 +90,11 @@ const SearchBar = ({ placeholder, value, onChange, autoFocus, hideResults }: ISe
             onChange={({ currentTarget }) => onChange(currentTarget.value)}
             autoFocus={autoFocus}
           />
-          <PlaceholderWrapper $hasValue={value.length > 0}>
-            {placeholder || 'Search for cooktails and ingredients...'}
+          <PlaceholderWrapper variant="subtitle1" $hasValue={value.length > 0}>
+            {placeholder || 'Search cocktails and ingredients'}
           </PlaceholderWrapper>
           <SearchIconWrapper>
-            <StyledIconButton size={40}>
+            <StyledIconButton size={isMdDown ? 35 : 40}>
               <SearchIcon />
             </StyledIconButton>
           </SearchIconWrapper>
@@ -105,9 +110,16 @@ const StyledDropdown: typeof Dropdown = styled(Dropdown)`
   .dropdown-menu {
     width: 350px;
     max-height: min(80vh, 800px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 
     &-item {
       padding: 0;
+    }
+
+    ${({ theme }) => theme.breakpoints.down('md')} {
+      width: 100%;
+      left: -30px;
+      overscroll-behavior: contain;
     }
   }
 
@@ -143,9 +155,10 @@ const StyledIconButton = styled(IconButton)`
 const SearchBarWrapper = styled.div`
   position: relative;
   width: 100%;
+  overflow: hidden;
 `;
 
-const PlaceholderWrapper = styled.div<{ $hasValue: boolean }>`
+const PlaceholderWrapper = styled(Typography)<{ $hasValue: boolean }>`
   position: absolute;
   top: 50%;
   left: 10px;
@@ -155,6 +168,7 @@ const PlaceholderWrapper = styled.div<{ $hasValue: boolean }>`
     transform 0.3s ease;
   color: #aaa;
   pointer-events: none;
+  white-space: nowrap;
 
   ${({ $hasValue }) =>
     $hasValue &&
@@ -175,6 +189,10 @@ const SearchInput = styled.input`
 
   &:focus {
     border-color: #909022;
+  }
+
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    font-size: 0.875rem;
   }
 `;
 

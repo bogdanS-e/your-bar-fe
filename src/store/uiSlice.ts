@@ -17,7 +17,7 @@ export type TUISlice = IUIStoreProps & IUIStoreActions;
 
 const initialData: IUIStoreProps = {
   isLoading: true,
-  isSidebarOpen: true,
+  isSidebarOpen: false,
 };
 
 const createUiSlice: StateCreator<TUISlice> = (set) => ({

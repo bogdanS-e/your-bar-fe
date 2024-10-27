@@ -2,6 +2,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import { Row, ImageCircle } from 'styles/components';
 import { ReactNode } from 'react';
+import Typography from 'styles/Typography';
 
 export interface ISearchCardProps {
   href: string;
@@ -16,11 +17,13 @@ const SearchCard = ({ href, image, name, isAvailable = false, Icon }: ISearchCar
     <CardContainer prefetch={false} href={href} $isAvailable={isAvailable}>
       <Row $gap="20px">
         <ImageCircle src={image || ''} width={80} height={80} alt={name} />
-        <TitleWrapper $justifyContent="space-between">
-          <Title>{name}</Title>
+        <Row $justifyContent="space-between" $fullWidth>
+          <Typography variant="body1" as="div">
+            {name}
+          </Typography>
 
           {Icon}
-        </TitleWrapper>
+        </Row>
       </Row>
     </CardContainer>
   );
@@ -33,12 +36,8 @@ const CardContainer = styled(Link)<{ $isAvailable: boolean }>`
   padding: 8px 12px;
   background: ${({ $isAvailable, theme }) =>
     $isAvailable ? theme.color.availableBackground : 'none'};
-`;
 
-const TitleWrapper = styled(Row)`
-  width: 100%;
-`;
-
-const Title = styled.span`
-  font-size: 1.125rem;
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    padding: 4px 6px;
+  }
 `;

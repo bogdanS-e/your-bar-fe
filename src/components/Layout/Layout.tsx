@@ -15,6 +15,7 @@ import useStore from 'store';
 import { DownMd, UpMd } from 'styles/media';
 import Sidebar from './Sidebar';
 import IconButton from 'components/IconButton';
+import { BurgerIcon } from 'components/Icons';
 
 interface ILayoutProps {
   children: ReactNode;
@@ -52,9 +53,11 @@ const Layout = ({ children }: ILayoutProps) => {
       <Page>
         <Sidebar />
         <Main>
-          <Row $justifyContent="space-between" $gap="20px">
+          <Row $justifyContent="space-between" $gap="20px" $md-gap="10px">
             <DownMd>
-              <IconButton onClick={openSidebar}>open</IconButton>
+              <BurgerButton onClick={openSidebar} size={30}>
+                <BurgerIcon />
+              </BurgerButton>
             </DownMd>
             <SearchBar value={searchValue} onChange={handleSearchChange} />
             <UpMd>
@@ -72,6 +75,10 @@ const Layout = ({ children }: ILayoutProps) => {
 };
 
 export default Layout;
+
+const BurgerButton = styled(IconButton)`
+  padding: 0;
+`;
 
 const Main = styled.main`
   max-width: 1700px;

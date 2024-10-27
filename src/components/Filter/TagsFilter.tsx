@@ -67,6 +67,7 @@ const Container = styled.div`
   font-style: italic;
   text-align: center;
   overflow-x: auto;
+  scroll-snap-type: x mandatory;
 
   ${({ theme }) => theme.breakpoints.down('lg')} {
     gap: 20px;
@@ -82,6 +83,7 @@ const Item = styled.div`
   cursor: pointer;
   flex: 1 0;
   max-width: 80px;
+  scroll-snap-align: start;
 
   ${({ theme }) => theme.breakpoints.down('lg')} {
     max-width: 70px;
@@ -140,5 +142,10 @@ const Selected = styled.span<{ $isSelected: boolean }>`
     top: -5%;
     color: #080808a8;
     opacity: ${({ $isSelected }) => ($isSelected ? '1' : '0')};
+
+    ${({ theme }) => theme.breakpoints.down('md')} {
+      width: 20px;
+      height: 20px;
+    }
   }
 `;

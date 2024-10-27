@@ -80,18 +80,22 @@ const getVariantStyles = (
       `;
     case 'body1':
       return css`
-        font-size: 1rem;
-        font-weight: 300;
+        font-size: 1.125rem;
+        font-weight: 400;
+
+        ${theme.breakpoints.down('md')} {
+          font-size: 1rem;
+        }
       `;
     case 'body2':
       return css`
         font-size: 0.875rem;
-        font-weight: 300;
+        font-weight: 400;
       `;
     default:
       return css`
         font-size: 1rem;
-        font-weight: 300;
+        font-weight: 400;
       `;
   }
 };

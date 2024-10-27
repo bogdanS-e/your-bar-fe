@@ -1,8 +1,9 @@
 import { MouseEvent } from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 import IconButton from 'components/IconButton';
 import { CheckmarkIcon } from 'components/Icons';
+import { useMediaQuery } from 'hooks';
 
 interface ICheckmarkButtonProps {
   isActive: boolean;
@@ -11,6 +12,9 @@ interface ICheckmarkButtonProps {
 }
 
 const CheckmarkButton = ({ isActive, className, onClick }: ICheckmarkButtonProps) => {
+  const theme = useTheme();
+  const isMdDown = useMediaQuery(theme.breakpoints.down('md'));
+
   const handleIconClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     e.preventDefault();
@@ -20,7 +24,7 @@ const CheckmarkButton = ({ isActive, className, onClick }: ICheckmarkButtonProps
 
   return (
     <StyledIconButton
-      size={40}
+      size={isMdDown ? 35 : 40}
       $isAvailable={isActive}
       onClick={handleIconClick}
       className={className}

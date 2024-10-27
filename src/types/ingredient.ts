@@ -20,7 +20,7 @@ export const ingredientTagInfo: Record<IngredientTag, ITagInfo<IngredientTag>> =
   },
   [IngredientTag.Strong]: {
     color: '#fff59dbb',
-    title: 'Strong alcohol',
+    title: 'Strong',
     image: '/images/ingredients/strong.png',
     key: IngredientTag.Strong,
   },
@@ -32,7 +32,7 @@ export const ingredientTagInfo: Record<IngredientTag, ITagInfo<IngredientTag>> =
   },
   [IngredientTag.Soft]: {
     color: '#aed581bb',
-    title: 'Soft alcohol',
+    title: 'Soft',
     image: '/images/ingredients/soft.png',
     key: IngredientTag.Soft,
   },

@@ -31,6 +31,7 @@ interface IFlexProps {
   $flexWrap?: T$flexWrap;
   $gap?: TGap;
   '$sm-gap'?: TGap;
+  '$md-gap'?: TGap;
   $fullWidth?: boolean;
 }
 
@@ -42,8 +43,12 @@ export const Row = styled.div<IFlexProps>`
   gap: ${({ $gap }) => $gap || '0'};
   width: ${({ $fullWidth }) => ($fullWidth ? '100%' : 'auto')};
 
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    gap: ${({ $gap, ...rest }) => rest['$md-gap'] || $gap || '0'};
+  }
+
   ${({ theme }) => theme.breakpoints.down('sm')} {
-    gap: ${({ $gap, ...rest }) => rest['$sm-gap'] || $gap || '0'};
+    gap: ${({ $gap, ...rest }) => rest['$sm-gap'] || rest['$md-gap'] || $gap || '0'};
   }
 `;
 
@@ -59,4 +64,9 @@ export const ImageCircle = styled.img`
   border: 1px solid #ccc;
   background: #fff;
   flex-shrink: 0;
+
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    width: 60px;
+    height: 60px;
+  }
 `;
