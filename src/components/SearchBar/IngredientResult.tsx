@@ -12,7 +12,7 @@ const IngredientResult = ({ ingredientId, ...rest }: IngredientResultProps) => {
 
   const isAvailable = useMemo(() => {
     return user?.ingredients.includes(ingredientId);
-  }, [user]);
+  }, [user, ingredientId]);
 
   return (
     <SearchCard

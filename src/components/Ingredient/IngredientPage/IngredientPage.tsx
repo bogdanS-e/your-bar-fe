@@ -44,7 +44,7 @@ const IngredientPage = ({ initialData }: IIngredientPageProps) => {
     }
 
     return !!user?.ingredients.includes(ingredient._id);
-  }, [user]);
+  }, [user, ingredient]);
 
   if (!ingredient) {
     return <h1>Ingredient not found</h1>;

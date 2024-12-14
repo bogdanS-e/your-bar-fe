@@ -18,7 +18,7 @@ const FavoriteCocktailButton = ({ cocktailId }: IFavoriteCocktailButtonProps) =>
 
   const isFavorite = useMemo(() => {
     return !!user?.favoriteCocktails.includes(cocktailId);
-  }, [user]);
+  }, [user, cocktailId]);
 
   const onIconClick = () => {
     if (!user) {

@@ -32,7 +32,7 @@ const Multiselect = <T extends string | number>({
   }, [options]);
 
   const inputValue = useMemo(() => {
-    if (selectedOptions.length === options.length) {
+    if (selectedOptions.length === optionsMap.size) {
       return 'All items selected';
     }
 

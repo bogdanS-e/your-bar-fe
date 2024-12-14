@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, ReactNode } from 'react';
+import { useRef, useEffect, ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
 import { useToggle } from 'hooks';

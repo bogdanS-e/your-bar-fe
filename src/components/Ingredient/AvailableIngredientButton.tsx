@@ -18,7 +18,7 @@ const AvailableIngredientButton = ({ ingredientId }: IAvailableIngredientButtonP
 
   const isAvailable = useMemo(() => {
     return !!user?.ingredients.includes(ingredientId);
-  }, [user]);
+  }, [user, ingredientId]);
 
   const onIconClick = () => {
     if (!user) {

@@ -36,7 +36,7 @@ const useAvailableCocktailsSet = (): Set<String> => {
     }
 
     return set;
-  }, [user]);
+  }, [user, cocktails]);
 
   return availableCocktailsSet;
 };
