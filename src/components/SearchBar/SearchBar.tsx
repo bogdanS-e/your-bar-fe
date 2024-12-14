@@ -17,11 +17,19 @@ interface ISearchBarProps {
   onChange: (value: string) => void;
   autoFocus?: boolean;
   hideResults?: boolean;
+  hideIcon?: boolean;
 }
 
 type TSearchItem = ICocktail | IIngredient;
 
-const SearchBar = ({ placeholder, value, onChange, autoFocus, hideResults }: ISearchBarProps) => {
+const SearchBar = ({
+  placeholder,
+  value,
+  onChange,
+  autoFocus,
+  hideResults,
+  hideIcon,
+}: ISearchBarProps) => {
   const theme = useTheme();
   const isMdDown = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -93,11 +101,14 @@ const SearchBar = ({ placeholder, value, onChange, autoFocus, hideResults }: ISe
           <PlaceholderWrapper variant="subtitle1" $hasValue={value.length > 0}>
             {placeholder || 'Search cocktails and ingredients'}
           </PlaceholderWrapper>
-          <SearchIconWrapper>
-            <StyledIconButton size={isMdDown ? 35 : 40}>
-              <SearchIcon />
-            </StyledIconButton>
-          </SearchIconWrapper>
+
+          {!hideIcon && (
+            <SearchIconWrapper>
+              <StyledIconButton size={isMdDown ? 35 : 40}>
+                <SearchIcon />
+              </StyledIconButton>
+            </SearchIconWrapper>
+          )}
         </SearchBarWrapper>
       }
     />

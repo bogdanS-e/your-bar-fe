@@ -16,9 +16,10 @@ interface IDropdownProps<T> {
   items: T[] | IGroup<T>[];
   position?: TPosition;
   className?: string;
-  renderItem?: (item: T) => ReactNode;
+  closeOnItemClick?: boolean;
   onOptionClick: (item: T) => void;
   onClose?: () => void;
+  renderItem?: (item: T) => ReactNode;
 }
 
 const Dropdown = <T extends TKey>({
@@ -26,6 +27,7 @@ const Dropdown = <T extends TKey>({
   items,
   position = 'bottom',
   className,
+  closeOnItemClick = true,
   renderItem,
   onOptionClick,
   onClose,
@@ -35,8 +37,11 @@ const Dropdown = <T extends TKey>({
 
   const onItemClick = (item: T) => {
     onOptionClick(item);
-    isOpenHandler.off();
-    onClose?.();
+
+    if (closeOnItemClick) {
+      isOpenHandler.off();
+      onClose?.();
+    }
   };
 
   useEffect(() => {

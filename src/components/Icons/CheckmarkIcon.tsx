@@ -2,7 +2,6 @@ const CheckmarkIcon = () => (
   <svg
     fill="#000000"
     version="1.1"
-    id="Capa_1"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 352.62 352.62"
     transform="matrix(1, 0, 0, 1, 0, 0)"

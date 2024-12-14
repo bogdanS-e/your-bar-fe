@@ -62,6 +62,26 @@ const GlobalStyle = createGlobalStyle`
     transform: translateY(-20px);
     transition: opacity 300ms, transform 300ms; /* Fast exit */
   }
+
+
+  .fade-left-enter {
+    opacity: 0;
+    transform: translateX(20px); /* Start slightly to the right */
+  }
+  .fade-left-enter-active {
+      opacity: 1;
+      transform: translateX(0); /* Move to original position */
+      transition: opacity 300ms ease-in, transform 300ms ease-in;
+  }
+  .fade-left-exit {
+      opacity: 1;
+      transform: translateX(0); /* Start at original position */
+  }
+  .fade-left-exit-active {
+      opacity: 0;
+      transform: translateX(20px); /* Move slightly to the right */
+      transition: opacity 200ms ease-out, transform 200ms ease-out;
+  }
 `;
 
 export default GlobalStyle;

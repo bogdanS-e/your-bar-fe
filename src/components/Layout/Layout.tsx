@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from 'react';
+import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { Roboto } from 'next/font/google';
-import Link from 'next/link';
 import styled from 'styled-components';
 import SearchBar from 'components/SearchBar';
 import GlobalLoader from 'components/GlobalLoader';
@@ -15,7 +15,12 @@ import useStore from 'store';
 import { DownMd, UpMd } from 'styles/media';
 import Sidebar from './Sidebar';
 import IconButton from 'components/IconButton';
-import { BurgerIcon } from 'components/Icons';
+import { ArrowRightIcon, BurgerIcon, SearchIcon } from 'components/Icons';
+import { useToggle } from 'hooks';
+import Multiselect from 'components/Multiselect';
+import { useRouter } from 'next/router';
+import { cocktailTagInfo } from 'types/cocktail';
+import { ingredientTagInfo } from 'types/ingredient';
 
 interface ILayoutProps {
   children: ReactNode;
@@ -26,9 +31,22 @@ const roboto = Roboto({
   subsets: ['latin', 'cyrillic'],
 });
 
+const cocktailsFilter = Object.values(cocktailTagInfo);
+const ingredientsFilter = Object.values(ingredientTagInfo);
+
 const Layout = ({ children }: ILayoutProps) => {
+  const router = useRouter();
+
   const { stopLoading, openSidebar } = useStore();
   const [searchValue, setSearchValue] = useState('');
+  const [isSearchOpen, isSearchOpenHandler] = useToggle(false);
+
+  const {
+    selectedCocktailTags,
+    selectedIngredientTags,
+    setSelectedIngredientTags,
+    setSelectedCocktailTags,
+  } = useStore();
 
   // prepare global data
   const query1 = useIngredients();
@@ -53,14 +71,56 @@ const Layout = ({ children }: ILayoutProps) => {
       <Page>
         <Sidebar />
         <Main>
+          <DownMd>
+            <SwitchTransition>
+              <CSSTransition
+                key={isSearchOpen.toString()}
+                timeout={300}
+                classNames="fade-left"
+                unmountOnExit
+              >
+                <Row $justifyContent="space-between" $gap="20px" $md-gap="10px">
+                  {isSearchOpen ? (
+                    <>
+                      <CloseSearchButton size={40} onClick={isSearchOpenHandler.off}>
+                        <ArrowRightIcon />
+                      </CloseSearchButton>
+                      <SearchBar value={searchValue} hideIcon onChange={handleSearchChange} />
+                    </>
+                  ) : (
+                    <>
+                      <TopBarIcon onClick={openSidebar} size={40}>
+                        <BurgerIcon />
+                      </TopBarIcon>
+
+                      {router.pathname === '/ingredients' ? (
+                        <Multiselect
+                          key="ingredient"
+                          options={ingredientsFilter}
+                          selectedOptions={selectedIngredientTags}
+                          onChange={setSelectedIngredientTags}
+                        />
+                      ) : (
+                        <Multiselect
+                          key="cocktail"
+                          options={cocktailsFilter}
+                          selectedOptions={selectedCocktailTags}
+                          onChange={setSelectedCocktailTags}
+                        />
+                      )}
+
+                      <SearchButton size={40} onClick={isSearchOpenHandler.on}>
+                        <SearchIcon />
+                      </SearchButton>
+                    </>
+                  )}
+                </Row>
+              </CSSTransition>
+            </SwitchTransition>
+          </DownMd>
           <Row $justifyContent="space-between" $gap="20px" $md-gap="10px">
-            <DownMd>
-              <BurgerButton onClick={openSidebar} size={30}>
-                <BurgerIcon />
-              </BurgerButton>
-            </DownMd>
-            <SearchBar value={searchValue} onChange={handleSearchChange} />
             <UpMd>
+              <SearchBar value={searchValue} onChange={handleSearchChange} />
               <AuthHandler />
             </UpMd>
           </Row>
@@ -76,8 +136,24 @@ const Layout = ({ children }: ILayoutProps) => {
 
 export default Layout;
 
-const BurgerButton = styled(IconButton)`
-  padding: 0;
+const TopBarIcon = styled(IconButton)`
+  padding: 5px;
+
+  &:hover {
+    background: white;
+  }
+`;
+
+const SearchButton = styled(TopBarIcon)`
+  color: transparent;
+`;
+
+const CloseSearchButton = styled(TopBarIcon)`
+  padding: 6px;
+
+  svg {
+    transform: rotateY(180deg);
+  }
 `;
 
 const Main = styled.main`

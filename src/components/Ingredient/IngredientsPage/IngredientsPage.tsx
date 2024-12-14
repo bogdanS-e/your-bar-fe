@@ -9,12 +9,13 @@ import MyIngredientsTab from './Tabs/MyIngredientsTab';
 import AllIngredientsTab from './Tabs/AllIngredientsTab';
 import useStore from 'store';
 import Typography from 'styles/Typography';
+import { UpMd } from 'styles/media';
 
 interface IIngredientsPageProps {
   initialData: IIngredient[];
 }
 
-const ingrediensFilter = Object.values(ingredientTagInfo);
+const ingredientsFilter = Object.values(ingredientTagInfo);
 
 const IngredientsPage = ({ initialData }: IIngredientsPageProps) => {
   const { isAuthenticated } = useAuth0();
@@ -68,11 +69,13 @@ const IngredientsPage = ({ initialData }: IIngredientsPageProps) => {
         <Title variant="h4" as="h1">
           Ingredients
         </Title>
-        <TagsFilter
-          items={ingrediensFilter}
-          selectedTags={selectedIngredientTags}
-          onChange={setSelectedIngredientTags}
-        />
+        <UpMd>
+          <TagsFilter
+            items={ingredientsFilter}
+            selectedTags={selectedIngredientTags}
+            onChange={setSelectedIngredientTags}
+          />
+        </UpMd>
 
         {isAuthenticated ? (
           <StyledTabs
